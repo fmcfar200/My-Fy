@@ -1,0 +1,37 @@
+.track-list {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
+  display: inline-block;
+  width: 500px;
+}
+
+.track-list li {
+  padding: 10px;
+  overflow: auto;
+}
+
+.track-list img {
+  float: left;
+  margin: 0 15px 0 0;
+}
+.track-list h4 {
+  font-size: 20px;
+  text-align: left;
+  margin: 0 0 0 0;
+  color: white;
+  max-lines: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.track-list p {
+  color: #9b9b9b;
+  text-align: left;
+  margin: 0 0 0 0;
+  max-lines: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

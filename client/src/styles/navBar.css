@@ -1,0 +1,20 @@
+nav {
+  background-color: black;
+}
+
+a.nav-item.nav-link {
+  color: white !important;
+}
+
+a.navbar-brand {
+  color: white !important;
+}
+
+a.nav-item.nav-link.active.active {
+  color: green !important;
+  border-bottom: 5px solid rgb(30, 215, 96);
+}
+
+button.navbar-toggler {
+  background-color: white !important;
+}
