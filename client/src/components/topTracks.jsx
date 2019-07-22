@@ -3,6 +3,10 @@ import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
 import TrackList from "./trackList";
 
+const TIME_RANGE_SHORT = "short_term";
+const TIME_RANGE_MEDIUM = "medium_term";
+const TIME_RANGE_LONG = "long_term";
+
 const spotifyApi = new Spotify();
 const params = getHashParams();
 
@@ -15,49 +19,46 @@ class TopTracks extends Component {
     range: "long_term"
   };
 
-  getTracks() {
+  async getTracks(range) {
     spotifyApi
-      .getMyTopTracks({ limit: 100, time_range: "long_term" })
+      .getMyTopTracks({ limit: 100, time_range: range })
       .then(response => {
         this.setState({
-          topTracksLong: response.items
+          currentList: response.items
         });
       });
-
-    spotifyApi
-      .getMyTopTracks({ limit: 100, time_range: "medium_term" })
-      .then(response => {
-        this.setState({
-          topTracksMedium: response.items
-        });
-      });
-
-    spotifyApi
-      .getMyTopTracks({ limit: 100, time_range: "short_term" })
-      .then(response => {
-        this.setState({
-          topTracksShort: response.items
-        });
-      });
-
-    this.setState({
-      currentList: this.state.topTracksLong
-    });
-
-    console.log(this.state.currentList);
   }
 
   async componentDidMount() {
     spotifyApi.setAccessToken(params.access_token);
-    this.getTracks();
+    this.getTracks(TIME_RANGE_LONG);
   }
+
   render() {
     return (
       <React.Fragment>
         <div>
-          <button>All Time</button>
-          <button>6 Months</button>
-          <button>4 Weeks</button>
+          <button
+            onClick={() => {
+              this.getTracks(TIME_RANGE_LONG);
+            }}
+          >
+            All Time
+          </button>
+          <button
+            onClick={() => {
+              this.getTracks(TIME_RANGE_MEDIUM);
+            }}
+          >
+            6 Months
+          </button>
+          <button
+            onClick={() => {
+              this.getTracks(TIME_RANGE_SHORT);
+            }}
+          >
+            4 Weeks
+          </button>
         </div>
         <TrackList data={this.state.currentList} />
       </React.Fragment>
