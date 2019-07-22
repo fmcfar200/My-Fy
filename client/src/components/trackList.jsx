@@ -13,7 +13,6 @@ const TrackList = props => {
 
   return (
     <React.Fragment>
-      <h2>{props.heading}</h2>
       <ul className="track-list">{theTrackList}</ul>
     </React.Fragment>
   );

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
+import TrackList from "./trackList";
 import { getHashParams } from "../utils/hashParameters";
 import "../App.css";
-import TrackList from "./trackList";
 
 const spotifyApi = new Spotify();
 const params = getHashParams();
@@ -116,12 +116,14 @@ class Profile extends Component {
         {/* Lists */}
         <div className="row">
           <div className="column">
+            <h2>Top Tracks (6 Months)</h2>
             <TrackList
               data={this.state.topTracks}
               heading="Top Tracks (6 months)"
             />
           </div>
           <div className="column">
+            <h2>Recently Played</h2>
             <TrackList
               data={this.state.recentlyPlayed}
               heading="Recently Played"
