@@ -37,30 +37,35 @@ class TopTracks extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-          <button
-            onClick={() => {
-              this.getTracks(TIME_RANGE_LONG);
-            }}
-          >
-            All Time
-          </button>
-          <button
-            onClick={() => {
-              this.getTracks(TIME_RANGE_MEDIUM);
-            }}
-          >
-            6 Months
-          </button>
-          <button
-            onClick={() => {
-              this.getTracks(TIME_RANGE_SHORT);
-            }}
-          >
-            4 Weeks
-          </button>
+        <div style={{ padding: "80px 80px" }}>
+          <div>
+            <button
+              onClick={() => {
+                this.getTracks(TIME_RANGE_LONG);
+              }}
+            >
+              All Time
+            </button>
+            <button
+              onClick={() => {
+                this.getTracks(TIME_RANGE_MEDIUM);
+              }}
+            >
+              6 Months
+            </button>
+            <button
+              onClick={() => {
+                this.getTracks(TIME_RANGE_SHORT);
+              }}
+            >
+              4 Weeks
+            </button>
+          </div>
+          <TrackList
+            style={{ padding: "100px 80px" }}
+            data={this.state.currentList}
+          />
         </div>
-        <TrackList data={this.state.currentList} />
       </React.Fragment>
     );
   }

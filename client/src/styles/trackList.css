@@ -2,11 +2,13 @@
   list-style-type: none;
   margin-left: 0px;
   padding-left: 0px;
-  display: inline-block;
+  /* display: inline-block; */
   width: 100%;
 }
 
 .track-list li {
+  display: list-item;
+  grid-template-columns: auto 1fr;
   margin-top: 30px;
   overflow: auto;
   cursor: pointer;
@@ -38,4 +40,12 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.trackInfo {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  vertical-align: center;
+  align-items: center;
+  margin: 0 auto;
 }

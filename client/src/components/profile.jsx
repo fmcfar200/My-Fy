@@ -115,7 +115,7 @@ class Profile extends Component {
 
         {/* Lists */}
         <div className="row">
-          <div className="column">
+          <div className="column" style={{ padding: "10px" }}>
             <h2 style={{ fontSize: "2vw", marginBottom: "20px" }}>
               Top Tracks (6 Months)
             </h2>
@@ -124,7 +124,7 @@ class Profile extends Component {
               heading="Top Tracks (6 months)"
             />
           </div>
-          <div className="column">
+          <div className="column" style={{ padding: "10px" }}>
             <h2 style={{ fontSize: "2vw", marginBottom: "20px" }}>
               Recently Played
             </h2>

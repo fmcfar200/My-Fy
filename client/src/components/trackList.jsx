@@ -9,11 +9,15 @@ const TrackList = props => {
     <li key={item.id}>
       <Link to={`/tracks/${item.id}`}>
         <img src={item.album.images[2].url} />
-        <h4>{item.name}</h4>
-        <p>
-          {item.artists[0].name} | {item.album.name}
-        </p>
-        <p className="Track-runtime">{msToRuntime(item.duration_ms)}</p>
+        <div className="trackInfo">
+          <div style={{ alignItems: "center" }}>
+            <h4>{item.name}</h4>
+            <p>
+              {item.artists[0].name} | {item.album.name}
+            </p>
+          </div>
+          <p className="Track-runtime">{msToRuntime(item.duration_ms)}</p>
+        </div>
       </Link>
     </li>
   ));
