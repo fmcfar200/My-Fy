@@ -8,7 +8,12 @@ const TrackList = props => {
   const theTrackList = data.map(item => (
     <li key={item.id}>
       <Link to={`/tracks/${item.id}`}>
-        <img src={item.album.images[2].url} />
+        <div className="Image-Container">
+          <img src={item.album.images[2].url} />
+          <div className="Overlay">
+            <i className="fas fa-info-circle" />
+          </div>
+        </div>
         <div className="trackInfo">
           <div style={{ alignItems: "center" }}>
             <h4>{item.name}</h4>

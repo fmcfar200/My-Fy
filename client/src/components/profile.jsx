@@ -3,6 +3,7 @@ import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import { getHashParams } from "../utils/hashParameters";
 import "../App.css";
+import "../styles/profile.css";
 
 const spotifyApi = new Spotify();
 const params = getHashParams();
@@ -114,9 +115,11 @@ class Profile extends Component {
         </div>
 
         {/* Lists */}
-        <div className="row">
-          <div className="column" style={{ padding: "10px" }}>
-            <h2 style={{ fontSize: "2vw", marginBottom: "20px" }}>
+        <section className="User-Preview">
+          <div className="User-Preview-Container">
+            <h2
+              style={{ fontSize: "2vw", marginBottom: "20px", color: "white" }}
+            >
               Top Tracks (6 Months)
             </h2>
             <TrackList
@@ -124,8 +127,11 @@ class Profile extends Component {
               heading="Top Tracks (6 months)"
             />
           </div>
-          <div className="column" style={{ padding: "10px" }}>
-            <h2 style={{ fontSize: "2vw", marginBottom: "20px" }}>
+
+          <div>
+            <h2
+              style={{ fontSize: "2vw", marginBottom: "20px", color: "white" }}
+            >
               Recently Played
             </h2>
             <TrackList
@@ -133,7 +139,7 @@ class Profile extends Component {
               heading="Recently Played"
             />
           </div>
-        </div>
+        </section>
       </React.Fragment>
     );
   }

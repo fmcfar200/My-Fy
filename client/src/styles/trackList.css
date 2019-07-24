@@ -17,19 +17,40 @@
   margin-top: 0px;
 }
 
+.Image-Container {
+  position: relative;
+  width: 100%;
+}
+.Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
 .track-list img {
   float: left;
   margin: 0 15px 0 0;
 }
+
 .track-list h4 {
   font-size: 20px;
   text-align: left;
   margin: 0 0 0 0;
-  color: white;
+  color: white !important;
   max-lines: 1;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.track-list h4:hover {
+  text-decoration: white underline;
 }
 
 .track-list p {
@@ -40,12 +61,34 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-decoration: none !important;
 }
 
 .trackInfo {
   display: grid;
   grid-template-columns: 1fr max-content;
-  vertical-align: center;
+  vertical-align: middle;
   align-items: center;
   margin: 0 auto;
+}
+
+a {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+a:hover img {
+  filter: brightness(50%);
+}
+
+a:hover .Image-Container .Overlay {
+  opacity: 1;
+}
+
+.fa-info-circle {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
 }
