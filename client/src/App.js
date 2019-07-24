@@ -5,6 +5,7 @@ import LoginScreen from "./components/loginScreen";
 import Profile from "./components/profile";
 import NotFound from "./components/notFound";
 import TopTracks from "./components/topTracks";
+import Track from "./components/track";
 import NavBar from "./components/navBar";
 import "./App.css";
 
@@ -34,6 +35,7 @@ class App extends Component {
                 {/* <Route path="/login" component={LoginScreen} /> */}
                 <Route path="/profile" component={Profile} />
                 <Route path="/top-tracks" component={TopTracks} />
+                <Route path="/tracks/:id" component={Track} />
                 <Route path="/not-found" component={NotFound} />
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />

@@ -116,14 +116,18 @@ class Profile extends Component {
         {/* Lists */}
         <div className="row">
           <div className="column">
-            <h2 style={{ fontSize: "2vw" }}>Top Tracks (6 Months)</h2>
+            <h2 style={{ fontSize: "2vw", marginBottom: "20px" }}>
+              Top Tracks (6 Months)
+            </h2>
             <TrackList
               data={this.state.topTracks}
               heading="Top Tracks (6 months)"
             />
           </div>
           <div className="column">
-            <h2 style={{ fontSize: "2vw" }}>Recently Played</h2>
+            <h2 style={{ fontSize: "2vw", marginBottom: "20px" }}>
+              Recently Played
+            </h2>
             <TrackList
               data={this.state.recentlyPlayed}
               heading="Recently Played"
