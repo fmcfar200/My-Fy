@@ -1,0 +1,32 @@
+.Spotify-Button {
+  background-color: #1db954;
+  border: 2px solid #1db954;
+  color: white;
+
+  align-content: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 25px;
+
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  cursor: pointer;
+}
+
+.Spotify-Button-Play {
+  background-color: #1db954;
+}
+
+.Spotify-Button-Trans {
+  background-color: transparent;
+  font-size: 20px;
+}

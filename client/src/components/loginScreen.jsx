@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "../logo.svg";
 import "../App.css";
+import "../styles/spotifyButton.css";
 
 class LoginScreen extends Component {
   state = {};
@@ -11,7 +12,9 @@ class LoginScreen extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <div style={{ textAlign: "center" }}>
             <a href="http://localhost:8888">
-              <button className="Spotify-button">Login To Spotify</button>
+              <button className="Spotify-Button Spotify-Button-Trans">
+                Login To Spotify
+              </button>
             </a>
           </div>
         </div>

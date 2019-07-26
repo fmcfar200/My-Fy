@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
+import { Link } from "react-router-dom";
 
 import "../styles/track.css";
+import "../styles/spotifyButton.css";
 
 const spotifyApi = new Spotify();
 const params = getHashParams();
@@ -14,7 +16,8 @@ class Track extends Component {
       track: {},
       albumImageUrl: "",
       album: {},
-      artist: ""
+      artist: "",
+      spotifyUrl: ""
     };
   }
 
@@ -36,7 +39,8 @@ class Track extends Component {
           track: response,
           albumImageUrl: response.album.images[1].url,
           artist: response.artists[0].name,
-          album: response.album
+          album: response.album,
+          spotifyUrl: response.external_urls.spotify
         });
       });
     } catch (ex) {
@@ -56,6 +60,11 @@ class Track extends Component {
             <h3>
               {this.state.album.name}, {this.getReleaseYear()}
             </h3>
+            <a href={this.state.spotifyUrl}>
+              <button className="Spotify-Button Spotify-Button-Play">
+                Play
+              </button>
+            </a>
           </div>
         </div>
       </React.Fragment>
