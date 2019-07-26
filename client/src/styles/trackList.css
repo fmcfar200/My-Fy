@@ -22,18 +22,19 @@
   width: 100%;
 }
 .Overlay {
+  transition: 0.3s ease;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
   height: 100%;
   width: 100%;
-  opacity: 0;
-  transition: 0.3s ease;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 .track-list img {
+  display: block;
   float: left;
   margin: 0 15px 0 0;
 }
@@ -80,15 +81,13 @@ a {
 a:hover img {
   filter: brightness(50%);
 }
-
+/*
 a:hover .Image-Container .Overlay {
   opacity: 1;
-}
+} */
 
-.fa-info-circle {
+/* .fa-info-circle {
   color: white;
   position: absolute;
-  top: 50%;
-  left: 50%;
   text-align: center;
-}
+} */

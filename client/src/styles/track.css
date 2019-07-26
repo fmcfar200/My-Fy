@@ -1,0 +1,13 @@
+.Track-Header {
+  display: flex;
+  text-align: left;
+  color: white;
+}
+
+.Track-Header img {
+  margin-right: 20px;
+}
+
+.Track-Header h1 {
+  margin: 0 0 8px 0;
+}

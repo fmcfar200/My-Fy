@@ -9,7 +9,7 @@ const TrackList = props => {
     <li key={item.id}>
       <Link to={`/tracks/${item.id}`}>
         <div className="Image-Container">
-          <img src={item.album.images[2].url} />
+          <img src={item.album.images[2].url} alt="Cover" />
           <div className="Overlay">
             <i className="fas fa-info-circle" />
           </div>
