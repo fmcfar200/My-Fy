@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
+import { getArtistString } from "../utils/index";
 
 import "../styles/track.css";
 import "../styles/spotifyButton.css";
@@ -33,18 +34,9 @@ class Track extends Component {
 
     try {
       const trackId = this.props.match.params.id;
+      //GET THE TRACK INFORMATION
       spotifyApi.getTrack(trackId).then(response => {
-        console.log(response);
-
-        //gets artists to string
-        var artistsString = "";
-        var artistArray = [];
-
-        for (let i = 0; i < response.artists.length; i++) {
-          artistArray.push(response.artists[i].name);
-        }
-        artistsString = artistArray.join(", ").toString();
-        console.log(artistsString);
+        var artistsString = getArtistString(response.artists);
 
         //sets state
         this.setState({
@@ -55,8 +47,11 @@ class Track extends Component {
           spotifyUrl: response.external_urls.spotify,
           preview_url: response.preview_url
         });
+      });
 
-        console.log(this.state.preview_url);
+      //GET TRACK AUDIO FEATURES
+      spotifyApi.getAudioFeaturesForTrack(trackId).then(response => {
+        console.log(response);
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)

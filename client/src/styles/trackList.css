@@ -4,6 +4,7 @@
   padding-left: 0px;
   /* display: inline-block; */
   width: 100%;
+  overflow: hidden;
 }
 
 .track-list li {
@@ -57,8 +58,8 @@
 .track-list p {
   color: #9b9b9b;
   text-align: left;
+  float: left;
   margin: 0 0 0 0;
-  max-lines: 1;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -70,7 +71,8 @@
   grid-template-columns: 1fr max-content;
   vertical-align: middle;
   align-items: center;
-  margin: 0 auto;
+  max-lines: 1;
+  overflow: hidden;
 }
 
 a {

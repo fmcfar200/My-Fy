@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { msToRuntime } from "../utils/msConverter";
+import { getArtistString } from "../utils/index";
 import "../styles/trackList.css";
 
 const TrackList = props => {
@@ -18,10 +19,10 @@ const TrackList = props => {
           <div style={{ alignItems: "center" }}>
             <h4>{item.name}</h4>
             <p>
-              {item.artists[0].name} | {item.album.name}
+              {getArtistString(item.artists)} | {item.album.name}
             </p>
           </div>
-          <p className="Track-runtime">{msToRuntime(item.duration_ms)}</p>
+          <p>{msToRuntime(item.duration_ms)}</p>
         </div>
       </Link>
     </li>
