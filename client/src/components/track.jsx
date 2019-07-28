@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
-import { Link } from "react-router-dom";
 
 import "../styles/track.css";
 import "../styles/spotifyButton.css";
@@ -16,8 +15,9 @@ class Track extends Component {
       track: {},
       albumImageUrl: "",
       album: {},
-      artist: "",
-      spotifyUrl: ""
+      artists: "",
+      spotifyUrl: "",
+      preview_url: ""
     };
   }
 
@@ -35,13 +35,28 @@ class Track extends Component {
       const trackId = this.props.match.params.id;
       spotifyApi.getTrack(trackId).then(response => {
         console.log(response);
+
+        //gets artists to string
+        var artistsString = "";
+        var artistArray = [];
+
+        for (let i = 0; i < response.artists.length; i++) {
+          artistArray.push(response.artists[i].name);
+        }
+        artistsString = artistArray.join(", ").toString();
+        console.log(artistsString);
+
+        //sets state
         this.setState({
           track: response,
           albumImageUrl: response.album.images[1].url,
-          artist: response.artists[0].name,
+          artists: artistsString,
           album: response.album,
-          spotifyUrl: response.external_urls.spotify
+          spotifyUrl: response.external_urls.spotify,
+          preview_url: response.preview_url
         });
+
+        console.log(this.state.preview_url);
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -54,14 +69,24 @@ class Track extends Component {
       <React.Fragment>
         <div className="Track-Header">
           <img src={this.state.albumImageUrl} alt="Cover" />
-          <div>
+          <div className="Track-Meta">
             <h1>{this.state.track.name}</h1>
-            <h2>{this.state.artist}</h2>
-            <h3>
-              {this.state.album.name}, {this.getReleaseYear()}
-            </h3>
-            <a href={this.state.spotifyUrl}>
-              <button className="Spotify-Button Spotify-Button-Play">
+            <h4>
+              <span style={{ color: "grey" }}>By </span>
+              {this.state.artists}
+            </h4>
+            <h5>
+              {this.state.album.name} &#183; {this.getReleaseYear()}
+            </h5>
+            <a
+              href={this.state.spotifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button
+                className="Spotify-Button Spotify-Button-Play"
+                style={{ marginTop: "16px" }}
+              >
                 Play
               </button>
             </a>
