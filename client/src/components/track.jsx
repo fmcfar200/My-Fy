@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
 import { getArtistString } from "../utils/index";
+import { Bar } from "react-chartjs-2";
 
 import "../styles/track.css";
 import "../styles/spotifyButton.css";
@@ -18,7 +19,8 @@ class Track extends Component {
       album: {},
       artists: "",
       spotifyUrl: "",
-      preview_url: ""
+      preview_url: "",
+      audioFeatureData: []
     };
   }
 
@@ -52,6 +54,22 @@ class Track extends Component {
       //GET TRACK AUDIO FEATURES
       spotifyApi.getAudioFeaturesForTrack(trackId).then(response => {
         console.log(response);
+
+        let audioFeaturesDataArray = [
+          response.acousticness,
+          response.danceability,
+          response.energy,
+          response.instrumentalness,
+          response.liveness,
+          response.speechiness,
+          response.valence
+        ];
+
+        this.setState({
+          audioFeatureData: audioFeaturesDataArray
+        });
+
+        console.log(this.state.audioFeatureData);
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -60,6 +78,30 @@ class Track extends Component {
   }
 
   render() {
+    const audioFeatureData = this.state.audioFeatureData;
+    const chartData = {
+      labels: [
+        "accousticness",
+        "danceability",
+        "energy",
+        "instrumentalness",
+        "liveness",
+        "speechiness",
+        "valence"
+      ],
+      datasets: [
+        {
+          label: "Audio Features",
+          backgroundColor: "rgba(29,185,84,0.2)",
+          borderColor: "rgba(29,185,84,1)",
+          borderWidth: 1,
+          hoverBackgroundColor: "rgba(29,185,84,0.4)",
+          hoverBorderColor: "rgba(29,185,84,1)",
+          data: audioFeatureData
+        }
+      ]
+    };
+
     return (
       <React.Fragment>
         <div className="Track-Header">
@@ -86,6 +128,33 @@ class Track extends Component {
               </button>
             </a>
           </div>
+        </div>
+        <div style={{ marginTop: "50px" }}>
+          <Bar
+            data={chartData}
+            width={700}
+            height={500}
+            options={{
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [
+                  {
+                    gridLines: {
+                      color: "##1db954"
+                    }
+                  }
+                ],
+
+                yAxes: [
+                  {
+                    gridLines: {
+                      color: "##1db954"
+                    }
+                  }
+                ]
+              }
+            }}
+          />
         </div>
       </React.Fragment>
     );
