@@ -15,3 +15,37 @@
 .Track-Header h5 {
   color: grey;
 }
+
+.Track-Grid-Container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 50px;
+  padding: 10px;
+}
+
+.Track-Grid-Item {
+  display: block;
+  border: 1px solid #1db95481;
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.Track-Grid-Item h4 {
+  color: white;
+  margin: 0;
+}
+
+.Track-Grid-Item p {
+  color: grey;
+  font-size: 12px;
+  margin: 0;
+}
+
+.Track-Graph-Container {
+  display: block;
+  max-width: 1500px;
+  margin-top: 50px;
+  align-content: center;
+  align-items: center;
+}
