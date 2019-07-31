@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
 import { formatNumber } from "../utils";
+import { toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/artist.css";
 import "../styles/spotifyButton.css";
 
@@ -26,9 +28,11 @@ class Artist extends Component {
     if (followBool === true) {
       this.setState({ userFollowing: false });
       spotifyApi.unfollowArtists([this.state.id]);
+      toast.success(this.state.name + " has been unfollowed!");
     } else {
       this.setState({ userFollowing: true });
       spotifyApi.followArtists([this.state.id]);
+      toast.success("You are now following " + this.state.name);
     }
   }
 
@@ -97,28 +101,30 @@ class Artist extends Component {
 
     return (
       <React.Fragment>
-        <div className="Artist-Header">
-          <img src={imageURL} alt="Cover" />
-          <h1>{name} </h1>
-        </div>
-
-        <div style={{ marginBottom: "50px" }}>{followButton}</div>
-
-        <div className="Artist-Info">
-          <div>
-            <h3>{followers}</h3>
-            <p>Followers</p>
+        <div className="Artist-Container">
+          <div className="Artist-Header">
+            <img src={imageURL} alt="Cover" />
+            <h1>{name} </h1>
           </div>
-          <div>
-            <h3>{popularity}%</h3>
-            <p>Popularity</p>
-          </div>
-        </div>
 
-        <div className="Artist-Genres">
-          <div>
-            {genreList}
-            <p>Genres</p>
+          <div style={{ marginBottom: "50px" }}>{followButton}</div>
+
+          <div className="Artist-Info">
+            <div>
+              <h3>{followers}</h3>
+              <p>Followers</p>
+            </div>
+            <div>
+              <h3>{popularity}%</h3>
+              <p>Popularity</p>
+            </div>
+          </div>
+
+          <div className="Artist-Genres">
+            <div>
+              {genreList}
+              <p>Genres</p>
+            </div>
           </div>
         </div>
       </React.Fragment>

@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { getHashParams } from "./utils/hashParameters";
+import { ToastContainer, toast } from "react-toastify";
 import LoginScreen from "./components/loginScreen";
 import Profile from "./components/profile";
 import NotFound from "./components/notFound";
 import TopTracks from "./components/topTracks";
 import Track from "./components/track";
 import NavBar from "./components/navBar";
-import "./App.css";
 import TopArtists from "./components/topArtists";
 import Artist from "./components/artist";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 const params = getHashParams();
-
+toast.configure();
 class App extends Component {
   constructor() {
     super();
@@ -25,6 +27,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         {!params.access_token ? (
           <React.Fragment>
             <LoginScreen />
