@@ -1,0 +1,30 @@
+.Top-Tracks-Header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.tab {
+  overflow: hidden;
+}
+
+.tab button {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+
+  color: white;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.tab button.active {
+  border-bottom: 5px solid white;
+  outline: none;
+}
