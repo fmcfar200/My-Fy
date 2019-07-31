@@ -1,0 +1,15 @@
+.Playlists-Container {
+  padding: 30px;
+}
+
+.Playlists-Grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 50px;
+}
+
+.Playlists-Grid img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}

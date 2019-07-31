@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
-import { getHashParams } from "../utils/hashParameters";
 import GridList from "../common/gridList";
+import { getHashParams } from "../utils/hashParameters";
+
+import "../styles/playlists.css";
 
 const spotifyApi = new Spotify();
 const params = getHashParams();
@@ -25,11 +27,16 @@ class Playlists extends Component {
   }
 
   render() {
+    const { playLists } = this.state;
     return (
       <React.Fragment>
-        <div>
+        <div className="Playlists-Container">
           <h2>My Playlists</h2>
-          <GridList data={this.state.playLists} />
+          <GridList
+            data={this.state.playLists}
+            gridClassName="Playlists-Grid"
+            routeName="playlist"
+          />
         </div>
       </React.Fragment>
     );

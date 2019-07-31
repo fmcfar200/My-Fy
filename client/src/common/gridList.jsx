@@ -6,7 +6,7 @@ const GridList = props => {
   const list = data.map(item => (
     <Link key={item.id} to={`/${routeName}/${item.id}`}>
       <div>
-        <img src={item.images[1].url} alt="Cover" />
+        <img src={item.images[0].url} alt="Cover" />
       </div>
     </Link>
   ));
