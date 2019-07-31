@@ -1,0 +1,23 @@
+.Top-Artists-Header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.Top-Artists-Grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 25px;
+}
+
+.Top-Artists-Grid img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.Top-Artists-Grid :hover img {
+  filter: brightness(50%);
+}

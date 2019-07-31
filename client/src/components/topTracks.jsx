@@ -13,9 +13,6 @@ const params = getHashParams();
 
 class TopTracks extends Component {
   state = {
-    topTracksLong: [],
-    topTracksMedium: [],
-    topTracksShort: [],
     currentList: [],
     range: "long_term"
   };
@@ -86,27 +83,6 @@ class TopTracks extends Component {
                 4 Weeks
               </button>
             </div>
-            {/* <button
-              onClick={() => {
-                this.getTracks(TIME_RANGE_LONG);
-              }}
-            >
-              All Time
-            </button>
-            <button
-              onClick={() => {
-                this.getTracks(TIME_RANGE_MEDIUM);
-              }}
-            >
-              6 Months
-            </button>
-            <button
-              onClick={() => {
-                this.getTracks(TIME_RANGE_SHORT);
-              }}
-            >
-              4 Weeks
-            </button> */}
           </div>
           <TrackList
             style={{ padding: "100px 80px" }}

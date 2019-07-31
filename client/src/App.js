@@ -9,6 +9,7 @@ import Track from "./components/track";
 import NavBar from "./components/navBar";
 import "./App.css";
 import TopArtists from "./components/topArtists";
+import Artist from "./components/artist";
 
 const params = getHashParams();
 
@@ -38,6 +39,7 @@ class App extends Component {
                 <Route path="/top-tracks" component={TopTracks} />
                 <Route path="/top-artists" component={TopArtists} />
                 <Route path="/tracks/:id" component={Track} />
+                <Route path="/artists/:id" component={Artist} />
                 <Route path="/not-found" component={NotFound} />
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />
