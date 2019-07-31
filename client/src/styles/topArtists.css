@@ -1,3 +1,7 @@
+.Top-Artists-Container {
+  padding: 30px;
+}
+
 .Top-Artists-Header {
   display: flex;
   justify-content: space-between;

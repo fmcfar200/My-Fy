@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
-import Grid from "../common/grid";
+import AudioAnalysisGrid from "./audioAnalysisGrid";
 import BarGraph from "../common/barGraph";
 import { getHashParams } from "../utils/hashParameters";
 import { getArtistString } from "../utils/index";
@@ -158,7 +158,7 @@ class Track extends Component {
           releaseYear={this.getReleaseYear()}
         />
 
-        <Grid
+        <AudioAnalysisGrid
           popularity={popularity}
           duration_ms={duration_ms}
           BPM={BPM}

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import { getHashParams } from "../utils/hashParameters";
-import { Link } from "react-router-dom";
 
 import "../styles/topArtists.css";
 import "../styles/topTracks.css";
+import GridList from "../common/gridList";
 
 const spotifyApi = new Spotify();
 const params = getHashParams();
@@ -48,51 +48,46 @@ class TopArtists extends Component {
   }
 
   render() {
-    const data = this.state.topArtists;
-    const artistsList = data.map(item => (
-      <Link key={item.id} to={`/artists/${item.id}`}>
-        <div>
-          <img src={item.images[1].url} alt="Headshot" />
-        </div>
-      </Link>
-    ));
+    const { topArtists } = this.state;
     return (
       <React.Fragment>
-        <div className="Top-Artists-Header">
-          <h1>Top Artists</h1>
-          <div className="tab">
-            <button
-              className="tabButton"
-              onClick={e => {
-                this.handleButtonClick(e, "className");
-                this.getTopArtists(TIME_RANGE_LONG);
-              }}
-            >
-              All Time
-            </button>
+        <div className="Top-Artists-Container">
+          <div className="Top-Artists-Header">
+            <h2>Top Artists</h2>
+            <div className="tab">
+              <button
+                className="tabButton"
+                onClick={e => {
+                  this.handleButtonClick(e, "className");
+                  this.getTopArtists(TIME_RANGE_LONG);
+                }}
+              >
+                All Time
+              </button>
 
-            <button
-              className="tabButton"
-              onClick={e => {
-                this.handleButtonClick(e, "className");
-                this.getTopArtists(TIME_RANGE_MEDIUM);
-              }}
-            >
-              6 Months
-            </button>
-            <button
-              className="tabButton"
-              onClick={e => {
-                this.handleButtonClick(e, "className");
-                this.getTopArtists(TIME_RANGE_SHORT);
-              }}
-            >
-              4 Weeks
-            </button>
+              <button
+                className="tabButton"
+                onClick={e => {
+                  this.handleButtonClick(e, "className");
+                  this.getTopArtists(TIME_RANGE_MEDIUM);
+                }}
+              >
+                6 Months
+              </button>
+              <button
+                className="tabButton"
+                onClick={e => {
+                  this.handleButtonClick(e, "className");
+                  this.getTopArtists(TIME_RANGE_SHORT);
+                }}
+              >
+                4 Weeks
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="Top-Artists-Grid">{artistsList}</div>
+          <GridList data={topArtists} gridClassName="Top-Artists-Grid" />
+        </div>
       </React.Fragment>
     );
   }

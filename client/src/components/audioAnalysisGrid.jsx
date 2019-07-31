@@ -1,6 +1,6 @@
 import React from "react";
 
-const Grid = props => {
+const AudioAnalysisGrid = props => {
   const {
     duration_ms,
     popularity,
@@ -78,4 +78,4 @@ const Grid = props => {
   );
 };
 
-export default Grid;
+export default AudioAnalysisGrid;
