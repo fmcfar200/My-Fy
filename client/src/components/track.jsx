@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
+import Grid from "../common/grid";
+import BarGraph from "../common/barGraph";
 import { getHashParams } from "../utils/hashParameters";
 import { getArtistString } from "../utils/index";
 import { msToRuntime } from "../utils/msConverter";
 import { parseTrackKey, parseTrackModality } from "../utils";
-import { Bar } from "react-chartjs-2";
 
 import "../styles/track.css";
 import "../styles/spotifyButton.css";
+import TrackHeader from "./trackHeader";
 
 const spotifyApi = new Spotify();
 const params = getHashParams();
@@ -25,7 +27,7 @@ class Track extends Component {
       audioFeatureData: [],
 
       duration_ms: 0,
-      key: "",
+      tonalKey: "",
       BPM: 0,
       timeSignature: 0,
       popularity: "",
@@ -85,7 +87,7 @@ class Track extends Component {
 
       spotifyApi.getAudioAnalysisForTrack(trackId).then(response => {
         this.setState({
-          key: parseTrackKey(response.track.key),
+          tonalKey: parseTrackKey(response.track.key),
           BPM: Math.round(response.track.tempo),
           timeSignature: response.track.time_signature,
           bars: response.bars.length,
@@ -96,13 +98,32 @@ class Track extends Component {
         });
       });
     } catch (ex) {
+      console.log(ex);
       if (ex.response && ex.response.status === 404)
         this.props.history.replace("/not-found");
     }
   }
 
   render() {
-    const audioFeatureData = this.state.audioFeatureData;
+    const {
+      track,
+      albumImageUrl,
+      album,
+      artists,
+      spotifyUrl,
+      audioFeatureData,
+      duration_ms,
+      popularity,
+      BPM,
+      timeSignature,
+      tonalKey,
+      bars,
+      beats,
+      segments,
+      sections,
+      modality
+    } = this.state;
+
     const chartData = {
       labels: [
         "accousticness",
@@ -128,120 +149,53 @@ class Track extends Component {
 
     return (
       <React.Fragment>
-        <div className="Track-Header">
-          <img src={this.state.albumImageUrl} alt="Cover" />
-          <div className="Track-Meta">
-            <h1>{this.state.track.name}</h1>
-            <h4>
-              <span style={{ color: "grey" }}>By </span>
-              {this.state.artists}
-            </h4>
-            <h5>
-              {this.state.album.name} &#183; {this.getReleaseYear()}
-            </h5>
-            <a
-              href={this.state.spotifyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button
-                className="Spotify-Button Spotify-Button-Play"
-                style={{ marginTop: "16px" }}
-              >
-                Play
-              </button>
-            </a>
-          </div>
-        </div>
+        <TrackHeader
+          trackName={track.name}
+          albumImageUrl={albumImageUrl}
+          albumName={album.name}
+          artists={artists}
+          spotifyUrl={spotifyUrl}
+          releaseYear={this.getReleaseYear()}
+        />
 
-        <div className="Track-Grid-Container">
-          <div className="Track-Grid-Item">
-            <h4>{this.state.duration_ms}</h4>
-            <p>Duration</p>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.popularity}%</h4>
-              <p>Popularity</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.BPM}</h4>
-              <p>BPM</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.timeSignature}</h4>
-              <p>Time Signature</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.key}</h4>
-              <p>Key</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.bars}</h4>
-              <p>Bars</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.beats}</h4>
-              <p>Beats</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.segments}</h4>
-              <p>Segments</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.sections}</h4>
-              <p>Sections</p>
-            </div>
-          </div>
-          <div className="Track-Grid-Item">
-            <div>
-              <h4>{this.state.modality}</h4>
-              <p>Modality</p>
-            </div>
-          </div>
-        </div>
+        <Grid
+          popularity={popularity}
+          duration_ms={duration_ms}
+          BPM={BPM}
+          timeSignature={timeSignature}
+          tonalKey={tonalKey}
+          beats={beats}
+          bars={bars}
+          segments={segments}
+          sections={sections}
+          modality={modality}
+        />
 
-        <div className="Track-Graph-Container">
-          <Bar
-            data={chartData}
-            width={700}
-            height={500}
-            options={{
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    gridLines: {
-                      color: "##1db954"
-                    }
+        <BarGraph
+          chartData={chartData}
+          width={700}
+          height={500}
+          options={{
+            maintainAspectRatio: false,
+            scales: {
+              xAxes: [
+                {
+                  gridLines: {
+                    color: "##1db954"
                   }
-                ],
+                }
+              ],
 
-                yAxes: [
-                  {
-                    gridLines: {
-                      color: "##1db954"
-                    }
+              yAxes: [
+                {
+                  gridLines: {
+                    color: "##1db954"
                   }
-                ]
-              }
-            }}
-          />
-        </div>
+                }
+              ]
+            }
+          }}
+        />
       </React.Fragment>
     );
   }
