@@ -86,7 +86,11 @@ class TopArtists extends Component {
             </div>
           </div>
 
-          <GridList data={topArtists} gridClassName="Top-Artists-Grid" />
+          <GridList
+            data={topArtists}
+            gridClassName="Top-Artists-Grid"
+            routeName="artists"
+          />
         </div>
       </React.Fragment>
     );

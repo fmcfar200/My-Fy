@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const GridList = props => {
-  const { data, gridClassName } = props;
+  const { data, gridClassName, routeName } = props;
   const list = data.map(item => (
-    <Link key={item.id} to={`/artists/${item.id}`}>
+    <Link key={item.id} to={`/${routeName}/${item.id}`}>
       <div>
-        <img src={item.images[1].url} alt="Headshot" />
+        <img src={item.images[1].url} alt="Cover" />
       </div>
     </Link>
   ));

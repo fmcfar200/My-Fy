@@ -10,6 +10,7 @@ import Track from "./components/track";
 import NavBar from "./components/navBar";
 import TopArtists from "./components/topArtists";
 import Artist from "./components/artist";
+import Playlists from "./components/playlists";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -41,6 +42,7 @@ class App extends Component {
                 <Route path="/profile" component={Profile} />
                 <Route path="/top-tracks" component={TopTracks} />
                 <Route path="/top-artists" component={TopArtists} />
+                <Route path="/playlists" component={Playlists} />
                 <Route path="/tracks/:id" component={Track} />
                 <Route path="/artists/:id" component={Artist} />
                 <Route path="/not-found" component={NotFound} />
