@@ -9,6 +9,7 @@
   font-size: 15px;
   font-weight: bold;
   text-align: center;
+  outline: none;
 
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -29,4 +30,18 @@
 .Spotify-Button-Trans {
   background-color: transparent;
   font-size: 20px;
+}
+
+.isFollowing {
+  font-weight: normal;
+}
+
+.isFollowing:hover span {
+  display: none;
+}
+
+.isFollowing:hover::before {
+  content: "Unfollow";
+  font-weight: bold;
+  font-size: 22px;
 }

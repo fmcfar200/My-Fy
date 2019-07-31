@@ -22,6 +22,16 @@ class Artist extends Component {
     userFollowing: false
   };
 
+  handleFollowClick(followBool) {
+    if (followBool === true) {
+      this.setState({ userFollowing: false });
+      spotifyApi.unfollowArtists([this.state.id]);
+    } else {
+      this.setState({ userFollowing: true });
+      spotifyApi.followArtists([this.state.id]);
+    }
+  }
+
   componentDidMount() {
     spotifyApi.setAccessToken(params.access_token);
     const artistId = this.props.match.params.id;
@@ -44,8 +54,6 @@ class Artist extends Component {
         this.setState({
           userFollowing: response[0]
         });
-
-        console.log(this.state.userFollowing);
       });
     }
   }
@@ -64,8 +72,13 @@ class Artist extends Component {
     var followButton;
     if (userFollowing === true) {
       followButton = (
-        <button className="Spotify-Button Spotify-Button-Trans">
-          Following
+        <button
+          className="Spotify-Button Spotify-Button-Trans isFollowing"
+          onClick={() => {
+            this.handleFollowClick(userFollowing);
+          }}
+        >
+          <span>Following</span>
         </button>
       );
     } else {
@@ -73,6 +86,9 @@ class Artist extends Component {
         <button
           className="Spotify-Button Spotify-Button-Play"
           style={{ fontSize: "20px" }}
+          onClick={() => {
+            this.handleFollowClick(userFollowing);
+          }}
         >
           Follow
         </button>
