@@ -2,6 +2,12 @@
   padding: 30px;
 }
 
+h2 {
+  color: white;
+  display: flex;
+  margin-bottom: 50px !important;
+}
+
 .Playlists-Grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

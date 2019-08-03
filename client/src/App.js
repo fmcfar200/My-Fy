@@ -13,6 +13,7 @@ import Artist from "./components/artist";
 import Playlists from "./components/playlists";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import Playlist from "./components/playlist";
 
 const params = getHashParams();
 toast.configure();
@@ -38,13 +39,13 @@ class App extends Component {
             <NavBar />
             <main className="App">
               <Switch>
-                {/* <Route path="/login" component={LoginScreen} /> */}
                 <Route path="/profile" component={Profile} />
                 <Route path="/top-tracks" component={TopTracks} />
                 <Route path="/top-artists" component={TopArtists} />
                 <Route path="/playlists" component={Playlists} />
                 <Route path="/tracks/:id" component={Track} />
                 <Route path="/artists/:id" component={Artist} />
+                <Route path="/playlist/:id" component={Playlist} />
                 <Route path="/not-found" component={NotFound} />
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />

@@ -33,7 +33,7 @@ class Playlists extends Component {
         <div className="Playlists-Container">
           <h2>My Playlists</h2>
           <GridList
-            data={this.state.playLists}
+            data={playLists}
             gridClassName="Playlists-Grid"
             routeName="playlist"
           />
