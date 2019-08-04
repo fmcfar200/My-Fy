@@ -7,6 +7,7 @@ const PlaylistHeader = props => {
     ownerName,
     trackCount,
     isPublic,
+    isCollaborative,
     spotifyUrl
   } = props;
   return (
@@ -20,6 +21,7 @@ const PlaylistHeader = props => {
         </h4>
         <h5>
           {trackCount} songs &#183; {isPublic ? "public" : "private"}
+          {isCollaborative ? <span> &#183; collaborative</span> : ""}
         </h5>
         <a href={spotifyUrl} target="_blank" rel="noopener noreferrer">
           <button

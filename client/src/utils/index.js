@@ -1,3 +1,35 @@
+export const getAverageAudioFeatures = audioFeatures => {
+  var acousticness = 0,
+    danceability = 0,
+    energy = 0,
+    instrumentalness = 0,
+    liveness = 0,
+    speechiness = 0,
+    valence = 0;
+
+  for (var i = 0; i < audioFeatures.length; i++) {
+    acousticness += audioFeatures[i].acousticness;
+    danceability += audioFeatures[i].danceability;
+    energy += audioFeatures[i].energy;
+    instrumentalness += audioFeatures[i].instrumentalness;
+    liveness += audioFeatures[i].liveness;
+    speechiness += audioFeatures[i].speechiness;
+    valence += audioFeatures[i].valence;
+  }
+
+  let avAudioFeaturesArray = [
+    acousticness / audioFeatures.length,
+    danceability / audioFeatures.length,
+    energy / audioFeatures.length,
+    instrumentalness / audioFeatures.length,
+    liveness / audioFeatures.length,
+    speechiness / audioFeatures.length,
+    valence / audioFeatures.length
+  ];
+
+  return avAudioFeaturesArray;
+};
+
 export const getArtistString = artists => {
   //gets artists to string
   var artistNameArray = [];

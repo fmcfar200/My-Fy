@@ -29,9 +29,6 @@ class TopTracks extends Component {
 
   async componentDidMount() {
     spotifyApi.setAccessToken(params.access_token);
-
-    let tabButtons = document.getElementsByClassName("tabButton");
-    tabButtons[0].className += " active";
     this.getTracks(TIME_RANGE_LONG);
   }
 
@@ -55,7 +52,7 @@ class TopTracks extends Component {
 
             <div className="tab">
               <button
-                className="tabButton"
+                className="tabButton active"
                 onClick={e => {
                   this.handleButtonClick(e, "className");
                   this.getTracks(TIME_RANGE_LONG);
