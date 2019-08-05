@@ -19,3 +19,7 @@ h2 {
   height: 200px;
   object-fit: cover;
 }
+
+.Button-Container {
+  display: flex;
+}

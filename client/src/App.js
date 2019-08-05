@@ -11,9 +11,10 @@ import NavBar from "./components/navBar";
 import TopArtists from "./components/topArtists";
 import Artist from "./components/artist";
 import Playlists from "./components/playlists";
+import Playlist from "./components/playlist";
+import Generator from "./components/generator";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import Playlist from "./components/playlist";
 
 const params = getHashParams();
 toast.configure();
@@ -46,6 +47,7 @@ class App extends Component {
                 <Route path="/tracks/:id" component={Track} />
                 <Route path="/artists/:id" component={Artist} />
                 <Route path="/playlist/:id" component={Playlist} />
+                <Route path="/generator/:id" component={Generator} />
                 <Route path="/not-found" component={NotFound} />
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />

@@ -10,8 +10,10 @@ import "../styles/topTracks.css";
 const spotifyApi = new Spotify();
 
 var audioFeatureData = [];
+
 class Playlist extends Component {
   state = {
+    playlistId: this.props.match.params.id,
     playlist: null,
     playlistTracks: [],
     showTracks: true,
@@ -28,7 +30,7 @@ class Playlist extends Component {
   }
 
   async componentDidMount() {
-    const playlistId = this.props.match.params.id;
+    const { playlistId } = this.state;
 
     spotifyApi
       .getPlaylist(playlistId)
@@ -66,7 +68,7 @@ class Playlist extends Component {
   }
 
   render() {
-    const { playlist, playlistTracks, showTracks } = this.state;
+    const { playlist, playlistTracks, showTracks, playlistId } = this.state;
 
     const chartData = {
       labels: [
@@ -95,6 +97,7 @@ class Playlist extends Component {
     return (
       <React.Fragment>
         <PlaylistHeader
+          id={playlistId}
           coverImageUrl={playlist.images[0].url}
           playlistName={playlist.name}
           ownerName={playlist.owner.display_name}
