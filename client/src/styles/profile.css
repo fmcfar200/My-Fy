@@ -1,18 +1,3 @@
-.Spotify-button {
-  background-color: transparent;
-  border: 2px solid #1db954;
-  padding: 10px;
-  align-content: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 25px;
-  color: white;
-  cursor: pointer;
-}
-
 .Profile-img {
   border-radius: 50%;
   width: 150px;
@@ -21,7 +6,7 @@
 
 h1 {
   color: white;
-  font-size: 50px;
+  font-size: 30px !important;
   margin: 15px;
 }
 
@@ -46,12 +31,62 @@ h1 {
 
 .User-Preview {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   width: 100%;
-  margin-top: 50px;
-  gap: 70px 70px;
+  margin-top: 25px;
+  gap: 50px;
 }
 
 .User-Preview-Container {
   display: block;
+}
+
+.TrackList-Heading {
+  font-size: 20px;
+  margin-bottom: 25px !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .Profile-img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+  }
+
+  h1 {
+    color: white;
+    font-size: 50px !important;
+    margin: 15px;
+  }
+
+  .Profile-info div {
+    display: inline-block;
+    align-content: center;
+    margin-bottom: 10px;
+  }
+
+  .Profile-info h3 {
+    color: #1db954;
+    font-size: 25px;
+    margin: 10px;
+  }
+
+  .Profile-info p {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgb(155, 155, 155);
+    letter-spacing: 1px;
+  }
+
+  .User-Preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 50px;
+    gap: 70px 70px;
+  }
+
+  .User-Preview-Container {
+    display: block;
+  }
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import { getHashParams } from "../utils/hashParameters";
-import "../App.css";
+//import "../App.css";
 import "../styles/profile.css";
 
 const spotifyApi = new Spotify();
@@ -104,7 +104,7 @@ class Profile extends Component {
             <h3>{this.state.followers.total}</h3>
             <p>Followers</p>
           </div>
-          <div style={{ marginLeft: 20, marginRight: 20 }}>
+          <div style={{ marginLeft: 15, marginRight: 15 }}>
             <h3>{this.state.followingCount.toString()}</h3>
             <p>Following</p>
           </div>
@@ -117,11 +117,7 @@ class Profile extends Component {
         {/* Lists */}
         <section className="User-Preview">
           <div className="User-Preview-Container">
-            <h2
-              style={{ fontSize: "2vw", marginBottom: "20px", color: "white" }}
-            >
-              Top Tracks (6 Months)
-            </h2>
+            <h2 className="TrackList-Heading">Top Tracks (6 Months)</h2>
             <TrackList
               data={this.state.topTracks}
               heading="Top Tracks (6 months)"
@@ -129,11 +125,7 @@ class Profile extends Component {
           </div>
 
           <div>
-            <h2
-              style={{ fontSize: "2vw", marginBottom: "20px", color: "white" }}
-            >
-              Recently Played
-            </h2>
+            <h2 className="TrackList-Heading">Recently Played</h2>
             <TrackList
               data={this.state.recentlyPlayed}
               heading="Recently Played"
