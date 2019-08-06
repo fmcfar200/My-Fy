@@ -6,30 +6,34 @@ import "../styles/trackList.css";
 
 const TrackList = props => {
   const data = props.data;
-  const theTrackList = data.map(item => (
-    <li key={item.id}>
-      <Link to={`/tracks/${item.id}`}>
-        <div className="Image-Container">
-          <img
-            src={item.album.images[2].url || item.album.images[0].url}
-            alt="Cover"
-          />
-          <div className="Overlay">
-            <i className="fas fa-info-circle" />
+  const theTrackList = data.map(item => {
+    var imageUrl = "";
+    if (item.album.images[2] !== undefined) {
+      imageUrl = item.album.images[2].url;
+    }
+
+    return (
+      <li key={item.id}>
+        <Link to={`/tracks/${item.id}`}>
+          <div className="Image-Container">
+            <img src={imageUrl} alt="Cover" />
+            <div className="Overlay">
+              <i className="fas fa-info-circle" />
+            </div>
           </div>
-        </div>
-        <div className="trackInfo">
-          <div style={{ alignItems: "center" }}>
-            <h4>{item.name}</h4>
-            <p>
-              {getArtistString(item.artists)} | {item.album.name}
-            </p>
+          <div className="trackInfo">
+            <div style={{ alignItems: "center" }}>
+              <h4>{item.name}</h4>
+              <p>
+                {getArtistString(item.artists)} | {item.album.name}
+              </p>
+            </div>
+            <p>{msToRuntime(item.duration_ms)}</p>
           </div>
-          <p>{msToRuntime(item.duration_ms)}</p>
-        </div>
-      </Link>
-    </li>
-  ));
+        </Link>
+      </li>
+    );
+  });
 
   return (
     <React.Fragment>

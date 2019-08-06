@@ -6,6 +6,9 @@ const spotifyApi = new Spotify();
 
 class Generator extends Component {
   state = {
+    userId: "",
+    orginalPlaylistName: "",
+
     itemId: this.props.match.params.id,
     generatedTracks: []
   };
@@ -42,9 +45,48 @@ class Generator extends Component {
     return seedArtistsArray.join(",").toString();
   }
 
+  saveGeneratedTracksAsNewPlaylist() {
+    const { generatedTracks } = this.state;
+
+    //adds all track uris to a new array
+    var trackURIs = [];
+    generatedTracks.forEach(item => {
+      trackURIs.push(item.uri);
+    });
+
+    //creates a new playlist and then adds all tracks to it
+    spotifyApi
+      .createPlaylist(this.state.userId, {
+        name: "Generated from: " + this.state.orginalPlaylistName
+      })
+      .then(createdResponse => {
+        return createdResponse.id;
+      })
+      .then(newPlaylistId => {
+        spotifyApi.addTracksToPlaylist(newPlaylistId, trackURIs);
+      });
+  }
+
   componentDidMount() {
     const { itemId } = this.state;
     var tracks = [];
+
+    //Gets User and playlist details
+    spotifyApi
+      .getMe()
+      .then(userResponse => {
+        return userResponse.id;
+      })
+      .then(userId => {
+        spotifyApi.getPlaylist(itemId).then(response => {
+          this.setState({
+            userId: userId,
+            orginalPlaylistName: response.name
+          });
+        });
+      });
+
+    //generates seeds and new tracks
     spotifyApi
       .getPlaylistTracks(itemId)
       .then(response => {
@@ -71,11 +113,21 @@ class Generator extends Component {
   }
 
   render() {
-    const { generatedTracks } = this.state;
+    const { generatedTracks, orginalPlaylistName } = this.state;
 
     return (
       <React.Fragment>
-        <h2>Generated Tracks</h2>
+        <div className="Generator-Header" style={{ display: "flex" }}>
+          <h2>Generated Tracks from {orginalPlaylistName}</h2>
+          <button
+            style={{ marginLeft: "10px" }}
+            onClick={() => {
+              this.saveGeneratedTracksAsNewPlaylist();
+            }}
+          >
+            Save
+          </button>
+        </div>
         <TrackList data={generatedTracks} />
       </React.Fragment>
     );
