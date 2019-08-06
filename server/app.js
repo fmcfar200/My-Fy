@@ -17,6 +17,8 @@ var cookieParser = require("cookie-parser");
 
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
+//http://localhost:8888/callback - development
+//https://my-fyauth.herokuapp.com/callback -production
 var redirect_uri = "http://localhost:8888/callback"; // Your redirect uri
 
 /**
@@ -111,6 +113,8 @@ app.get("/callback", function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
+        //http://localhost:3000/# - development
+        //https://my-fy3.herokuapp.com/# - production
         res.redirect(
           "http://localhost:3000/#" +
             querystring.stringify({
@@ -157,5 +161,5 @@ app.get("/refresh_token", function(req, res) {
   });
 });
 
-console.log("Listening on 8888");
-app.listen(8888);
+console.log("Listening on" + process.env.PORT || 8888);
+app.listen(process.env.PORT || 8888);

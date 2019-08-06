@@ -11,6 +11,8 @@ class LoginScreen extends Component {
         <div>
           <img src={logo} className="App-logo" alt="logo" />
           <div style={{ textAlign: "center" }}>
+            {/* https://my-fyauth.herokuapp.com/ -production
+              http://localhost:8888 - development */}
             <a href="http://localhost:8888">
               <button className="Spotify-Button Spotify-Button-Trans">
                 Login To Spotify
