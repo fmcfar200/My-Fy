@@ -161,5 +161,5 @@ app.get("/refresh_token", function(req, res) {
   });
 });
 
-console.log("Listening on" + process.env.PORT || 8888);
+console.log("Listening on" + process.env.PORT || "8888");
 app.listen(process.env.PORT || 8888);
