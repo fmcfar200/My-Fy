@@ -22,13 +22,16 @@ const TrackList = props => {
             </div>
           </div>
           <div className="trackInfo">
-            <div style={{ alignItems: "center" }}>
-              <h4>{item.name}</h4>
-              <p>
+            <span className="Name-Artist-Container">
+              <span>
+                {item.name}
+                <br />
+              </span>
+              <span>
                 {getArtistString(item.artists)} | {item.album.name}
-              </p>
-            </div>
-            <p>{msToRuntime(item.duration_ms)}</p>
+              </span>
+            </span>
+            <p className="Runtime-Text">{msToRuntime(item.duration_ms)}</p>
           </div>
         </Link>
       </li>

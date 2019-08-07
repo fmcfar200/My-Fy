@@ -3,7 +3,6 @@
   margin-left: 0px;
   padding-left: 0px;
   /* display: inline-block; */
-  width: 100%;
   overflow: hidden;
 }
 
@@ -75,6 +74,25 @@
   overflow: hidden;
 }
 
+.Name-Artist-Container {
+  height: inherit;
+  display: block;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 1px;
+  overflow: hidden;
+}
+
+.Runtime-Text {
+  color: #9b9b9b;
+  text-align: left;
+  float: left;
+  margin: 0 0 0 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 a {
   color: white !important;
   text-decoration: none !important;
@@ -83,6 +101,95 @@ a {
 a:hover img {
   filter: brightness(50%);
 }
+
+@media only screen and (min-width: 768px) {
+  .track-list {
+    list-style-type: none;
+    margin-left: 0px;
+    padding-left: 0px;
+    /* display: inline-block; */
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .track-list li {
+    display: list-item;
+    grid-template-columns: auto 1fr;
+    margin-top: 30px;
+    overflow: auto;
+    cursor: pointer;
+  }
+  .track-list :first-child {
+    margin-top: 0px;
+  }
+
+  .Image-Container {
+    position: relative;
+    width: 100%;
+  }
+  .Overlay {
+    transition: 0.3s ease;
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+  .track-list img {
+    display: block;
+    float: left;
+    margin: 0 15px 0 0;
+  }
+
+  .track-list h4 {
+    font-size: 20px;
+    text-align: left;
+    margin: 0 0 0 0;
+    color: white !important;
+    max-lines: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .track-list h4:hover {
+    text-decoration: white underline;
+  }
+
+  .track-list p {
+    color: #9b9b9b;
+    text-align: left;
+    float: left;
+    margin: 0 0 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-decoration: none !important;
+  }
+
+  .trackInfo {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    vertical-align: middle;
+    align-items: center;
+    max-lines: 1;
+    overflow: hidden;
+  }
+
+  a {
+    color: white !important;
+    text-decoration: none !important;
+  }
+
+  a:hover img {
+    filter: brightness(50%);
+  }
+}
+
 /*
 a:hover .Image-Container .Overlay {
   opacity: 1;

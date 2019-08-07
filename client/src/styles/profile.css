@@ -39,6 +39,7 @@ h1 {
 
 .User-Preview-Container {
   display: block;
+  overflow: hidden;
 }
 
 .TrackList-Heading {
