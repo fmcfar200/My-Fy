@@ -32,6 +32,7 @@ class Profile extends Component {
       product: "",
       type: "",
       uri: "",
+      imageURL: "",
 
       topTracks: [],
       recentlyPlayed: [],
@@ -43,10 +44,15 @@ class Profile extends Component {
     spotifyApi.setAccessToken(params.access_token);
 
     spotifyApi.getMe().then(response => {
+      var profileImageUrl = "default_profile.png";
+      if (response.images.length > 0) {
+        profileImageUrl = response.images[0].url;
+      }
+
       this.setState({
         display_name: response.display_name,
         id: response.id,
-        images: response.images,
+        imageURL: profileImageUrl,
         followers: response.followers
       });
     });
@@ -93,7 +99,11 @@ class Profile extends Component {
       <React.Fragment>
         {/* Header Profile Info */}
         <div>
-          <img className="Profile-img" src={this.state.images[0].url} alt="" />
+          <img
+            className="Profile-img"
+            src={this.state.imageURL}
+            alt="Profile"
+          />
         </div>
         <div>
           <h1>{this.state.display_name}</h1>
