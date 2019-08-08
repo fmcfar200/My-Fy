@@ -50,11 +50,12 @@
   text-overflow: ellipsis;
 }
 
-.track-list h4:hover {
+.track-list .Track-Title:hover {
   text-decoration: white underline;
 }
 
 .track-list p {
+  font-size: 14px;
   color: #9b9b9b;
   text-align: left;
   float: left;
@@ -82,6 +83,15 @@
   white-space: nowrap;
   padding-right: 1px;
   overflow: hidden;
+}
+
+.Track-Title {
+  font-size: 16px;
+}
+
+.Track-Artist {
+  font-size: 14px;
+  color: #9b9b9b;
 }
 
 .Runtime-Text {
@@ -145,17 +155,6 @@ a:hover img {
     margin: 0 15px 0 0;
   }
 
-  .track-list h4 {
-    font-size: 20px;
-    text-align: left;
-    margin: 0 0 0 0;
-    color: white !important;
-    max-lines: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
   .track-list h4:hover {
     text-decoration: white underline;
   }
@@ -169,6 +168,16 @@ a:hover img {
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration: none !important;
+  }
+
+  .Name-Artist-Container {
+    height: inherit;
+    display: block;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 1px;
+    overflow: hidden;
   }
 
   .trackInfo {

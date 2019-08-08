@@ -23,11 +23,11 @@ const TrackList = props => {
           </div>
           <div className="trackInfo">
             <span className="Name-Artist-Container">
-              <span>
+              <span className="Track-Title">
                 {item.name}
                 <br />
               </span>
-              <span>
+              <span className="Track-Artist">
                 {getArtistString(item.artists)} | {item.album.name}
               </span>
             </span>

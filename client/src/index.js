@@ -6,6 +6,10 @@ import * as serviceWorker from "./serviceWorker";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 
+var $ = require("jquery");
+window.$ = $;
+require("bootstrap");
+
 ReactDOM.render(
   <BrowserRouter>
     <App />
