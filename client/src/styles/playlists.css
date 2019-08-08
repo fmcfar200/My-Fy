@@ -1,25 +1,53 @@
 .Playlists-Container {
-  padding: 30px;
 }
 
-h2 {
+.Playlists-Container h2 {
+  font-size: 25px;
   color: white;
   display: flex;
-  margin-bottom: 50px !important;
+  margin-bottom: 25px !important;
 }
 
 .Playlists-Grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  row-gap: 50px;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 25px;
 }
 
 .Playlists-Grid img {
-  width: 200px;
-  height: 200px;
+  width: 125px;
+  height: 125px;
   object-fit: cover;
 }
 
 .Button-Container {
   display: flex;
+}
+
+@media only screen and (min-width: 768px) {
+  .Playlists-Container {
+    padding: 30px;
+  }
+
+  h2 {
+    color: white;
+    display: flex;
+    margin-bottom: 50px !important;
+  }
+
+  .Playlists-Grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 50px;
+  }
+
+  .Playlists-Grid img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .Button-Container {
+    display: flex;
+  }
 }

@@ -46,7 +46,7 @@ class TopTracks extends Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ padding: "80px 80px" }}>
+        <div>
           <div className="Top-Tracks-Header">
             <h2>Top Tracks</h2>
 
