@@ -39,7 +39,7 @@ const PlaylistHeader = props => {
               className="Spotify-Button Spotify-Button-Play"
               style={{ marginTop: "16px" }}
             >
-              Generate
+              More
             </button>
           </Link>
         </div>

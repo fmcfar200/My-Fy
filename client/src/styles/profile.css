@@ -43,6 +43,7 @@ h1 {
 }
 
 .TrackList-Heading {
+  color: white;
   font-size: 20px;
   margin-bottom: 25px !important;
 }

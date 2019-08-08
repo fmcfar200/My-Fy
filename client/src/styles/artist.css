@@ -1,18 +1,17 @@
 .Artist-Container {
-  padding: 100px;
 }
 
 .Artist-Header {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .Artist-Header img {
-  width: 320px;
-  height: 320px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   object-fit: cover;
 
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .Artist-Header h1 {
@@ -56,4 +55,66 @@
   color: rgb(155, 155, 155);
   letter-spacing: 1px;
   margin-top: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+  .Artist-Container {
+    padding: 100px;
+  }
+
+  .Artist-Header {
+    margin-bottom: 25px;
+  }
+
+  .Artist-Header img {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    margin-bottom: 5px;
+  }
+
+  .Artist-Header h1 {
+    font-size: 55px;
+  }
+
+  .Artist-Info {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 50px;
+  }
+
+  .Artist-Info div {
+    display: inline-block;
+    align-content: center;
+    margin-bottom: 10px;
+  }
+
+  .Artist-Info h3 {
+    color: #1db954;
+    font-size: 25px;
+    margin: 10px;
+  }
+
+  .Artist-Info p {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgb(155, 155, 155);
+    letter-spacing: 1px;
+  }
+
+  .Artist-Genres h3 {
+    color: #1db954;
+    font-size: 25px;
+    margin: 5px;
+  }
+
+  .Artist-Genres p {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgb(155, 155, 155);
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
 }

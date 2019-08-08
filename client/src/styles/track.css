@@ -1,11 +1,11 @@
 .Track-Header {
-  display: flex;
-  text-align: left;
+  display: block;
+  /* text-align: left; */
   color: white;
 }
 
 .Track-Header img {
-  margin-right: 20px;
+  margin-bottom: 15px;
 }
 
 .Track-Header h1 {
@@ -18,7 +18,7 @@
 
 .Track-Grid-Container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   margin-top: 50px;
   padding: 10px;
 }
@@ -48,4 +48,60 @@
   margin-top: 50px;
   align-content: center;
   align-items: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .Track-Header {
+    display: flex;
+    text-align: left;
+    color: white;
+  }
+
+  .Track-Header img {
+    width: 300px;
+    height: 300px;
+    margin-right: 20px;
+  }
+
+  .Track-Header h1 {
+    margin: 0 0 8px 0;
+  }
+
+  .Track-Header h5 {
+    color: grey;
+  }
+
+  .Track-Grid-Container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 50px;
+    padding: 10px;
+  }
+
+  .Track-Grid-Item {
+    display: block;
+    border: 1px solid #1db95481;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .Track-Grid-Item h4 {
+    color: white;
+    margin: 0;
+  }
+
+  .Track-Grid-Item p {
+    color: grey;
+    font-size: 12px;
+    margin: 0;
+  }
+
+  .Track-Graph-Container {
+    display: block;
+    max-width: 1500px;
+    margin-top: 50px;
+    align-content: center;
+    align-items: center;
+  }
 }

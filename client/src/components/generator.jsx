@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { toast } from "react-toastify";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
-
+import "../styles/generator.css";
 import "../styles/spotifyButton.css";
 
 const spotifyApi = new Spotify();
@@ -122,19 +122,20 @@ class Generator extends Component {
 
     return (
       <React.Fragment>
-        <div style={{ display: "block" }}>
-          <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
-          <button
-            className="Spotify-Button Spotify-Button-Play"
-            style={{ float: "left", marginBottom: "25px" }}
-            onClick={() => {
-              this.saveGeneratedTracksAsNewPlaylist();
-            }}
-          >
-            Save
-          </button>
+        <div className="Generator-Container">
+          <div className="Generator-Header">
+            <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
+            <button
+              className="Spotify-Button Spotify-Button-Play Save"
+              onClick={() => {
+                this.saveGeneratedTracksAsNewPlaylist();
+              }}
+            >
+              Save
+            </button>
+          </div>
+          <TrackList data={generatedTracks} />
         </div>
-        <TrackList data={generatedTracks} />
       </React.Fragment>
     );
   }

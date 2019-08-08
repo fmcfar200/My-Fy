@@ -1,0 +1,24 @@
+.Generator-Container {
+  display: block;
+}
+
+.Generator-Header {
+  display: block;
+}
+
+.Generator-Header h2 {
+  color: white;
+  font-size: 25px;
+  margin-bottom: 25px;
+}
+
+.Save {
+  margin-bottom: 25px;
+}
+
+@media only screen and (min-width: 768px) {
+  .Save {
+    float: left;
+    margin-bottom: 25px;
+  }
+}
