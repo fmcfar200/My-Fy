@@ -72,25 +72,8 @@ class Generator extends Component {
     toast.success("Playlist Saved to Spotify 🎵");
   }
 
-  componentDidMount() {
-    const { itemId } = this.state;
+  getRecommendations(itemId) {
     var tracks = [];
-
-    //Gets User and playlist details
-    spotifyApi
-      .getMe()
-      .then(userResponse => {
-        return userResponse.id;
-      })
-      .then(userId => {
-        spotifyApi.getPlaylist(itemId).then(response => {
-          this.setState({
-            userId: userId,
-            orginalPlaylistName: response.name
-          });
-        });
-      });
-
     //generates seeds and new tracks
     spotifyApi
       .getPlaylistTracks(itemId)
@@ -117,6 +100,27 @@ class Generator extends Component {
       });
   }
 
+  componentDidMount() {
+    const { itemId } = this.state;
+
+    //Gets User and playlist details
+    spotifyApi
+      .getMe()
+      .then(userResponse => {
+        return userResponse.id;
+      })
+      .then(userId => {
+        spotifyApi.getPlaylist(itemId).then(response => {
+          this.setState({
+            userId: userId,
+            orginalPlaylistName: response.name
+          });
+        });
+      });
+
+    this.getRecommendations(itemId);
+  }
+
   render() {
     const { generatedTracks, orginalPlaylistName } = this.state;
 
@@ -125,14 +129,24 @@ class Generator extends Component {
         <div className="Generator-Container">
           <div className="Generator-Header">
             <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
-            <button
-              className="Spotify-Button Spotify-Button-Play Save"
-              onClick={() => {
-                this.saveGeneratedTracksAsNewPlaylist();
-              }}
-            >
-              Save
-            </button>
+            <div className="Header-Button-Container">
+              <button
+                className="Spotify-Button Spotify-Button-Play Save"
+                onClick={() => {
+                  this.saveGeneratedTracksAsNewPlaylist();
+                }}
+              >
+                Add all to playlist
+              </button>
+              <button
+                className="Refresh"
+                onClick={() => {
+                  this.getRecommendations(this.state.itemId);
+                }}
+              >
+                <i className="fas fa-sync" />
+              </button>
+            </div>
           </div>
           <TrackList data={generatedTracks} />
         </div>
