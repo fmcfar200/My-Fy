@@ -8,12 +8,14 @@ import "../styles/spotifyButton.css";
 const spotifyApi = new Spotify();
 
 class Generator extends Component {
+  dropdownContainerRef = React.createRef();
   state = {
     userId: "",
     orginalPlaylistName: "",
-
+    saveMenuOpen: false,
     itemId: this.props.match.params.id,
-    generatedTracks: []
+    generatedTracks: [],
+    userOwnedPlaylists: []
   };
 
   //generates track seeds
@@ -100,16 +102,37 @@ class Generator extends Component {
       });
   }
 
-  componentDidMount() {
-    const { itemId } = this.state;
+  handleSaveClick = () => {
+    this.setState(state => {
+      return {
+        saveMenuOpen: !state.saveMenuOpen
+      };
+    });
+  };
 
+  handleClickOutside = event => {
+    if (
+      this.dropdownContainerRef.current &&
+      !this.dropdownContainerRef.current.contains(event.target)
+    ) {
+      this.setState({
+        saveMenuOpen: false
+      });
+    }
+  };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+
+    const { itemId } = this.state;
+    var userId = "";
     //Gets User and playlist details
     spotifyApi
       .getMe()
       .then(userResponse => {
-        return userResponse.id;
+        userId = userResponse.id;
       })
-      .then(userId => {
+      .then(() => {
         spotifyApi.getPlaylist(itemId).then(response => {
           this.setState({
             userId: userId,
@@ -118,11 +141,45 @@ class Generator extends Component {
         });
       });
 
+    //GET PLAYLISTS FOR ADDING
+    spotifyApi
+      .getUserPlaylists({ limit: 50 })
+      .then(response => {
+        return response.items;
+      })
+      .then(followedPlaylists => {
+        var userOwnedPlaylists = [];
+
+        for (var i = 0; i < followedPlaylists.length; i++) {
+          var playlist = followedPlaylists[i];
+          if (playlist.owner.id === userId) {
+            userOwnedPlaylists.push(playlist);
+          }
+        }
+        console.log(userOwnedPlaylists);
+        this.setState({
+          userOwnedPlaylists: userOwnedPlaylists
+        });
+      });
+
+    //GETS RECCOMENDATIONS
     this.getRecommendations(itemId);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
   render() {
-    const { generatedTracks, orginalPlaylistName } = this.state;
+    const {
+      generatedTracks,
+      orginalPlaylistName,
+      userOwnedPlaylists
+    } = this.state;
+
+    const ownedplaylistList = userOwnedPlaylists.map(item => (
+      <li>{item.name}</li>
+    ));
 
     return (
       <React.Fragment>
@@ -130,14 +187,28 @@ class Generator extends Component {
           <div className="Generator-Header">
             <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
             <div className="Header-Button-Container">
-              <button
-                className="Spotify-Button Spotify-Button-Play Save"
-                onClick={() => {
-                  this.saveGeneratedTracksAsNewPlaylist();
-                }}
+              <div
+                className="Dropdown-Container"
+                ref={this.dropdownContainerRef}
               >
-                Add all to playlist
-              </button>
+                <button
+                  className="Spotify-Button Spotify-Button-Play Save"
+                  onClick={() => {
+                    // this.saveGeneratedTracksAsNewPlaylist();
+                    this.handleSaveClick();
+                  }}
+                >
+                  Add all to playlist
+                </button>
+                {this.state.saveMenuOpen && (
+                  <div className="Dropdown">
+                    <ul>
+                      <li>+ New Playlist</li>
+                      {ownedplaylistList}
+                    </ul>
+                  </div>
+                )}
+              </div>
               <button
                 className="Refresh"
                 onClick={() => {
