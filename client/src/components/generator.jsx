@@ -14,7 +14,7 @@ class Generator extends Component {
     orginalPlaylistName: "",
     itemId: this.props.match.params.id,
     generatedTracks: [],
-    userOwnedPlaylists: []
+    accessiblePlaylists: []
   };
 
   //generates track seeds
@@ -130,18 +130,18 @@ class Generator extends Component {
         return response.items;
       })
       .then(followedPlaylists => {
-        var userOwnedPlaylists = [];
-        userOwnedPlaylists.push({ name: "New Playlist", id: "new" });
+        var accessiblePlaylists = [];
+        accessiblePlaylists.push({ name: "New Playlist", id: "new" });
 
         for (var i = 0; i < followedPlaylists.length; i++) {
           var playlist = followedPlaylists[i];
-          if (playlist.owner.id === userId) {
-            userOwnedPlaylists.push(playlist);
+          if (playlist.owner.id === userId || playlist.collaborative === true) {
+            accessiblePlaylists.push(playlist);
           }
         }
-        console.log(userOwnedPlaylists);
+        console.log(accessiblePlaylists);
         this.setState({
-          userOwnedPlaylists: userOwnedPlaylists
+          accessiblePlaylists: accessiblePlaylists
         });
       });
 
@@ -153,10 +153,10 @@ class Generator extends Component {
     const {
       generatedTracks,
       orginalPlaylistName,
-      userOwnedPlaylists
+      accessiblePlaylists
     } = this.state;
 
-    const dropdownListItems = userOwnedPlaylists.map(item => (
+    const dropdownListItems = accessiblePlaylists.map(item => (
       <li
         key={item.id}
         onClick={() => {
