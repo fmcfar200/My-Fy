@@ -4,15 +4,14 @@ import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
+import DropdownButton from "../common/dropdownButton";
 
 const spotifyApi = new Spotify();
 
 class Generator extends Component {
-  dropdownContainerRef = React.createRef();
   state = {
     userId: "",
     orginalPlaylistName: "",
-    saveMenuOpen: false,
     itemId: this.props.match.params.id,
     generatedTracks: [],
     userOwnedPlaylists: []
@@ -50,7 +49,7 @@ class Generator extends Component {
     return seedArtistsArray.join(",").toString();
   }
 
-  saveGeneratedTracksAsNewPlaylist() {
+  saveGeneratedTracksToPlaylist(playlistId, playlistName) {
     const { generatedTracks } = this.state;
 
     //adds all track uris to a new array
@@ -59,19 +58,23 @@ class Generator extends Component {
       trackURIs.push(item.uri);
     });
 
-    //creates a new playlist and then adds all tracks to it
-    spotifyApi
-      .createPlaylist(this.state.userId, {
-        name: "Generated from: " + this.state.orginalPlaylistName
-      })
-      .then(createdResponse => {
-        return createdResponse.id;
-      })
-      .then(newPlaylistId => {
-        spotifyApi.addTracksToPlaylist(newPlaylistId, trackURIs);
-      });
+    if (playlistId === "new") {
+      //creates a new playlist and then adds all tracks to it
+      spotifyApi
+        .createPlaylist(this.state.userId, {
+          name: "Generated from: " + this.state.orginalPlaylistName
+        })
+        .then(createdResponse => {
+          return createdResponse.id;
+        })
+        .then(newPlaylistId => {
+          spotifyApi.addTracksToPlaylist(newPlaylistId, trackURIs);
+        });
+    } else {
+      spotifyApi.addTracksToPlaylist(playlistId, trackURIs);
+    }
 
-    toast.success("Playlist Saved to Spotify 🎵");
+    toast.success("Tracks Added to " + playlistName + " 🎵");
   }
 
   getRecommendations(itemId) {
@@ -102,28 +105,7 @@ class Generator extends Component {
       });
   }
 
-  handleSaveClick = () => {
-    this.setState(state => {
-      return {
-        saveMenuOpen: !state.saveMenuOpen
-      };
-    });
-  };
-
-  handleClickOutside = event => {
-    if (
-      this.dropdownContainerRef.current &&
-      !this.dropdownContainerRef.current.contains(event.target)
-    ) {
-      this.setState({
-        saveMenuOpen: false
-      });
-    }
-  };
-
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-
     const { itemId } = this.state;
     var userId = "";
     //Gets User and playlist details
@@ -149,6 +131,7 @@ class Generator extends Component {
       })
       .then(followedPlaylists => {
         var userOwnedPlaylists = [];
+        userOwnedPlaylists.push({ name: "New Playlist", id: "new" });
 
         for (var i = 0; i < followedPlaylists.length; i++) {
           var playlist = followedPlaylists[i];
@@ -166,10 +149,6 @@ class Generator extends Component {
     this.getRecommendations(itemId);
   }
 
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
   render() {
     const {
       generatedTracks,
@@ -177,8 +156,15 @@ class Generator extends Component {
       userOwnedPlaylists
     } = this.state;
 
-    const ownedplaylistList = userOwnedPlaylists.map(item => (
-      <li>{item.name}</li>
+    const dropdownListItems = userOwnedPlaylists.map(item => (
+      <li
+        key={item.id}
+        onClick={() => {
+          this.saveGeneratedTracksToPlaylist(item.id, item.name);
+        }}
+      >
+        {item.name}
+      </li>
     ));
 
     return (
@@ -187,28 +173,12 @@ class Generator extends Component {
           <div className="Generator-Header">
             <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
             <div className="Header-Button-Container">
-              <div
-                className="Dropdown-Container"
-                ref={this.dropdownContainerRef}
-              >
-                <button
-                  className="Spotify-Button Spotify-Button-Play Save"
-                  onClick={() => {
-                    // this.saveGeneratedTracksAsNewPlaylist();
-                    this.handleSaveClick();
-                  }}
-                >
-                  Add all to playlist
-                </button>
-                {this.state.saveMenuOpen && (
-                  <div className="Dropdown">
-                    <ul>
-                      <li>+ New Playlist</li>
-                      {ownedplaylistList}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              <DropdownButton
+                buttonClass="Spotify-Button Spotify-Button-Play Save"
+                buttonLabel="Add all to playlist"
+                listItems={dropdownListItems}
+              />
+
               <button
                 className="Refresh"
                 onClick={() => {
