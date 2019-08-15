@@ -5,7 +5,12 @@ import { getArtistString } from "../utils/index";
 import "../styles/trackList.css";
 
 const TrackList = props => {
-  const data = props.data;
+  const { data, toggle, checkTrack } = props;
+
+  function handleCheck(item) {
+    checkTrack(item);
+  }
+
   const theTrackList = data.map(item => {
     var imageUrl = "";
     if (item.album.images[2] !== undefined) {
@@ -31,9 +36,12 @@ const TrackList = props => {
                 {getArtistString(item.artists)} | {item.album.name}
               </span>
             </span>
-            <p className="Runtime-Text">{msToRuntime(item.duration_ms)}</p>
+            {!toggle && (
+              <p className="Runtime-Text">{msToRuntime(item.duration_ms)}</p>
+            )}
           </div>
         </Link>
+        {toggle && <input type="checkbox" onClick={() => handleCheck(item)} />}
       </li>
     );
   });

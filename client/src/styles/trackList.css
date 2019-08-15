@@ -7,6 +7,7 @@
 }
 
 .track-list li {
+  position: relative;
   display: list-item;
   grid-template-columns: auto 1fr;
   margin-top: 30px;
@@ -110,6 +111,12 @@ a {
 
 a:hover img {
   filter: brightness(50%);
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  bottom: 50%;
+  right: 0;
 }
 
 @media only screen and (min-width: 768px) {

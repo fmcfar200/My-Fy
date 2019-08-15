@@ -9,13 +9,32 @@ import DropdownButton from "../common/dropdownButton";
 const spotifyApi = new Spotify();
 
 class Generator extends Component {
+  constructor(props) {
+    super(props);
+    this.checkTrack = this.checkTrack.bind(this);
+  }
   state = {
     userId: "",
     orginalPlaylistName: "",
     itemId: this.props.match.params.id,
     generatedTracks: [],
-    accessiblePlaylists: []
+    accessiblePlaylists: [],
+    checkedTracks: []
   };
+
+  checkTrack(track) {
+    var checkedTracks = this.state.checkedTracks;
+    var alreadyAdded = checkedTracks.includes(track);
+    if (alreadyAdded) {
+      checkedTracks.splice(checkedTracks.indexOf(track), 1);
+    } else {
+      checkedTracks.push(track);
+    }
+
+    this.setState({
+      checkedTracks: checkedTracks
+    });
+  }
 
   //generates track seeds
   generateSeedTracks(tracks) {
@@ -50,11 +69,18 @@ class Generator extends Component {
   }
 
   saveGeneratedTracksToPlaylist(playlistId, playlistName) {
-    const { generatedTracks } = this.state;
+    const { generatedTracks, checkedTracks } = this.state;
+    var selectedTracks = [];
+    var trackURIs = [];
+
+    if (checkedTracks.length === 0) {
+      selectedTracks = generatedTracks;
+    } else {
+      selectedTracks = checkedTracks;
+    }
 
     //adds all track uris to a new array
-    var trackURIs = [];
-    generatedTracks.forEach(item => {
+    selectedTracks.forEach(item => {
       trackURIs.push(item.uri);
     });
 
@@ -189,7 +215,13 @@ class Generator extends Component {
               </button>
             </div>
           </div>
-          <TrackList data={generatedTracks} />
+          <div className="Tracks-Container">
+            <TrackList
+              data={generatedTracks}
+              toggle={true}
+              checkTrack={this.checkTrack}
+            />
+          </div>
         </div>
       </React.Fragment>
     );
