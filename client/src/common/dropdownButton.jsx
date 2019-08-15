@@ -8,13 +8,13 @@ class DropdownButton extends Component {
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
 
     console.log(this.props);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("click", this.handleClickOutside);
   }
 
   handleClick = () => {
