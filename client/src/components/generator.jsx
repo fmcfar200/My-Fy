@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { toast } from "react-toastify";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
+import DropdownButton from "../common/dropdownButton";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
-import DropdownButton from "../common/dropdownButton";
 
 const spotifyApi = new Spotify();
 
@@ -34,6 +34,15 @@ class Generator extends Component {
     this.setState({
       checkedTracks: checkedTracks
     });
+  }
+
+  clearSelection() {
+    this.setState({ checkedTracks: [] });
+    var checkedBoxes = document.getElementsByTagName("INPUT");
+
+    for (var i = 0; i < checkedBoxes.length; i++) {
+      checkedBoxes[i].checked = false;
+    }
   }
 
   //generates track seeds
@@ -179,7 +188,8 @@ class Generator extends Component {
     const {
       generatedTracks,
       orginalPlaylistName,
-      accessiblePlaylists
+      accessiblePlaylists,
+      checkedTracks
     } = this.state;
 
     const dropdownListItems = accessiblePlaylists.map(item => (
@@ -201,9 +211,24 @@ class Generator extends Component {
             <div className="Header-Button-Container">
               <DropdownButton
                 buttonClass="Spotify-Button Spotify-Button-Play Save"
-                buttonLabel="Add all to playlist"
+                buttonLabel={
+                  checkedTracks.length === 0
+                    ? "Add all to playlist"
+                    : "Add to playlist"
+                }
                 listItems={dropdownListItems}
               />
+
+              {checkedTracks.length > 0 && (
+                <button
+                  className="Spotify-Button Spotify-Button-Play Clear"
+                  onClick={() => {
+                    this.clearSelection();
+                  }}
+                >
+                  Clear Selection
+                </button>
+              )}
 
               <button
                 className="Refresh"
