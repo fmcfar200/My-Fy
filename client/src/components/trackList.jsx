@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { msToRuntime } from "../utils/msConverter";
 import { getArtistString } from "../utils/index";
-import Checkbox from "react-simple-checkbox";
 import "../styles/trackList.css";
 
 const TrackList = props => {
