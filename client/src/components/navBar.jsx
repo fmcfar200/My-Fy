@@ -44,9 +44,6 @@ const NavBar = () => {
           <NavLink className="nav-item nav-link" to="/recently-played">
             Recent
           </NavLink>
-          <Link className="nav-item nav-link" to="/login">
-            Logout
-          </Link>
         </div>
       </div>
     </nav>

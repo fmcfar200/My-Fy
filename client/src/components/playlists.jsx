@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import GridList from "../common/gridList";
-import { getHashParams } from "../utils/hashParameters";
+import { token } from "../utils";
 
 import "../styles/playlists.css";
 
 const spotifyApi = new Spotify();
-const params = getHashParams();
+spotifyApi.setAccessToken(token);
 
 class Playlists extends Component {
   state = {
@@ -22,7 +22,6 @@ class Playlists extends Component {
   }
 
   async componentDidMount() {
-    spotifyApi.setAccessToken(params.access_token);
     this.getPlaylists();
   }
 

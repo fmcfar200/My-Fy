@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
-import { getHashParams } from "../utils/hashParameters";
+import { token, logout } from "../utils";
 //import "../App.css";
 import "../styles/profile.css";
+import "../styles/spotifyButton.css";
 
 const spotifyApi = new Spotify();
-const params = getHashParams();
+spotifyApi.setAccessToken(token);
+
 class Profile extends Component {
   constructor() {
     super();
@@ -41,8 +43,6 @@ class Profile extends Component {
   }
 
   async componentDidMount() {
-    spotifyApi.setAccessToken(params.access_token);
-
     spotifyApi.getMe().then(response => {
       var profileImageUrl = "default_profile.png";
       if (response.images.length > 0) {
@@ -122,6 +122,17 @@ class Profile extends Component {
             <h3>{this.state.playlistAmount.toString()}</h3>
             <p>Playlist</p>
           </div>
+        </div>
+
+        <div>
+          <button
+            className="Spotify-Button Spotify-Button-Trans"
+            onClick={() => {
+              logout();
+            }}
+          >
+            Logout
+          </button>
         </div>
 
         {/* Lists */}

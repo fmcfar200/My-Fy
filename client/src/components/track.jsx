@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import AudioAnalysisGrid from "./audioAnalysisGrid";
 import BarGraph from "../common/barGraph";
-import { getHashParams } from "../utils/hashParameters";
+import { token } from "../utils";
 import { getArtistString } from "../utils/index";
 import { msToRuntime } from "../utils/msConverter";
 import { parseTrackKey, parseTrackModality } from "../utils";
@@ -12,7 +12,7 @@ import "../styles/spotifyButton.css";
 import TrackHeader from "./trackHeader";
 
 const spotifyApi = new Spotify();
-const params = getHashParams();
+spotifyApi.setAccessToken(token);
 
 class Track extends Component {
   constructor() {
@@ -47,8 +47,6 @@ class Track extends Component {
   }
 
   async componentDidMount() {
-    spotifyApi.setAccessToken(params.access_token);
-
     try {
       const trackId = this.props.match.params.id;
       //GET THE TRACK INFORMATION

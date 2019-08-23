@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
-import { getHashParams } from "../utils/hashParameters";
-
+import GridList from "../common/gridList";
+import { token } from "../utils";
 import "../styles/topArtists.css";
 import "../styles/topTracks.css";
-import GridList from "../common/gridList";
 
 const spotifyApi = new Spotify();
-const params = getHashParams();
+spotifyApi.setAccessToken(token);
 
 const TIME_RANGE_SHORT = "short_term";
 const TIME_RANGE_MEDIUM = "medium_term";
@@ -17,6 +16,10 @@ class TopArtists extends Component {
   state = {
     topArtists: []
   };
+
+  async componentDidMount() {
+    this.getTopArtists(TIME_RANGE_LONG);
+  }
 
   handleButtonClick(e) {
     var i, tabButtons;
@@ -37,12 +40,6 @@ class TopArtists extends Component {
           topArtists: response.items
         });
       });
-  }
-
-  async componentDidMount() {
-    spotifyApi.setAccessToken(params.access_token);
-
-    this.getTopArtists(TIME_RANGE_LONG);
   }
 
   render() {

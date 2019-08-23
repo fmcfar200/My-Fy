@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
-import { getHashParams } from "../utils/hashParameters";
+import { token } from "../utils";
 import { formatNumber } from "../utils";
 import { toast } from "react-toastify";
 
@@ -9,7 +9,7 @@ import "../styles/artist.css";
 import "../styles/spotifyButton.css";
 
 const spotifyApi = new Spotify();
-const params = getHashParams();
+spotifyApi.setAccessToken(token);
 
 class Artist extends Component {
   state = {
@@ -37,7 +37,6 @@ class Artist extends Component {
   }
 
   componentDidMount() {
-    spotifyApi.setAccessToken(params.access_token);
     const artistId = this.props.match.params.id;
 
     if (artistId && artistId !== "") {

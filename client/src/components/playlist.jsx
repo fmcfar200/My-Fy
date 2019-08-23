@@ -4,10 +4,12 @@ import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import BarGraph from "../common/barGraph";
 import { getAverageAudioFeatures } from "../utils/index";
+import { token } from "../utils";
 import "../styles/playlist.css";
 import "../styles/topTracks.css";
 
 const spotifyApi = new Spotify();
+spotifyApi.setAccessToken(token);
 
 var audioFeatureData = [];
 

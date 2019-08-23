@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { getHashParams } from "./utils/hashParameters";
 import { ToastContainer, toast } from "react-toastify";
+import { token } from "./utils";
 import LoginScreen from "./components/loginScreen";
 import Profile from "./components/profile";
 import NotFound from "./components/notFound";
@@ -16,22 +16,23 @@ import Generator from "./components/generator";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
-const params = getHashParams();
 toast.configure();
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: params.access_token ? true : false
+      loggedIn: token ? true : false
     };
     console.log(this.state.loggedIn);
   }
+
+  componentDidMount() {}
 
   render() {
     return (
       <React.Fragment>
         <ToastContainer />
-        {!params.access_token ? (
+        {!token ? (
           <React.Fragment>
             <LoginScreen />
           </React.Fragment>

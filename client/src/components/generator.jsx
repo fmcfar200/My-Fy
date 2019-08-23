@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { toast } from "react-toastify";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import DropdownButton from "../common/dropdownButton";
+import { toast } from "react-toastify";
+import { token } from "../utils";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
 
 const spotifyApi = new Spotify();
+spotifyApi.setAccessToken(token);
 
 class Generator extends Component {
   constructor(props) {

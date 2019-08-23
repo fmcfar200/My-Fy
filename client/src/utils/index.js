@@ -1,3 +1,33 @@
+import { getHashParams } from "./hashParameters";
+
+//SPOTIFY UTILS - TOKENS , PARSING, AUDIO **********************************
+const setLocalAccessToken = token => {
+  window.localStorage.setItem("spotify_access_token", token);
+};
+
+const getLocalAccessToken = () =>
+  window.localStorage.getItem("spotify_access_token");
+
+export const getAccessToken = () => {
+  const { access_token } = getHashParams();
+
+  const localAccessToken = getLocalAccessToken();
+
+  if (!localAccessToken || localAccessToken === "undefined") {
+    setLocalAccessToken(access_token);
+    return access_token;
+  }
+
+  return localAccessToken;
+};
+
+export const token = getAccessToken();
+
+export const logout = () => {
+  window.localStorage.removeItem("spotify_access_token");
+  window.location.reload();
+};
+
 export const getAverageAudioFeatures = audioFeatures => {
   var acousticness = 0,
     danceability = 0,
