@@ -4,6 +4,7 @@ import GridList from "../common/gridList";
 import { token } from "../utils";
 import "../styles/topArtists.css";
 import "../styles/topTracks.css";
+import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -14,6 +15,7 @@ const TIME_RANGE_LONG = "long_term";
 
 class TopArtists extends Component {
   state = {
+    loading: true,
     topArtists: []
   };
 
@@ -33,17 +35,21 @@ class TopArtists extends Component {
   }
 
   async getTopArtists(range) {
+    this.setState({
+      loading: true
+    });
     spotifyApi
       .getMyTopArtists({ limit: 100, time_range: range })
       .then(response => {
         this.setState({
-          topArtists: response.items
+          topArtists: response.items,
+          loading: false
         });
       });
   }
 
   render() {
-    const { topArtists } = this.state;
+    const { loading, topArtists } = this.state;
     return (
       <React.Fragment>
         <div className="Top-Artists-Container">
@@ -80,12 +86,15 @@ class TopArtists extends Component {
               </button>
             </div>
           </div>
-
-          <GridList
-            data={topArtists}
-            gridClassName="Top-Artists-Grid"
-            routeName="artists"
-          />
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <GridList
+              data={topArtists}
+              gridClassName="Top-Artists-Grid"
+              routeName="artists"
+            />
+          )}
         </div>
       </React.Fragment>
     );

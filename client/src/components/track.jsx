@@ -10,6 +10,7 @@ import { parseTrackKey, parseTrackModality } from "../utils";
 import "../styles/track.css";
 import "../styles/spotifyButton.css";
 import TrackHeader from "./trackHeader";
+import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -18,6 +19,7 @@ class Track extends Component {
   constructor() {
     super();
     this.state = {
+      loading: true,
       track: {},
       albumImageUrl: "",
       album: {},
@@ -92,7 +94,9 @@ class Track extends Component {
           beats: response.beats.length,
           segments: response.segments.length,
           sections: response.sections.length,
-          modality: parseTrackModality(response.track.mode)
+          modality: parseTrackModality(response.track.mode),
+
+          loading: false
         });
       });
     } catch (ex) {
@@ -104,6 +108,7 @@ class Track extends Component {
 
   render() {
     const {
+      loading,
       track,
       albumImageUrl,
       album,
@@ -147,53 +152,59 @@ class Track extends Component {
 
     return (
       <React.Fragment>
-        <TrackHeader
-          trackName={track.name}
-          albumImageUrl={albumImageUrl}
-          albumName={album.name}
-          artists={artists}
-          spotifyUrl={spotifyUrl}
-          releaseYear={this.getReleaseYear()}
-        />
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <React.Fragment>
+            <TrackHeader
+              trackName={track.name}
+              albumImageUrl={albumImageUrl}
+              albumName={album.name}
+              artists={artists}
+              spotifyUrl={spotifyUrl}
+              releaseYear={this.getReleaseYear()}
+            />
 
-        <AudioAnalysisGrid
-          popularity={popularity}
-          duration_ms={duration_ms}
-          BPM={BPM}
-          timeSignature={timeSignature}
-          tonalKey={tonalKey}
-          beats={beats}
-          bars={bars}
-          segments={segments}
-          sections={sections}
-          modality={modality}
-        />
+            <AudioAnalysisGrid
+              popularity={popularity}
+              duration_ms={duration_ms}
+              BPM={BPM}
+              timeSignature={timeSignature}
+              tonalKey={tonalKey}
+              beats={beats}
+              bars={bars}
+              segments={segments}
+              sections={sections}
+              modality={modality}
+            />
 
-        <BarGraph
-          chartData={chartData}
-          width={700}
-          height={500}
-          options={{
-            maintainAspectRatio: false,
-            scales: {
-              xAxes: [
-                {
-                  gridLines: {
-                    color: "##1db954"
-                  }
+            <BarGraph
+              chartData={chartData}
+              width={700}
+              height={500}
+              options={{
+                maintainAspectRatio: false,
+                scales: {
+                  xAxes: [
+                    {
+                      gridLines: {
+                        color: "##1db954"
+                      }
+                    }
+                  ],
+
+                  yAxes: [
+                    {
+                      gridLines: {
+                        color: "##1db954"
+                      }
+                    }
+                  ]
                 }
-              ],
-
-              yAxes: [
-                {
-                  gridLines: {
-                    color: "##1db954"
-                  }
-                }
-              ]
-            }
-          }}
-        />
+              }}
+            />
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

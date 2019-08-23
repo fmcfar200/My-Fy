@@ -3,6 +3,7 @@ import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import { token } from "../utils";
 import "../styles/topTracks.css";
+import ActivityIndicator from "../common/activityIndicator";
 
 const TIME_RANGE_SHORT = "short_term";
 const TIME_RANGE_MEDIUM = "medium_term";
@@ -13,6 +14,7 @@ spotifyApi.setAccessToken(token);
 
 class TopTracks extends Component {
   state = {
+    loading: true,
     currentList: [],
     range: "long_term"
   };
@@ -22,11 +24,15 @@ class TopTracks extends Component {
   }
 
   async getTracks(range) {
+    this.setState({
+      loading: true
+    });
     spotifyApi
       .getMyTopTracks({ limit: 100, time_range: range })
       .then(response => {
         this.setState({
-          currentList: response.items
+          currentList: response.items,
+          loading: false
         });
       });
   }
@@ -43,6 +49,7 @@ class TopTracks extends Component {
   }
 
   render() {
+    const { loading } = this.state;
     return (
       <React.Fragment>
         <div>
@@ -80,10 +87,15 @@ class TopTracks extends Component {
               </button>
             </div>
           </div>
-          <TrackList
-            style={{ padding: "100px 80px" }}
-            data={this.state.currentList}
-          />
+
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <TrackList
+              style={{ padding: "100px 80px" }}
+              data={this.state.currentList}
+            />
+          )}
         </div>
       </React.Fragment>
     );

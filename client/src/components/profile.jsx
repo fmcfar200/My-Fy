@@ -5,6 +5,7 @@ import { token, logout } from "../utils";
 //import "../App.css";
 import "../styles/profile.css";
 import "../styles/spotifyButton.css";
+import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -13,6 +14,7 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
+      loading: true,
       country: "",
       display_name: "",
       email: "",
@@ -89,70 +91,78 @@ class Profile extends Component {
       })
       .then(trackInfo => {
         this.setState({
-          recentlyPlayed: trackInfo.tracks
+          recentlyPlayed: trackInfo.tracks,
+          loading: false
         });
       });
   }
 
   render() {
+    const { loading } = this.state;
     return (
       <React.Fragment>
-        {/* Header Profile Info */}
-        <div>
-          <img
-            className="Profile-img"
-            src={this.state.imageURL}
-            alt="Profile"
-          />
-        </div>
-        <div>
-          <h1>{this.state.display_name}</h1>
-        </div>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <React.Fragment>
+            {/* Header Profile Info */}
+            <div>
+              <img
+                className="Profile-img"
+                src={this.state.imageURL}
+                alt="Profile"
+              />
+            </div>
+            <div>
+              <h1>{this.state.display_name}</h1>
+            </div>
 
-        <div className="Profile-info">
-          <div>
-            <h3>{this.state.followers.total}</h3>
-            <p>Followers</p>
-          </div>
-          <div style={{ marginLeft: 15, marginRight: 15 }}>
-            <h3>{this.state.followingCount.toString()}</h3>
-            <p>Following</p>
-          </div>
-          <div>
-            <h3>{this.state.playlistAmount.toString()}</h3>
-            <p>Playlist</p>
-          </div>
-        </div>
+            <div className="Profile-info">
+              <div>
+                <h3>{this.state.followers.total}</h3>
+                <p>Followers</p>
+              </div>
+              <div style={{ marginLeft: 15, marginRight: 15 }}>
+                <h3>{this.state.followingCount.toString()}</h3>
+                <p>Following</p>
+              </div>
+              <div>
+                <h3>{this.state.playlistAmount.toString()}</h3>
+                <p>Playlist</p>
+              </div>
+            </div>
 
-        <div>
-          <button
-            className="Spotify-Button Spotify-Button-Trans logout"
-            onClick={() => {
-              logout();
-            }}
-          >
-            Logout
-          </button>
-        </div>
+            <div>
+              <button
+                className="Spotify-Button Spotify-Button-Trans logout"
+                onClick={() => {
+                  logout();
+                }}
+              >
+                Logout
+              </button>
+            </div>
 
-        {/* Lists */}
-        <section className="User-Preview">
-          <div className="User-Preview-Container">
-            <h2 className="TrackList-Heading">Top Tracks (6 Months)</h2>
-            <TrackList
-              data={this.state.topTracks}
-              heading="Top Tracks (6 months)"
-            />
-          </div>
+            {/* Lists */}
+            <section className="User-Preview">
+              <div className="User-Preview-Container">
+                <h2 className="TrackList-Heading">Top Tracks (6 Months)</h2>
+                <TrackList
+                  data={this.state.topTracks}
+                  heading="Top Tracks (6 months)"
+                />
+              </div>
 
-          <div>
-            <h2 className="TrackList-Heading">Recently Played</h2>
-            <TrackList
-              data={this.state.recentlyPlayed}
-              heading="Recently Played"
-            />
-          </div>
-        </section>
+              <div>
+                <h2 className="TrackList-Heading">Recently Played</h2>
+                <TrackList
+                  data={this.state.recentlyPlayed}
+                  heading="Recently Played"
+                />
+              </div>
+            </section>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

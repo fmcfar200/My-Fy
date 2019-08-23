@@ -7,12 +7,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/artist.css";
 import "../styles/spotifyButton.css";
+import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
 
 class Artist extends Component {
   state = {
+    loading: true,
     name: "",
     followers: 0,
     genres: [],
@@ -55,7 +57,8 @@ class Artist extends Component {
 
       spotifyApi.isFollowingArtists([artistId]).then(response => {
         this.setState({
-          userFollowing: response[0]
+          userFollowing: response[0],
+          loading: false
         });
       });
     }
@@ -63,6 +66,7 @@ class Artist extends Component {
 
   render() {
     const {
+      loading,
       name,
       imageURL,
       followers,
@@ -100,32 +104,38 @@ class Artist extends Component {
 
     return (
       <React.Fragment>
-        <div className="Artist-Container">
-          <div className="Artist-Header">
-            <img src={imageURL} alt="Cover" />
-            <h1>{name} </h1>
-          </div>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <React.Fragment>
+            <div className="Artist-Container">
+              <div className="Artist-Header">
+                <img src={imageURL} alt="Cover" />
+                <h1>{name} </h1>
+              </div>
 
-          <div style={{ marginBottom: "50px" }}>{followButton}</div>
+              <div style={{ marginBottom: "50px" }}>{followButton}</div>
 
-          <div className="Artist-Info">
-            <div>
-              <h3>{followers}</h3>
-              <p>Followers</p>
-            </div>
-            <div>
-              <h3>{popularity}%</h3>
-              <p>Popularity</p>
-            </div>
-          </div>
+              <div className="Artist-Info">
+                <div>
+                  <h3>{followers}</h3>
+                  <p>Followers</p>
+                </div>
+                <div>
+                  <h3>{popularity}%</h3>
+                  <p>Popularity</p>
+                </div>
+              </div>
 
-          <div className="Artist-Genres">
-            <div>
-              {genreList}
-              <p>Genres</p>
+              <div className="Artist-Genres">
+                <div>
+                  {genreList}
+                  <p>Genres</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

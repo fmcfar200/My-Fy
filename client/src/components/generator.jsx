@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { token } from "../utils";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
+import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -16,6 +17,7 @@ class Generator extends Component {
     this.checkTrack = this.checkTrack.bind(this);
   }
   state = {
+    loading: true,
     userId: "",
     orginalPlaylistName: "",
     itemId: this.props.match.params.id,
@@ -136,7 +138,8 @@ class Generator extends Component {
           .then(response => {
             console.log(response);
             this.setState({
-              generatedTracks: response.tracks
+              generatedTracks: response.tracks,
+              loading: false
             });
           });
       });
@@ -188,6 +191,7 @@ class Generator extends Component {
 
   render() {
     const {
+      loading,
       generatedTracks,
       orginalPlaylistName,
       accessiblePlaylists,
@@ -243,11 +247,15 @@ class Generator extends Component {
             </div>
           </div>
           <div className="Tracks-Container">
-            <TrackList
-              data={generatedTracks}
-              toggle={true}
-              checkTrack={this.checkTrack}
-            />
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <TrackList
+                data={generatedTracks}
+                toggle={true}
+                checkTrack={this.checkTrack}
+              />
+            )}
           </div>
         </div>
       </React.Fragment>
