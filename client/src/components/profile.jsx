@@ -126,7 +126,7 @@ class Profile extends Component {
 
         <div>
           <button
-            className="Spotify-Button Spotify-Button-Trans"
+            className="Spotify-Button Spotify-Button-Trans logout"
             onClick={() => {
               logout();
             }}

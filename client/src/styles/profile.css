@@ -48,6 +48,14 @@ h1 {
   margin-bottom: 25px !important;
 }
 
+.logout {
+  font-size: 16px;
+}
+
+.logout:hover {
+  border-color: grey;
+}
+
 @media only screen and (min-width: 768px) {
   .Profile-img {
     border-radius: 50%;

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+// import logo from "../logo.svg";
 import "../App.css";
 import "../styles/spotifyButton.css";
+import "../styles/loginScreen.css";
+
 require("dotenv").config();
 
 const DEV_SERVER = "http://localhost:8888";
@@ -23,10 +25,11 @@ class LoginScreen extends Component {
     return (
       <header className="App-header">
         <div>
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <div style={{ textAlign: "center" }}>
             {/* https://my-fyauth.herokuapp.com/ -production
               http://localhost:8888 - development */}
+            <h1>My-Fy</h1>
             <a href={this.state.authServerURL}>
               <button className="Spotify-Button Spotify-Button-Trans">
                 Login To Spotify
