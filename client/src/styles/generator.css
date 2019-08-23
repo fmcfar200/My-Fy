@@ -4,6 +4,12 @@
 
 .Generator-Header {
   display: block;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #181818;
 }
 
 .Generator-Header h2 {
@@ -14,8 +20,8 @@
 
 .Header-Button-Container {
   display: flex;
-  /* justify-content: space-between; */
-  margin-bottom: 25px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .Save {

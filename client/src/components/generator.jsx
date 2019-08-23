@@ -208,8 +208,8 @@ class Generator extends Component {
     return (
       <React.Fragment>
         <div className="Generator-Container">
+          <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
           <div className="Generator-Header">
-            <h2>Generated Tracks from '{orginalPlaylistName}'</h2>
             <div className="Header-Button-Container">
               <DropdownButton
                 buttonClass="Spotify-Button Spotify-Button-Play Save"
