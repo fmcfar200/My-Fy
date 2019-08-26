@@ -2,63 +2,17 @@ import { getHashParams } from "./hashParameters";
 import axios from "axios";
 
 //SPOTIFY UTILS - TOKENS , PARSING, AUDIO **********************************
-const TOKEN_EXPIRE_TIME = 3600 * 1000;
-const setTokenTimeStamp = () => {
-  window.localStorage.setItem("spotify_token_timestamp", Date.now());
-};
-
 const setLocalAccessToken = token => {
-  setTokenTimeStamp();
   window.localStorage.setItem("spotify_access_token", token);
 };
 
-const setLocalRefreshToken = token =>
-  window.localStorage.setItem("spotify_refresh_token", token);
-const getTokenTimestamp = () =>
-  window.localStorage.getItem("spotify_token_timestamp");
-
-const getLocalAccessToken = () => {
+const getLocalAccessToken = () =>
   window.localStorage.getItem("spotify_access_token");
-};
-
-const getLocalRefreshToken = () =>
-  window.localStorage.getItem("spotify_refresh_token");
-
-// Refresh the token
-const refreshAccessToken = async () => {
-  try {
-    const { data } = await axios.get(
-      `https://my-fyauth.herokuapp.com/refresh_token?refresh_token=${getLocalRefreshToken()}`
-    );
-    const { access_token } = data;
-    setLocalAccessToken(access_token);
-    window.location.reload();
-    return;
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 export const getAccessToken = () => {
-  const { access_token, refresh_token, error } = getHashParams();
-
-  if (error) {
-    console.error(error);
-    refreshAccessToken();
-  }
-
-  // If token has expired
-  if (Date.now() - getTokenTimestamp() > TOKEN_EXPIRE_TIME) {
-    console.warn("Access token has expired, refreshing...");
-    refreshAccessToken();
-  }
+  const { access_token } = getHashParams();
 
   const localAccessToken = getLocalAccessToken();
-  const localRefreshToken = getLocalRefreshToken();
-
-  if (!localRefreshToken || localRefreshToken === "undefined") {
-    setLocalRefreshToken(refresh_token);
-  }
 
   if (!localAccessToken || localAccessToken === "undefined") {
     setLocalAccessToken(access_token);
