@@ -19,6 +19,23 @@
   height: 125px;
   object-fit: cover;
 }
+.Playlists-Grid .Info-Container {
+  display: block;
+}
+
+.Playlists-Grid .Name-Label {
+  margin-top: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.Playlists-Grid .Owner-Label {
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: grey;
+}
 
 .Button-Container {
   display: flex;

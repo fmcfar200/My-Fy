@@ -45,19 +45,26 @@ class Profile extends Component {
   }
 
   async componentDidMount() {
-    spotifyApi.getMe().then(response => {
-      var profileImageUrl = "default_profile.png";
-      if (response.images.length > 0) {
-        profileImageUrl = response.images[0].url;
-      }
+    spotifyApi
+      .getMe()
+      .then(response => {
+        var profileImageUrl = "default_profile.png";
+        if (response.images.length > 0) {
+          profileImageUrl = response.images[0].url;
+        }
 
-      this.setState({
-        display_name: response.display_name,
-        id: response.id,
-        imageURL: profileImageUrl,
-        followers: response.followers
+        this.setState({
+          display_name: response.display_name,
+          id: response.id,
+          imageURL: profileImageUrl,
+          followers: response.followers
+        });
+      })
+      .catch(error => {
+        if (error.status === 401) {
+          logout();
+        }
       });
-    });
 
     spotifyApi.getFollowedArtists().then(response => {
       this.setState({

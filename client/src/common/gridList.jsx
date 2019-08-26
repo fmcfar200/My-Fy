@@ -7,6 +7,12 @@ const GridList = props => {
     <Link key={item.id} to={`/${routeName}/${item.id}`}>
       <div>
         <img src={item.images[0].url} alt="Cover" />
+        <div className="Info-Container">
+          <label className="Name-Label">{item.name}</label>
+          <div>
+            <label className="Owner-Label">{item.owner.display_name}</label>
+          </div>
+        </div>
       </div>
     </Link>
   ));
