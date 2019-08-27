@@ -138,7 +138,7 @@ class Playlist extends Component {
           </div>
           <div className="Body-Content">
             {showTracks ? (
-              <TrackList data={playlistTracks} />
+              <TrackList data={playlistTracks} history={this.props.history} />
             ) : (
               <React.Fragment>
                 <BarGraph

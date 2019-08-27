@@ -5,7 +5,7 @@ import { getArtistString } from "../utils/index";
 import "../styles/trackList.css";
 
 const TrackList = props => {
-  const { data, toggle, checkTrack } = props;
+  const { data, toggle, checkTrack, history } = props;
 
   function handleCheck(item) {
     checkTrack(item);
@@ -26,22 +26,29 @@ const TrackList = props => {
               <i className="fas fa-info-circle" />
             </div>
           </div>
-          <div className="trackInfo">
-            <span className="Name-Artist-Container">
-              <span className="Track-Title">
-                {item.name}
-                <br />
-              </span>
-              <span className="Track-Artist">
-                {getArtistString(item.artists)} | {item.album.name}
-              </span>
-            </span>
-            {!toggle && (
-              <p className="Runtime-Text">{msToRuntime(item.duration_ms)}</p>
-            )}
-          </div>
         </Link>
-        {toggle && <input type="checkbox" onClick={() => handleCheck(item)} />}
+        <div className="trackInfo">
+          <span
+            className="Name-Artist-Container"
+            onClick={() => {
+              history.push(`/tracks/${item.id}`);
+            }}
+          >
+            <span className="Track-Title">
+              {item.name}
+              <br />
+            </span>
+            <span className="Track-Artist">
+              {getArtistString(item.artists)} | {item.album.name}
+            </span>
+          </span>
+          {!toggle && (
+            <p className="Runtime-Text">{msToRuntime(item.duration_ms)}</p>
+          )}
+          {toggle && (
+            <input type="checkbox" onClick={() => handleCheck(item)} />
+          )}
+        </div>
       </li>
     );
   });

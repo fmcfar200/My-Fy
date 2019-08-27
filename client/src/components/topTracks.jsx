@@ -94,6 +94,7 @@ class TopTracks extends Component {
             <TrackList
               style={{ padding: "100px 80px" }}
               data={this.state.currentList}
+              history={this.props.history}
             />
           )}
         </div>

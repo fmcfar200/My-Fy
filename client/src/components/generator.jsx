@@ -254,6 +254,7 @@ class Generator extends Component {
                 data={generatedTracks}
                 toggle={true}
                 checkTrack={this.checkTrack}
+                history={this.props.history}
               />
             )}
           </div>

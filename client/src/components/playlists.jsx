@@ -42,6 +42,7 @@ class Playlists extends Component {
                 data={playLists}
                 gridClassName="Playlists-Grid"
                 routeName="playlist"
+                showNames={true}
               />
             </div>
           </React.Fragment>

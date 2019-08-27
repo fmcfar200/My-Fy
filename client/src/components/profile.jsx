@@ -157,6 +157,7 @@ class Profile extends Component {
                 <TrackList
                   data={this.state.topTracks}
                   heading="Top Tracks (6 months)"
+                  history={this.props.history}
                 />
               </div>
 
@@ -165,6 +166,7 @@ class Profile extends Component {
                 <TrackList
                   data={this.state.recentlyPlayed}
                   heading="Recently Played"
+                  history={this.props.history}
                 />
               </div>
             </section>
