@@ -258,6 +258,7 @@ class Generator extends Component {
               />
             )}
           </div>
+          <div className="fadedScroller_fade"></div>
         </div>
       </React.Fragment>
     );
