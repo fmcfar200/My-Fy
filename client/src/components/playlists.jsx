@@ -16,12 +16,24 @@ class Playlists extends Component {
   };
 
   async getPlaylists() {
-    spotifyApi.getUserPlaylists({ limit: 50 }).then(response => {
-      this.setState({
-        playLists: response.items,
-        loading: false
+    var thePlaylists = [];
+    spotifyApi
+      .getUserPlaylists({ limit: 50 })
+      .then(response => {
+        thePlaylists = response.items;
+        thePlaylists.forEach(playList => {
+          if (playList.tracks.total === 0) {
+            var index = thePlaylists.indexOf(playList);
+            thePlaylists.splice(index, 1);
+          }
+        });
+      })
+      .then(() => {
+        this.setState({
+          playLists: thePlaylists,
+          loading: false
+        });
       });
-    });
   }
 
   async componentDidMount() {

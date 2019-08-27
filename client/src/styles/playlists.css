@@ -1,6 +1,3 @@
-.Playlists-Container {
-}
-
 .Playlists-Container h2 {
   font-size: 25px;
   color: white;
@@ -24,6 +21,7 @@
 }
 
 .Playlists-Grid .Name-Label {
+  color: white;
   margin-top: 8px;
   text-align: center;
   font-weight: bold;
@@ -37,16 +35,12 @@
   color: grey;
 }
 
-.Button-Container {
-  display: flex;
-}
-
 @media only screen and (min-width: 768px) {
   .Playlists-Container {
     padding: 30px;
   }
 
-  h2 {
+  .Playlists-Container h2 {
     color: white;
     display: flex;
     margin-bottom: 50px !important;
@@ -62,9 +56,5 @@
     width: 200px;
     height: 200px;
     object-fit: cover;
-  }
-
-  .Button-Container {
-    display: flex;
   }
 }
