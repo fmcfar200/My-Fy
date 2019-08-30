@@ -6,7 +6,7 @@ import "react-activity/dist/react-activity.css";
 const ActivityIndicator = () => {
   return (
     <div>
-      <Digital className="container" color="#1db954" size={30} />
+      <Digital className="container" color="var(--secondary-color)" size={30} />
     </div>
   );
 };

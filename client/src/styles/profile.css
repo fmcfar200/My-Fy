@@ -17,7 +17,7 @@ h1 {
 }
 
 .Profile-info h3 {
-  color: #1db954;
+  color: var(--secondary-color);
   font-size: 25px;
   margin: 10px;
 }
@@ -76,7 +76,7 @@ h1 {
   }
 
   .Profile-info h3 {
-    color: #1db954;
+    color: var(--secondary-color);
     font-size: 25px;
     margin: 10px;
   }

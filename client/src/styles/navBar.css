@@ -11,8 +11,8 @@ a.navbar-brand {
 }
 
 a.nav-item.nav-link.active.active {
-  color: green !important;
-  border-bottom: 5px solid rgb(30, 215, 96);
+  color: var(--secondary-color) !important;
+  border-bottom: 5px solid var(--secondary-color);
 }
 
 button.navbar-toggler {

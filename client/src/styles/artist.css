@@ -31,7 +31,7 @@
 }
 
 .Artist-Info h3 {
-  color: #1db954;
+  color: var(--secondary-color);
   font-size: 25px;
   margin: 10px;
 }
@@ -44,7 +44,7 @@
 }
 
 .Artist-Genres h3 {
-  color: #1db954;
+  color: var(--secondary-color);
   font-size: 25px;
   margin: 5px;
 }
@@ -92,7 +92,7 @@
   }
 
   .Artist-Info h3 {
-    color: #1db954;
+    color: var(--secondary-color);
     font-size: 25px;
     margin: 10px;
   }
@@ -105,7 +105,7 @@
   }
 
   .Artist-Genres h3 {
-    color: #1db954;
+    color: var(--secondary-color);
     font-size: 25px;
     margin: 5px;
   }

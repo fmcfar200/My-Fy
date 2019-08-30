@@ -25,7 +25,7 @@
 
 .Track-Grid-Item {
   display: block;
-  border: 1px solid #1db95481;
+  border: 1px solid var(--secondary-color);
   padding: 20px;
   font-size: 30px;
   text-align: center;
@@ -80,7 +80,7 @@
 
   .Track-Grid-Item {
     display: block;
-    border: 1px solid #1db95481;
+    border: 1px solid var(--secondary-color);
     padding: 20px;
     font-size: 30px;
     text-align: center;

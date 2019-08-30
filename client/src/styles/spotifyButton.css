@@ -1,6 +1,6 @@
 .Spotify-Button {
-  background-color: #1db954;
-  border: 2px solid #1db954;
+  background-color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
   color: white;
 
   align-content: center;
@@ -24,7 +24,7 @@
 }
 
 .Spotify-Button-Play {
-  background-color: #1db954;
+  background-color: var(--secondary-color);
 }
 
 .Spotify-Button-Trans {

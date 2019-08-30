@@ -113,6 +113,8 @@ class Generator extends Component {
       spotifyApi.addTracksToPlaylist(playlistId, trackURIs);
     }
 
+    this.clearSelection();
+
     toast.success("Tracks Added to " + playlistName + " 🎵");
   }
 
@@ -238,8 +240,12 @@ class Generator extends Component {
 
               <button
                 className="Refresh"
+                data-toggle={checkedTracks.length > 0 ? "modal" : ""}
+                data-target={checkedTracks.length > 0 ? "#exampleModal" : ""}
                 onClick={() => {
-                  this.getRecommendations(this.state.itemId);
+                  if (checkedTracks.length === 0) {
+                    this.getRecommendations(this.state.itemId);
+                  }
                 }}
               >
                 <i className="fas fa-sync" />
@@ -259,6 +265,57 @@ class Generator extends Component {
             )}
           </div>
           <div className="fadedScroller_fade"></div>
+        </div>
+
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Refresh Tracks
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Refreshing track list will lose your currently selected tracks.
+                Add them to a playlist if you do not wish to lose them.
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary refresh"
+                  data-dismiss="modal"
+                  onClick={() => {
+                    this.clearSelection();
+                    this.getRecommendations(this.state.itemId);
+                  }}
+                >
+                  Refresh Tracks
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );
