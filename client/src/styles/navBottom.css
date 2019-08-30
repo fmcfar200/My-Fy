@@ -16,5 +16,18 @@
 
 a.nav-item.nav-link.active.active {
   color: green !important;
-  border-bottom: 5px solid rgb(30, 215, 96);
+  border-bottom: 2.5px solid rgb(30, 215, 96);
+}
+
+nav.bottom {
+  background-color: black !important;
+  align-content: center !important;
+  justify-content: space-evenly !important;
+  font-size: 12px;
+}
+
+@media only screen and (min-width: 768px) {
+  nav.navbar.bottom {
+    display: none !important;
+  }
 }

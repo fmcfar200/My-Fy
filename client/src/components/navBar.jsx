@@ -5,7 +5,7 @@ import "../styles/navBar.css";
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar top navbar-expand-lg navbar-light">
       <NavLink className="navbar-brand" to="/profile">
         <img
           src={logo}
