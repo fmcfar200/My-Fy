@@ -14,7 +14,7 @@ const NavBar = () => {
           height="30"
           alt="logo"
         />
-        MyFy
+        My-Fy
       </NavLink>
       <button
         className="navbar-toggler"
