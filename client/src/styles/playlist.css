@@ -6,9 +6,11 @@
 }
 
 .Playlist-Header img {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: auto;
+  padding: 5px;
   margin-bottom: 20px;
+  align-content: center;
 }
 
 .Playlist-Header h1 {

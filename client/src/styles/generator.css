@@ -4,7 +4,7 @@
 
 h2 {
   color: white;
-  font-size: 25px;
+  font-size: 25px !important;
   margin-bottom: 25px;
 }
 .Generator-Header {
@@ -64,6 +64,11 @@ h2 {
 
 .modal-content .modal-footer .refresh {
   background-color: var(--secondary-color) !important;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 340px) {
+  h2 {
+  }
 }
 
 @media only screen and (min-width: 768px) {

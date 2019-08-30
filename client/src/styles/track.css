@@ -6,6 +6,8 @@
 
 .Track-Header img {
   margin-bottom: 15px;
+  width: 250px;
+  height: 250px;
 }
 
 .Track-Header h1 {

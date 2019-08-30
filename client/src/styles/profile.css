@@ -56,6 +56,28 @@ h1 {
   border-color: grey;
 }
 
+@media only screen and (min-width: 320px) and (max-width: 375px) {
+  h1 {
+    font-size: 20px !important;
+    margin-top: 2px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .Profile-info h3 {
+    font-size: 16px;
+  }
+
+  .Profile-info p {
+    font-size: 8px;
+  }
+}
+
+@media only screen and (min-width: 360px) {
+  h1 {
+    font-size: 25px !important;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .Profile-img {
     border-radius: 50%;

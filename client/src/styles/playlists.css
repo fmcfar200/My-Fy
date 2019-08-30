@@ -35,9 +35,16 @@
   color: grey;
 }
 
+@media only screen and (min-width: 320px) and (max-width: 375px) {
+  .Playlists-Grid img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .Playlists-Container {
-    padding: 30px;
+    padding: 0px;
   }
 
   .Playlists-Container h2 {
