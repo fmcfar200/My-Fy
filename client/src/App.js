@@ -16,6 +16,7 @@ import Generator from "./components/generator";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import NavBottom from "./components/navBottom";
+import Sidebar from "./common/sidebar";
 
 toast.configure();
 class App extends Component {
@@ -39,7 +40,7 @@ class App extends Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <NavBar />
+            <Sidebar />
             <main className="App">
               <Switch>
                 <Route path="/profile" component={Profile} />
