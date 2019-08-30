@@ -18,3 +18,9 @@ a.nav-item.nav-link.active.active {
 button.navbar-toggler {
   background-color: white !important;
 }
+
+@media only screen and (min-width: 768px) {
+  nav {
+    /*display: none !important; */
+  }
+}

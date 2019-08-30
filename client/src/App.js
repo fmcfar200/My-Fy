@@ -15,6 +15,7 @@ import Playlist from "./components/playlist";
 import Generator from "./components/generator";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import NavBottom from "./components/navBottom";
 
 toast.configure();
 class App extends Component {
@@ -54,6 +55,7 @@ class App extends Component {
                 <Redirect to="/not-found" />
               </Switch>
             </main>
+            <NavBottom></NavBottom>
           </React.Fragment>
         )}
       </React.Fragment>

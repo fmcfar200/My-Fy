@@ -1,0 +1,20 @@
+.phantom {
+  display: block;
+  padding: 10px;
+  height: 40px;
+  width: 100%;
+}
+
+.nav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  background-color: black;
+}
+
+a.nav-item.nav-link.active.active {
+  color: green !important;
+  border-bottom: 5px solid rgb(30, 215, 96);
+}
