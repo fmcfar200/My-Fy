@@ -87,14 +87,19 @@ class Profile extends Component {
       });
 
     spotifyApi
-      .getMyRecentlyPlayedTracks({ limit: 10 })
+      .getMyRecentlyPlayedTracks({ limit: 50 })
       .then(function(data) {
         return data.items.map(function(t) {
           return t.track.id;
         });
       })
       .then(function(trackIds) {
-        return spotifyApi.getTracks(trackIds);
+        //removing duplicated
+        var theTrackIds = trackIds.filter(function(item, pos, self) {
+          return self.indexOf(item) === pos;
+        });
+        var finalTracks = theTrackIds.slice(0, 10); // reduce to 10
+        return spotifyApi.getTracks(finalTracks);
       })
       .then(trackInfo => {
         this.setState({

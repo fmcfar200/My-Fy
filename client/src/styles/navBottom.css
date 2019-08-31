@@ -25,6 +25,7 @@ nav.bottom {
 
 nav.bottom a.nav-item.nav-link {
   border-top: 2.5px solid transparent;
+  color: grey;
 }
 
 nav.bottom a.nav-item.nav-link.active.active {

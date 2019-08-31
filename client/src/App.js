@@ -7,7 +7,6 @@ import Profile from "./components/profile";
 import NotFound from "./components/notFound";
 import TopTracks from "./components/topTracks";
 import Track from "./components/track";
-import NavBar from "./components/navBar";
 import TopArtists from "./components/topArtists";
 import Artist from "./components/artist";
 import Playlists from "./components/playlists";

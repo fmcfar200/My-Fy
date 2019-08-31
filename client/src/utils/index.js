@@ -2,7 +2,7 @@ import { getHashParams } from "./hashParameters";
 //import axios from "axios";
 
 //SPOTIFY UTILS - TOKENS , PARSING, AUDIO **********************************
-const TOKEN_EXPIRE_TIME = 3600 * 1000;
+//const TOKEN_EXPIRE_TIME = 3600 * 1000;
 
 const setTokenTimeStamp = () => {
   window.localStorage.setItem("spotify_token_timestamp", Date.now());
@@ -15,8 +15,8 @@ const setLocalAccessToken = token => {
 
 const getLocalAccessToken = () =>
   window.localStorage.getItem("spotify_access_token");
-const getTokenTimestamp = () =>
-  window.localStorage.getItem("spotify_token_timestamp");
+// const getTokenTimestamp = () =>
+//   window.localStorage.getItem("spotify_token_timestamp");
 
 export const getAccessToken = () => {
   const { access_token } = getHashParams();
