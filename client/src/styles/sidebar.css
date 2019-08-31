@@ -26,11 +26,14 @@
 }
 
 .sidenav a.nav-item.nav-link {
-  color: white !important;
+  color: grey !important;
 }
 
-.sidenav a.navbar-brand {
-  color: white !important;
+.sidenav a.nav-item.nav-link:hover {
+  color: var(--secondary-color) !important;
+  border-right: 5px solid var(--secondary-color);
+  border-bottom: none;
+  background: var(--main-color) !important;
 }
 
 .sidenav a.nav-item.nav-link.active.active {

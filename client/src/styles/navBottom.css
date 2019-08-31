@@ -14,16 +14,22 @@
   background-color: black;
 }
 
-a.nav-item.nav-link.active.active {
-  color: var(--secondary-color) !important;
-  border-bottom: 2.5px solid var(--secondary-color);
-}
-
 nav.bottom {
   background-color: black !important;
   align-content: center !important;
   justify-content: space-evenly !important;
   font-size: 12px;
+  padding-top: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+nav.bottom a.nav-item.nav-link {
+  border-top: 2.5px solid transparent;
+}
+
+nav.bottom a.nav-item.nav-link.active.active {
+  color: var(--secondary-color) !important;
+  border-top: 2.5px solid var(--secondary-color);
 }
 
 @media only screen and (min-width: 768px) {

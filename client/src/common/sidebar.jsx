@@ -15,8 +15,6 @@ const Sidebar = () => {
             height="100"
             alt="logo"
           />
-          <br></br>
-          MyFy
         </NavLink>
 
         <div className="navbar-nav nav-fill w-100">
@@ -31,7 +29,7 @@ const Sidebar = () => {
             Top Tracks
           </NavLink>
           <NavLink className="nav-item nav-link mb-3" to="/top-artists">
-            <i class="fa fa-users" aria-hidden="true"></i>
+            <i class="fa fa-music" aria-hidden="true"></i>
             <br></br>
             Top Artists
           </NavLink>

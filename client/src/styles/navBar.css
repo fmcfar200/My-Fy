@@ -3,7 +3,7 @@ nav {
 }
 
 a.nav-item.nav-link {
-  color: white !important;
+  color: grey !important;
 }
 
 a.navbar-brand {
@@ -12,7 +12,6 @@ a.navbar-brand {
 
 a.nav-item.nav-link.active.active {
   color: var(--secondary-color) !important;
-  border-bottom: 5px solid var(--secondary-color);
 }
 
 button.navbar-toggler {

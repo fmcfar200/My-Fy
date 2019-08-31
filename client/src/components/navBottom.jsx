@@ -17,7 +17,7 @@ const NavBottom = () => {
             Top Tracks
           </NavLink>
           <NavLink className="nav-item nav-link" to="/top-artists">
-            <i class="fa fa-users" aria-hidden="true"></i> <br></br>
+            <i class="fa fa-music" aria-hidden="true"></i> <br></br>
             Top Artists
           </NavLink>
           <NavLink className="nav-item nav-link" to="/playlists">
