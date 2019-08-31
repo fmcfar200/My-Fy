@@ -19,27 +19,27 @@ const Sidebar = () => {
 
         <div className="navbar-nav nav-fill w-100">
           <NavLink className="nav-item nav-link mb-3" to="/profile">
-            <i class="fa fa-user" aria-hidden="true"></i>
+            <i className="fa fa-user" aria-hidden="true"></i>
             <br></br>
             Profile <span className="sr-only">(current)</span>
           </NavLink>
           <NavLink className="nav-item nav-link mb-3" to="/top-tracks">
-            <i class="fa fa-play" aria-hidden="true"></i>
+            <i className="fa fa-play" aria-hidden="true"></i>
             <br></br>
             Top Tracks
           </NavLink>
           <NavLink className="nav-item nav-link mb-3" to="/top-artists">
-            <i class="fa fa-music" aria-hidden="true"></i>
+            <i className="fa fa-music" aria-hidden="true"></i>
             <br></br>
             Top Artists
           </NavLink>
           <NavLink className="nav-item nav-link mb-3" to="/playlists">
-            <i class="fa fa-list" aria-hidden="true"></i>
+            <i className="fa fa-list" aria-hidden="true"></i>
             <br></br>
             Playlists
           </NavLink>
           <NavLink className="nav-item nav-link mb-3" to="/recently-played">
-            <i class="fa fa-repeat" aria-hidden="true"></i>
+            <i className="fa fa-repeat" aria-hidden="true"></i>
             <br></br>
             Recent
           </NavLink>

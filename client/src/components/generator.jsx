@@ -15,6 +15,7 @@ class Generator extends Component {
   constructor(props) {
     super(props);
     this.checkTrack = this.checkTrack.bind(this);
+    this.menuRef = React.createRef();
   }
   state = {
     loading: true,
@@ -48,6 +49,10 @@ class Generator extends Component {
       checkedBoxes[i].checked = false;
     }
   }
+
+  handleMenuClose = () => {
+    this.menuRef.current.handleClick();
+  };
 
   //generates track seeds
   generateSeedTracks(tracks) {
@@ -114,6 +119,7 @@ class Generator extends Component {
     }
 
     this.clearSelection();
+    this.handleMenuClose();
 
     toast.success("Tracks Added to " + playlistName + " 🎵");
   }
@@ -218,6 +224,7 @@ class Generator extends Component {
           <div className="Generator-Header">
             <div className="Header-Button-Container">
               <DropdownButton
+                ref={this.menuRef}
                 buttonClass="Spotify-Button Spotify-Button-Play Save"
                 buttonLabel={
                   checkedTracks.length === 0
