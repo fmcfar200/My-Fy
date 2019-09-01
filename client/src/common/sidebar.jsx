@@ -5,7 +5,7 @@ import "../styles/sidebar.css";
 
 const Sidebar = () => {
   return (
-    <div class="sidenav">
+    <div className="sidenav">
       <nav className="navbar p-0 side align-items-start nav-fill justify-content-start h-100 navbar-light">
         <NavLink className="nav-item nav-link logo" to="/profile">
           <img

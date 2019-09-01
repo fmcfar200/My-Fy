@@ -1,11 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import * as Sentry from "@sentry/browser";
+import ReactGA from "react-ga";
+import createHistory from "history/createBrowserHistory";
 import App from "./App";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
+
+const history = createHistory();
+ReactGA.initialize("UA-146858098-1");
+history.listen((location, action) => {
+  ReactGA.pageview(location.pathname + location.search);
+});
 
 Sentry.init({
   dsn: "https://6c2d25552e28485fa1933d8b2b3fd261@sentry.io/1547072"
@@ -16,9 +24,9 @@ window.$ = $;
 require("bootstrap");
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <App />
-  </BrowserRouter>,
+  </Router>,
   document.getElementById("root")
 );
 

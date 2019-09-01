@@ -12,10 +12,10 @@ import Artist from "./components/artist";
 import Playlists from "./components/playlists";
 import Playlist from "./components/playlist";
 import Generator from "./components/generator";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
 import NavBottom from "./components/navBottom";
 import Sidebar from "./common/sidebar";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 toast.configure();
 class App extends Component {
