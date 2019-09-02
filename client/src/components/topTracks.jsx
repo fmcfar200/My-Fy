@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import { token } from "../utils";
-import "../styles/topTracks.css";
 import ActivityIndicator from "../common/activityIndicator";
+import "../styles/topTracks.css";
 
 const TIME_RANGE_SHORT = "short_term";
 const TIME_RANGE_MEDIUM = "medium_term";
@@ -86,6 +87,16 @@ class TopTracks extends Component {
                 4 Weeks
               </button>
             </div>
+            {!loading && (
+              <Link to={`/generator/${"top-tracks"}`}>
+                <button
+                  className="Spotify-Button Spotify-Button-Play"
+                  style={{}}
+                >
+                  More
+                </button>
+              </Link>
+            )}
           </div>
 
           {loading ? (

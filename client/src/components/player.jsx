@@ -17,7 +17,6 @@ class Player extends Component {
   componentDidMount() {
     if (this.props.params.access_token) {
       spotifyApi.setAccessToken(this.props.params.access_token);
-      console.log(this.props.params.access_token + " " + "logged in: ");
       this.getNowPlaying();
     }
   }

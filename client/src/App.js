@@ -49,7 +49,8 @@ class App extends Component {
                 <Route path="/tracks/:id" component={Track} />
                 <Route path="/artists/:id" component={Artist} />
                 <Route path="/playlist/:id" component={Playlist} />
-                <Route path="/generator/:id" component={Generator} />
+                <Route path="/generator/:type/:id" component={Generator} />
+                <Route path="/generator/:type" component={Generator} />
                 <Route path="/not-found" component={NotFound} />
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />

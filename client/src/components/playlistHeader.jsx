@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 const PlaylistHeader = props => {
   const {
     id,
+    generatorType,
     coverImageUrl,
     playlistName,
     ownerName,
@@ -34,7 +35,7 @@ const PlaylistHeader = props => {
               Play
             </button>
           </a>
-          <Link to={`/generator/${id}`}>
+          <Link to={`/generator/${generatorType}/${id}`}>
             <button
               className="Spotify-Button Spotify-Button-Play"
               style={{ marginTop: "16px" }}

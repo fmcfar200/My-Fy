@@ -21,11 +21,88 @@ class Generator extends Component {
     loading: true,
     userId: "",
     orginalPlaylistName: "",
+    generatorType: this.props.match.params.type,
     itemId: this.props.match.params.id,
     generatedTracks: [],
     accessiblePlaylists: [],
     checkedTracks: []
   };
+
+  componentDidMount() {
+    const { generatorType, itemId } = this.state;
+    console.log(generatorType);
+
+    //Gets User details
+    spotifyApi.getMe().then(userResponse => {
+      this.setState({
+        userId: userResponse.id
+      });
+    });
+
+    //GET PLAYLISTS FOR ADDING
+    spotifyApi
+      .getUserPlaylists({ limit: 50 })
+      .then(response => {
+        return response.items;
+      })
+      .then(followedPlaylists => {
+        var accessiblePlaylists = [];
+        accessiblePlaylists.push({ name: "New Playlist", id: "new" });
+
+        for (var i = 0; i < followedPlaylists.length; i++) {
+          var playlist = followedPlaylists[i];
+          if (
+            playlist.owner.id === this.state.userId ||
+            playlist.collaborative === true
+          ) {
+            accessiblePlaylists.push(playlist);
+          }
+        }
+        this.setState({
+          accessiblePlaylists: accessiblePlaylists
+        });
+      });
+
+    if (generatorType === "playlist") {
+      spotifyApi.getPlaylist(itemId).then(response => {
+        this.setState({
+          orginalPlaylistName: response.name
+        });
+      });
+
+      this.generateFromPlaylist(itemId);
+    } else if (generatorType === "top-tracks") {
+      this.setState({
+        orginalPlaylistName: "Top Tracks"
+      });
+      this.generateFromTopTracks();
+    }
+  }
+
+  generateFromTopTracks() {
+    spotifyApi
+      .getMyTopTracks({ limit: 50 })
+      .then(response => {
+        return response.items;
+      })
+      .then(tracks => {
+        return this.generateSeedTracks(tracks);
+      })
+      .then(seedTracks => {
+        const seed_tracks = seedTracks;
+        spotifyApi
+          .getRecommendations({
+            seed_tracks: seed_tracks,
+            limit: 100
+          })
+          .then(response => {
+            this.setState({
+              generatedTracks: response.tracks,
+              loading: false
+            });
+          });
+      });
+  }
 
   checkTrack(track) {
     var checkedTracks = this.state.checkedTracks;
@@ -66,7 +143,11 @@ class Generator extends Component {
 
     let seedTracksArray = [];
     for (var i = 0; i < randomIndexArr.length; i++) {
-      seedTracksArray.push(tracks[randomIndexArr[i]].track.id);
+      if (this.state.generatorType === "playlist") {
+        seedTracksArray.push(tracks[randomIndexArr[i]].track.id);
+      } else {
+        seedTracksArray.push(tracks[randomIndexArr[i]].id);
+      }
     }
 
     return seedTracksArray.join(",").toString();
@@ -124,8 +205,9 @@ class Generator extends Component {
     toast.success("Tracks Added to " + playlistName + " 🎵");
   }
 
-  getRecommendations(itemId) {
+  generateFromPlaylist(itemId) {
     var tracks = [];
+
     //generates seeds and new tracks
     spotifyApi
       .getPlaylistTracks(itemId)
@@ -135,66 +217,18 @@ class Generator extends Component {
         return this.generateSeedTracks(tracks);
       })
       .then(seedTracks => {
-        const seed_tracks = seedTracks;
-        const seed_artists = this.generateSeedArtists(tracks);
         spotifyApi
           .getRecommendations({
-            seed_tracks: seed_tracks,
-            seed_artists: seed_artists,
+            seed_tracks: seedTracks,
             limit: 100
           })
           .then(response => {
-            console.log(response);
             this.setState({
               generatedTracks: response.tracks,
               loading: false
             });
           });
       });
-  }
-
-  componentDidMount() {
-    const { itemId } = this.state;
-    var userId = "";
-    //Gets User and playlist details
-    spotifyApi
-      .getMe()
-      .then(userResponse => {
-        userId = userResponse.id;
-      })
-      .then(() => {
-        spotifyApi.getPlaylist(itemId).then(response => {
-          this.setState({
-            userId: userId,
-            orginalPlaylistName: response.name
-          });
-        });
-      });
-
-    //GET PLAYLISTS FOR ADDING
-    spotifyApi
-      .getUserPlaylists({ limit: 50 })
-      .then(response => {
-        return response.items;
-      })
-      .then(followedPlaylists => {
-        var accessiblePlaylists = [];
-        accessiblePlaylists.push({ name: "New Playlist", id: "new" });
-
-        for (var i = 0; i < followedPlaylists.length; i++) {
-          var playlist = followedPlaylists[i];
-          if (playlist.owner.id === userId || playlist.collaborative === true) {
-            accessiblePlaylists.push(playlist);
-          }
-        }
-        console.log(accessiblePlaylists);
-        this.setState({
-          accessiblePlaylists: accessiblePlaylists
-        });
-      });
-
-    //GETS RECCOMENDATIONS
-    this.getRecommendations(itemId);
   }
 
   render() {
@@ -251,7 +285,7 @@ class Generator extends Component {
                 data-target={checkedTracks.length > 0 ? "#exampleModal" : ""}
                 onClick={() => {
                   if (checkedTracks.length === 0) {
-                    this.getRecommendations(this.state.itemId);
+                    this.generateFromPlaylist(this.state.itemId);
                   }
                 }}
               >
@@ -275,47 +309,47 @@ class Generator extends Component {
         </div>
 
         <div
-          class="modal fade"
+          className="modal fade"
           id="exampleModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
                   Refresh Tracks
                 </h5>
                 <button
                   type="button"
-                  class="close"
+                  className="close"
                   data-dismiss="modal"
                   aria-label="Close"
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 Refreshing track list will lose your currently selected tracks.
                 Add them to a playlist if you do not wish to lose them.
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  className="btn btn-secondary"
                   data-dismiss="modal"
                 >
                   Close
                 </button>
                 <button
                   type="button"
-                  class="btn btn-primary refresh"
+                  className="btn btn-primary refresh"
                   data-dismiss="modal"
                   onClick={() => {
                     this.clearSelection();
-                    this.getRecommendations(this.state.itemId);
+                    this.generateFromPlaylist(this.state.itemId);
                   }}
                 >
                   Refresh Tracks

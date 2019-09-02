@@ -100,6 +100,7 @@ class Playlist extends Component {
       <React.Fragment>
         <PlaylistHeader
           id={playlistId}
+          generatorType={"playlist"}
           coverImageUrl={playlist.images[0].url}
           playlistName={playlist.name}
           ownerName={playlist.owner.display_name}

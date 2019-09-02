@@ -9,8 +9,6 @@ class DropdownButton extends Component {
 
   componentDidMount() {
     document.addEventListener("click", this.handleClickOutside);
-
-    console.log(this.props);
   }
 
   componentWillUnmount() {

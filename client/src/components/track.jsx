@@ -53,7 +53,6 @@ class Track extends Component {
       const trackId = this.props.match.params.id;
       //GET THE TRACK INFORMATION
       spotifyApi.getTrack(trackId).then(response => {
-        console.log(response);
         var artistsString = getArtistString(response.artists);
         //sets state
         this.setState({
