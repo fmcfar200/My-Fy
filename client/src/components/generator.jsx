@@ -73,10 +73,10 @@ class Generator extends Component {
 
       this.generateFromPlaylist(id);
     } else {
-      var titlePrefix = humanize(generatorType);
-      var titleSuffix = humanize(id);
+      var titlePrefix = humanize(id);
+      var titleSuffix = humanize(generatorType);
       this.setState({
-        orginalPlaylistName: `${titlePrefix} - ${titleSuffix}`
+        orginalPlaylistName: `${titlePrefix} ${titleSuffix}`
       });
     }
 
