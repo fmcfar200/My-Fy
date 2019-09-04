@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
+import * as Sentry from "@sentry/browser";
+
 import AudioAnalysisGrid from "./audioAnalysisGrid";
 import BarGraph from "../common/barGraph";
 import { token } from "../utils";
@@ -52,53 +54,69 @@ class Track extends Component {
     try {
       const trackId = this.props.match.params.id;
       //GET THE TRACK INFORMATION
-      spotifyApi.getTrack(trackId).then(response => {
-        var artistsString = getArtistString(response.artists);
-        //sets state
-        this.setState({
-          track: response,
-          duration_ms: msToRuntime(response.duration_ms),
-          albumImageUrl: response.album.images[1].url,
-          artists: artistsString,
-          album: response.album,
-          spotifyUrl: response.external_urls.spotify,
-          preview_url: response.preview_url,
-          popularity: response.popularity
+      spotifyApi
+        .getTrack(trackId)
+        .then(response => {
+          var artistsString = getArtistString(response.artists);
+          //sets state
+          this.setState({
+            track: response,
+            duration_ms: msToRuntime(response.duration_ms),
+            albumImageUrl: response.album.images[1].url,
+            artists: artistsString,
+            album: response.album,
+            spotifyUrl: response.external_urls.spotify,
+            preview_url: response.preview_url,
+            popularity: response.popularity
+          });
+        })
+        .catch(err => {
+          Sentry.captureException(err);
         });
-      });
 
       //GET TRACK AUDIO FEATURES
-      spotifyApi.getAudioFeaturesForTrack(trackId).then(response => {
-        let audioFeaturesDataArray = [
-          response.acousticness,
-          response.danceability,
-          response.energy,
-          response.instrumentalness,
-          response.liveness,
-          response.speechiness,
-          response.valence
-        ];
+      spotifyApi
+        .getAudioFeaturesForTrack(trackId)
+        .then(response => {
+          let audioFeaturesDataArray = [
+            response.acousticness,
+            response.danceability,
+            response.energy,
+            response.instrumentalness,
+            response.liveness,
+            response.speechiness,
+            response.valence
+          ];
 
-        this.setState({
-          audioFeatureData: audioFeaturesDataArray
+          this.setState({
+            audioFeatureData: audioFeaturesDataArray
+          });
+        })
+        .catch(err => {
+          Sentry.captureException(err);
         });
-      });
 
-      spotifyApi.getAudioAnalysisForTrack(trackId).then(response => {
-        this.setState({
-          tonalKey: parseTrackKey(response.track.key),
-          BPM: Math.round(response.track.tempo),
-          timeSignature: response.track.time_signature,
-          bars: response.bars.length,
-          beats: response.beats.length,
-          segments: response.segments.length,
-          sections: response.sections.length,
-          modality: parseTrackModality(response.track.mode),
+      spotifyApi
+        .getAudioAnalysisForTrack(trackId)
+        .then(response => {
+          this.setState({
+            tonalKey: parseTrackKey(response.track.key),
+            BPM: Math.round(response.track.tempo),
+            timeSignature: response.track.time_signature,
+            bars: response.bars.length,
+            beats: response.beats.length,
+            segments: response.segments.length,
+            sections: response.sections.length,
+            modality: parseTrackModality(response.track.mode),
 
-          loading: false
+            loading: false
+          });
+        })
+        .catch(err => {
+          Sentry.captureException(err);
         });
-      });
     } catch (ex) {
+      Sentry.captureException(ex);
       console.log(ex);
       if (ex.response && ex.response.status === 404)
         this.props.history.replace("/not-found");

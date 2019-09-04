@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 import Spotify from "spotify-web-api-js";
 import GridList from "../common/gridList";
 import { token } from "../utils";
@@ -48,6 +49,9 @@ class TopArtists extends Component {
           loading: false,
           range: range
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 

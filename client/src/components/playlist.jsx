@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 import PlaylistHeader from "./playlistHeader";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
@@ -55,6 +56,9 @@ class Playlist extends Component {
         spotifyApi.getAudioFeaturesForTracks(trackIds).then(response => {
           audioFeatureData = getAverageAudioFeatures(response.audio_features);
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import DropdownButton from "../common/dropdownButton";
 import { toast } from "react-toastify";
 import { token, humanize } from "../utils";
+import ActivityIndicator from "../common/activityIndicator";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
-import ActivityIndicator from "../common/activityIndicator";
-import TopTracks from "./topTracks";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -62,6 +62,9 @@ class Generator extends Component {
         this.setState({
           accessiblePlaylists: accessiblePlaylists
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
 
     if (generatorType === "playlist") {
@@ -110,6 +113,9 @@ class Generator extends Component {
               loading: false
             });
           });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 
@@ -136,6 +142,9 @@ class Generator extends Component {
               loading: false
             });
           });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 
@@ -278,6 +287,9 @@ class Generator extends Component {
               loading: false
             });
           });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 

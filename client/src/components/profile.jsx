@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import { token, logout } from "../utils";
-//import "../App.css";
+import ActivityIndicator from "../common/activityIndicator";
 import "../styles/profile.css";
 import "../styles/spotifyButton.css";
-import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -66,17 +66,27 @@ class Profile extends Component {
         }
       });
 
-    spotifyApi.getFollowedArtists().then(response => {
-      this.setState({
-        followingCount: response.artists.items.length
+    spotifyApi
+      .getFollowedArtists()
+      .then(response => {
+        this.setState({
+          followingCount: response.artists.items.length
+        });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
-    });
 
-    spotifyApi.getUserPlaylists().then(response => {
-      this.setState({
-        playlistAmount: response.total
+    spotifyApi
+      .getUserPlaylists()
+      .then(response => {
+        this.setState({
+          playlistAmount: response.total
+        });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
-    });
 
     spotifyApi
       .getMyTopTracks({ limit: 10, time_range: "medium_term" })
@@ -84,6 +94,9 @@ class Profile extends Component {
         this.setState({
           topTracks: response.items
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
 
     spotifyApi
@@ -106,6 +119,9 @@ class Profile extends Component {
           recentlyPlayed: trackInfo.tracks,
           loading: false
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 

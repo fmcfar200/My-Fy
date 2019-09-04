@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
@@ -36,6 +37,9 @@ class TopTracks extends Component {
           loading: false,
           range: range
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 

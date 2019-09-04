@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
+import * as Sentry from "@sentry/browser";
 import { token } from "../utils";
 import { formatNumber } from "../utils";
 import { toast } from "react-toastify";
@@ -42,25 +43,35 @@ class Artist extends Component {
     const artistId = this.props.match.params.id;
 
     if (artistId && artistId !== "") {
-      spotifyApi.getArtist(artistId).then(response => {
-        this.setState({
-          name: response.name,
-          followers: formatNumber(response.followers.total),
-          genres: response.genres,
-          id: response.id,
-          imageURL: response.images[1].url,
-          popularity: response.popularity,
-          type: response.type,
-          spotifyURL: response.external_urls.spotify
+      spotifyApi
+        .getArtist(artistId)
+        .then(response => {
+          this.setState({
+            name: response.name,
+            followers: formatNumber(response.followers.total),
+            genres: response.genres,
+            id: response.id,
+            imageURL: response.images[1].url,
+            popularity: response.popularity,
+            type: response.type,
+            spotifyURL: response.external_urls.spotify
+          });
+        })
+        .catch(err => {
+          Sentry.captureException(err);
         });
-      });
 
-      spotifyApi.isFollowingArtists([artistId]).then(response => {
-        this.setState({
-          userFollowing: response[0],
-          loading: false
+      spotifyApi
+        .isFollowingArtists([artistId])
+        .then(response => {
+          this.setState({
+            userFollowing: response[0],
+            loading: false
+          });
+        })
+        .catch(err => {
+          Sentry.captureException(err);
         });
-      });
     }
   }
 

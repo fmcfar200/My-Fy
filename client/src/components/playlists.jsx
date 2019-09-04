@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
+import * as Sentry from "@sentry/browser";
 import GridList from "../common/gridList";
 import { token } from "../utils";
 
@@ -33,6 +34,9 @@ class Playlists extends Component {
           playLists: thePlaylists,
           loading: false
         });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
       });
   }
 
