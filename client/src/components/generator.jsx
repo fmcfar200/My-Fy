@@ -8,6 +8,7 @@ import { token, humanize } from "../utils";
 import ActivityIndicator from "../common/activityIndicator";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
+import ModalAlertDialog from "../common/modalAlertDialog";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -293,6 +294,11 @@ class Generator extends Component {
       });
   }
 
+  handleConfirmClick() {
+    this.clearSelection();
+    this.generateFromPlaylist(this.state.id);
+  }
+
   render() {
     const {
       loading,
@@ -367,59 +373,16 @@ class Generator extends Component {
               />
             )}
           </div>
-          <div className="fadedScroller_fade"></div>
         </div>
 
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Refresh Tracks
-                </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                Refreshing track list will lose your currently selected tracks.
-                Add them to a playlist if you do not wish to lose them.
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary refresh"
-                  data-dismiss="modal"
-                  onClick={() => {
-                    this.clearSelection();
-                    this.generateFromPlaylist(this.state.id);
-                  }}
-                >
-                  Refresh Tracks
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ModalAlertDialog
+          title="Refresh Tracks"
+          body=" Refreshing track list will lose your currently selected tracks. Add
+            them to a playlist if you do not wish to lose them. "
+          closeButtonLabel="Close"
+          confirmButtonLabel="RefreshTracks"
+          handleConfirmClick={() => this.handleConfirmClick()}
+        />
       </React.Fragment>
     );
   }

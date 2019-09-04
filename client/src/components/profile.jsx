@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import * as Sentry from "@sentry/browser";
+import { token, logout } from "../utils";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
-import { token, logout } from "../utils";
+import * as Sentry from "@sentry/browser";
 import ActivityIndicator from "../common/activityIndicator";
 import "../styles/profile.css";
 import "../styles/spotifyButton.css";
