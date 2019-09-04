@@ -6,6 +6,7 @@ h2 {
   color: white;
   font-size: 25px !important;
   margin-bottom: 25px;
+  text-align: start;
 }
 .Generator-Header {
   display: block;

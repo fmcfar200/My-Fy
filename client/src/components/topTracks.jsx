@@ -33,7 +33,8 @@ class TopTracks extends Component {
       .then(response => {
         this.setState({
           currentList: response.items,
-          loading: false
+          loading: false,
+          range: range
         });
       });
   }
@@ -50,7 +51,7 @@ class TopTracks extends Component {
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, range } = this.state;
     return (
       <React.Fragment>
         <div>
@@ -88,7 +89,7 @@ class TopTracks extends Component {
               </button>
             </div>
             {!loading && (
-              <Link to={`/generator/${"top-tracks"}`}>
+              <Link to={`/generator/${"top-tracks"}/${range}`}>
                 <button
                   className="Spotify-Button Spotify-Button-Play"
                   style={{}}

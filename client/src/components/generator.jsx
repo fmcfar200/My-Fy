@@ -22,15 +22,15 @@ class Generator extends Component {
     userId: "",
     orginalPlaylistName: "",
     generatorType: this.props.match.params.type,
-    itemId: this.props.match.params.id,
+    id: this.props.match.params.id,
     generatedTracks: [],
     accessiblePlaylists: [],
     checkedTracks: []
   };
 
   componentDidMount() {
-    const { generatorType, itemId } = this.state;
-    console.log(generatorType);
+    const { generatorType, id } = this.state;
+    console.log(this.props.match.params);
 
     //Gets User details
     spotifyApi.getMe().then(userResponse => {
@@ -64,24 +64,25 @@ class Generator extends Component {
       });
 
     if (generatorType === "playlist") {
-      spotifyApi.getPlaylist(itemId).then(response => {
+      spotifyApi.getPlaylist(id).then(response => {
         this.setState({
           orginalPlaylistName: response.name
         });
       });
 
-      this.generateFromPlaylist(itemId);
+      this.generateFromPlaylist(id);
     } else if (generatorType === "top-tracks") {
       this.setState({
-        orginalPlaylistName: "Top Tracks"
+        orginalPlaylistName: `Top Tracks - ${id}`
       });
       this.generateFromTopTracks();
     }
   }
 
   generateFromTopTracks() {
+    const { id } = this.state;
     spotifyApi
-      .getMyTopTracks({ limit: 50 })
+      .getMyTopTracks({ limit: 50, time_range: id })
       .then(response => {
         return response.items;
       })
@@ -167,7 +168,7 @@ class Generator extends Component {
     return seedArtistsArray.join(",").toString();
   }
 
-  saveGeneratedTracksToPlaylist(playlistId, playlistName) {
+  saveGeneratedTracksToPlaylist(id, playlistName) {
     const { generatedTracks, checkedTracks } = this.state;
     var selectedTracks = [];
     var trackURIs = [];
@@ -183,7 +184,7 @@ class Generator extends Component {
       trackURIs.push(item.uri);
     });
 
-    if (playlistId === "new") {
+    if (id === "new") {
       //creates a new playlist and then adds all tracks to it
       spotifyApi
         .createPlaylist(this.state.userId, {
@@ -192,11 +193,11 @@ class Generator extends Component {
         .then(createdResponse => {
           return createdResponse.id;
         })
-        .then(newPlaylistId => {
-          spotifyApi.addTracksToPlaylist(newPlaylistId, trackURIs);
+        .then(newid => {
+          spotifyApi.addTracksToPlaylist(newid, trackURIs);
         });
     } else {
-      spotifyApi.addTracksToPlaylist(playlistId, trackURIs);
+      spotifyApi.addTracksToPlaylist(id, trackURIs);
     }
 
     this.clearSelection();
@@ -285,7 +286,7 @@ class Generator extends Component {
                 data-target={checkedTracks.length > 0 ? "#exampleModal" : ""}
                 onClick={() => {
                   if (checkedTracks.length === 0) {
-                    this.generateFromPlaylist(this.state.itemId);
+                    this.generateFromPlaylist(this.state.id);
                   }
                 }}
               >
@@ -349,7 +350,7 @@ class Generator extends Component {
                   data-dismiss="modal"
                   onClick={() => {
                     this.clearSelection();
-                    this.generateFromPlaylist(this.state.itemId);
+                    this.generateFromPlaylist(this.state.id);
                   }}
                 >
                   Refresh Tracks
