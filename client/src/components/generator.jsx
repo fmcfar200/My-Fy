@@ -92,7 +92,7 @@ class Generator extends Component {
         return response.items;
       })
       .then(tracks => {
-        return this.generateSeedTracks(tracks);
+        return this.createSeedTracks(tracks);
       })
       .then(seedTracks => {
         const seed_tracks = seedTracks;
@@ -118,7 +118,7 @@ class Generator extends Component {
         return response.items;
       })
       .then(artists => {
-        return this.generateSeedArtists(artists);
+        return this.createSeedArtists(artists);
       })
       .then(seedArtists => {
         const seed_artists = seedArtists;
@@ -159,12 +159,23 @@ class Generator extends Component {
     }
   }
 
+  refreshTracks() {
+    const { generatorType, id } = this.state;
+
+    if (generatorType === "playlist") {
+      this.generateFromPlaylist(id);
+    } else if (generatorType === "top-tracks") {
+      this.generateFromTopTracks();
+    } else if (generatorType === "top-artists") {
+      this.generateFromTopTracks();
+    }
+  }
   handleMenuClose = () => {
     this.menuRef.current.handleClick();
   };
 
   //generates track seeds
-  generateSeedTracks(tracks) {
+  createSeedTracks(tracks) {
     let randomIndexArr = [
       Math.floor(Math.random() * tracks.length),
       Math.floor(Math.random() * tracks.length),
@@ -186,7 +197,7 @@ class Generator extends Component {
   }
 
   //generates atrists seeds
-  generateSeedArtists(artists) {
+  createSeedArtists(artists) {
     let randomIndexArr = [
       Math.floor(Math.random() * artists.length),
       Math.floor(Math.random() * artists.length),
@@ -250,7 +261,7 @@ class Generator extends Component {
       .then(response => {
         tracks = response.items;
 
-        return this.generateSeedTracks(tracks);
+        return this.createSeedTracks(tracks);
       })
       .then(seedTracks => {
         spotifyApi
@@ -321,7 +332,7 @@ class Generator extends Component {
                 data-target={checkedTracks.length > 0 ? "#exampleModal" : ""}
                 onClick={() => {
                   if (checkedTracks.length === 0) {
-                    this.generateFromPlaylist(this.state.id);
+                    this.refreshTracks();
                   }
                 }}
               >
