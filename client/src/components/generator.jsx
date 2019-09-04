@@ -76,6 +76,11 @@ class Generator extends Component {
         orginalPlaylistName: `Top Tracks - ${id}`
       });
       this.generateFromTopTracks();
+    } else if (generatorType === "top-artists") {
+      this.setState({
+        orginalPlaylistName: `Top Artists - ${id}`
+      });
+      this.generateFromTopArtists();
     }
   }
 
@@ -94,6 +99,32 @@ class Generator extends Component {
         spotifyApi
           .getRecommendations({
             seed_tracks: seed_tracks,
+            limit: 100
+          })
+          .then(response => {
+            this.setState({
+              generatedTracks: response.tracks,
+              loading: false
+            });
+          });
+      });
+  }
+
+  generateFromTopArtists() {
+    const { id } = this.state;
+    spotifyApi
+      .getMyTopArtists({ limit: 50, time_range: id })
+      .then(response => {
+        return response.items;
+      })
+      .then(artists => {
+        return this.generateSeedArtists(artists);
+      })
+      .then(seedArtists => {
+        const seed_artists = seedArtists;
+        spotifyApi
+          .getRecommendations({
+            seed_artists: seed_artists,
             limit: 100
           })
           .then(response => {
@@ -155,14 +186,18 @@ class Generator extends Component {
   }
 
   //generates atrists seeds
-  generateSeedArtists(tracks) {
+  generateSeedArtists(artists) {
     let randomIndexArr = [
-      //Math.floor(Math.random() * tracks.length)
+      Math.floor(Math.random() * artists.length),
+      Math.floor(Math.random() * artists.length),
+      Math.floor(Math.random() * artists.length),
+      Math.floor(Math.random() * artists.length),
+      Math.floor(Math.random() * artists.length)
     ];
 
     let seedArtistsArray = [];
     for (var i = 0; i < randomIndexArr.length; i++) {
-      seedArtistsArray.push(tracks[randomIndexArr[i]].track.artists[0].id);
+      seedArtistsArray.push(artists[randomIndexArr[i]].id);
     }
 
     return seedArtistsArray.join(",").toString();

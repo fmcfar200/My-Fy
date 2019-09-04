@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Spotify from "spotify-web-api-js";
 import GridList from "../common/gridList";
 import { token } from "../utils";
+import { Link } from "react-router-dom";
 import "../styles/topArtists.css";
 import "../styles/topTracks.css";
 import ActivityIndicator from "../common/activityIndicator";
@@ -16,7 +17,8 @@ const TIME_RANGE_LONG = "long_term";
 class TopArtists extends Component {
   state = {
     loading: true,
-    topArtists: []
+    topArtists: [],
+    range: TIME_RANGE_LONG
   };
 
   async componentDidMount() {
@@ -43,13 +45,14 @@ class TopArtists extends Component {
       .then(response => {
         this.setState({
           topArtists: response.items,
-          loading: false
+          loading: false,
+          range: range
         });
       });
   }
 
   render() {
-    const { loading, topArtists } = this.state;
+    const { loading, topArtists, range } = this.state;
     return (
       <React.Fragment>
         <div className="Top-Artists-Container">
@@ -85,6 +88,16 @@ class TopArtists extends Component {
                 4 Weeks
               </button>
             </div>
+            {!loading && (
+              <Link to={`/generator/${"top-artists"}/${range}`}>
+                <button
+                  className="Spotify-Button Spotify-Button-Play"
+                  style={{}}
+                >
+                  More
+                </button>
+              </Link>
+            )}
           </div>
           {loading ? (
             <ActivityIndicator />

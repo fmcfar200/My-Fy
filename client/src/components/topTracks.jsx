@@ -17,7 +17,7 @@ class TopTracks extends Component {
   state = {
     loading: true,
     currentList: [],
-    range: "long_term"
+    range: TIME_RANGE_LONG
   };
 
   async componentDidMount() {
