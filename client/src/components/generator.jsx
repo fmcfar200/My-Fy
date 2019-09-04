@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import * as Sentry from "@sentry/browser";
+import { toast } from "react-toastify";
+import { token, humanize } from "../utils";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import DropdownButton from "../common/dropdownButton";
-import { toast } from "react-toastify";
-import { token, humanize } from "../utils";
 import ActivityIndicator from "../common/activityIndicator";
+import ModalAlertDialog from "../common/modalAlertDialog";
+import * as Sentry from "@sentry/browser";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
-import ModalAlertDialog from "../common/modalAlertDialog";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -32,7 +32,6 @@ class Generator extends Component {
 
   componentDidMount() {
     const { generatorType, id } = this.state;
-    console.log(this.props.match.params);
 
     //Gets User details
     spotifyApi.getMe().then(userResponse => {
@@ -41,7 +40,7 @@ class Generator extends Component {
       });
     });
 
-    //GET PLAYLISTS FOR ADDING
+    //GET PLAYLISTS FOR dropdown menu
     spotifyApi
       .getUserPlaylists({ limit: 50 })
       .then(response => {
@@ -49,8 +48,9 @@ class Generator extends Component {
       })
       .then(followedPlaylists => {
         var accessiblePlaylists = [];
-        accessiblePlaylists.push({ name: "New Playlist", id: "new" });
+        accessiblePlaylists.push({ name: "New Playlist", id: "new" }); // new playlist option
 
+        //see if playlists is owned as well as collaborative
         for (var i = 0; i < followedPlaylists.length; i++) {
           var playlist = followedPlaylists[i];
           if (
@@ -70,13 +70,15 @@ class Generator extends Component {
 
     if (generatorType === "playlist") {
       spotifyApi.getPlaylist(id).then(response => {
+        //set title
         this.setState({
           orginalPlaylistName: response.name
         });
       });
 
-      this.generateFromPlaylist(id);
+      this.generateFromPlaylist(id); // generate tracks form playlist id
     } else {
+      //set title based on options
       var titlePrefix = humanize(id);
       var titleSuffix = humanize(generatorType);
       this.setState({
@@ -84,6 +86,7 @@ class Generator extends Component {
       });
     }
 
+    //generate tracks
     if (generatorType === "top-artists") {
       this.generateFromTopArtists();
     } else if (generatorType === "top-tracks") {
@@ -260,6 +263,7 @@ class Generator extends Component {
     toast.success("Tracks Added to " + playlistName + " 🎵");
   }
 
+  //check track from checkbox
   checkTrack(track) {
     var checkedTracks = this.state.checkedTracks;
     var alreadyAdded = checkedTracks.includes(track);
@@ -274,6 +278,7 @@ class Generator extends Component {
     });
   }
 
+  //clear selected tracks
   clearSelection() {
     this.setState({ checkedTracks: [] });
     var checkedBoxes = document.getElementsByTagName("INPUT");
@@ -283,6 +288,7 @@ class Generator extends Component {
     }
   }
 
+  //refresh tracks
   refreshTracks() {
     const { generatorType, id } = this.state;
 
@@ -294,15 +300,19 @@ class Generator extends Component {
       this.generateFromTopTracks();
     }
   }
+
+  //handler for closing menu
   handleMenuClose = () => {
     this.menuRef.current.handleClick();
   };
 
+  //handler for confirm button in modal menu
   handleConfirmClick() {
     this.clearSelection();
     this.generateFromPlaylist(this.state.id);
   }
 
+  //RENDER
   render() {
     const {
       loading,
@@ -312,6 +322,7 @@ class Generator extends Component {
       checkedTracks
     } = this.state;
 
+    //mapping accessible playlists into list items
     const dropdownListItems = accessiblePlaylists.map(item => (
       <li
         key={item.id}
@@ -365,6 +376,8 @@ class Generator extends Component {
               </button>
             </div>
           </div>
+
+          {/* Track list container */}
           <div className="Tracks-Container">
             {loading ? (
               <ActivityIndicator />
@@ -379,6 +392,7 @@ class Generator extends Component {
           </div>
         </div>
 
+        {/* Modal Menu */}
         <ModalAlertDialog
           title="Refresh Tracks"
           body=" Refreshing track list will lose your currently selected tracks. Add
