@@ -8,13 +8,15 @@ const Sidebar = () => {
     <div className="sidenav">
       <nav className="navbar p-0 side align-items-start nav-fill justify-content-start h-100 navbar-light">
         <NavLink className="nav-item nav-link logo" to="/profile">
-          <img
-            src={logo}
-            className="d-inline-block align-top"
-            width="100"
-            height="100"
-            alt="logo"
-          />
+          <i
+            className="fa fa-wifi"
+            style={{
+              fontSize: 50,
+              transform: "rotate(45deg)",
+              color: "#1db954",
+              marginTop: 20
+            }}
+          ></i>
         </NavLink>
 
         <div className="navbar-nav nav-fill w-100">
