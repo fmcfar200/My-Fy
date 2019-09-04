@@ -91,6 +91,7 @@ class Generator extends Component {
     }
   }
 
+  //GENERATE FROM USERS TOP TRACKS
   generateFromTopTracks() {
     const { id } = this.state;
     spotifyApi
@@ -120,6 +121,7 @@ class Generator extends Component {
       });
   }
 
+  //GENERATE FROM USER'S TOP ARTISTS
   generateFromTopArtists() {
     const { id } = this.state;
     spotifyApi
@@ -149,43 +151,35 @@ class Generator extends Component {
       });
   }
 
-  checkTrack(track) {
-    var checkedTracks = this.state.checkedTracks;
-    var alreadyAdded = checkedTracks.includes(track);
-    if (alreadyAdded) {
-      checkedTracks.splice(checkedTracks.indexOf(track), 1);
-    } else {
-      checkedTracks.push(track);
-    }
+  //GENERATE TRACKS BASED ON A PLAYLIST
+  generateFromPlaylist(itemId) {
+    var tracks = [];
 
-    this.setState({
-      checkedTracks: checkedTracks
-    });
+    //generates seeds and new tracks
+    spotifyApi
+      .getPlaylistTracks(itemId)
+      .then(response => {
+        tracks = response.items;
+
+        return this.createSeedTracks(tracks);
+      })
+      .then(seedTracks => {
+        spotifyApi
+          .getRecommendations({
+            seed_tracks: seedTracks,
+            limit: 100
+          })
+          .then(response => {
+            this.setState({
+              generatedTracks: response.tracks,
+              loading: false
+            });
+          });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
+      });
   }
-
-  clearSelection() {
-    this.setState({ checkedTracks: [] });
-    var checkedBoxes = document.getElementsByTagName("INPUT");
-
-    for (var i = 0; i < checkedBoxes.length; i++) {
-      checkedBoxes[i].checked = false;
-    }
-  }
-
-  refreshTracks() {
-    const { generatorType, id } = this.state;
-
-    if (generatorType === "playlist") {
-      this.generateFromPlaylist(id);
-    } else if (generatorType === "top-tracks") {
-      this.generateFromTopTracks();
-    } else if (generatorType === "top-artists") {
-      this.generateFromTopTracks();
-    }
-  }
-  handleMenuClose = () => {
-    this.menuRef.current.handleClick();
-  };
 
   //generates track seeds
   createSeedTracks(tracks) {
@@ -227,6 +221,7 @@ class Generator extends Component {
     return seedArtistsArray.join(",").toString();
   }
 
+  //SAVE TRACKS TO PLAYLIST
   saveGeneratedTracksToPlaylist(id, playlistName) {
     const { generatedTracks, checkedTracks } = this.state;
     var selectedTracks = [];
@@ -265,34 +260,43 @@ class Generator extends Component {
     toast.success("Tracks Added to " + playlistName + " 🎵");
   }
 
-  generateFromPlaylist(itemId) {
-    var tracks = [];
+  checkTrack(track) {
+    var checkedTracks = this.state.checkedTracks;
+    var alreadyAdded = checkedTracks.includes(track);
+    if (alreadyAdded) {
+      checkedTracks.splice(checkedTracks.indexOf(track), 1);
+    } else {
+      checkedTracks.push(track);
+    }
 
-    //generates seeds and new tracks
-    spotifyApi
-      .getPlaylistTracks(itemId)
-      .then(response => {
-        tracks = response.items;
-
-        return this.createSeedTracks(tracks);
-      })
-      .then(seedTracks => {
-        spotifyApi
-          .getRecommendations({
-            seed_tracks: seedTracks,
-            limit: 100
-          })
-          .then(response => {
-            this.setState({
-              generatedTracks: response.tracks,
-              loading: false
-            });
-          });
-      })
-      .catch(err => {
-        Sentry.captureException(err);
-      });
+    this.setState({
+      checkedTracks: checkedTracks
+    });
   }
+
+  clearSelection() {
+    this.setState({ checkedTracks: [] });
+    var checkedBoxes = document.getElementsByTagName("INPUT");
+
+    for (var i = 0; i < checkedBoxes.length; i++) {
+      checkedBoxes[i].checked = false;
+    }
+  }
+
+  refreshTracks() {
+    const { generatorType, id } = this.state;
+
+    if (generatorType === "playlist") {
+      this.generateFromPlaylist(id);
+    } else if (generatorType === "top-tracks") {
+      this.generateFromTopTracks();
+    } else if (generatorType === "top-artists") {
+      this.generateFromTopTracks();
+    }
+  }
+  handleMenuClose = () => {
+    this.menuRef.current.handleClick();
+  };
 
   handleConfirmClick() {
     this.clearSelection();
