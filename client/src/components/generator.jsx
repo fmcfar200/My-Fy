@@ -3,10 +3,11 @@ import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
 import DropdownButton from "../common/dropdownButton";
 import { toast } from "react-toastify";
-import { token } from "../utils";
+import { token, humanize } from "../utils";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
 import ActivityIndicator from "../common/activityIndicator";
+import TopTracks from "./topTracks";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -71,16 +72,18 @@ class Generator extends Component {
       });
 
       this.generateFromPlaylist(id);
-    } else if (generatorType === "top-tracks") {
+    } else {
+      var titlePrefix = humanize(generatorType);
+      var titleSuffix = humanize(id);
       this.setState({
-        orginalPlaylistName: `Top Tracks - ${id}`
+        orginalPlaylistName: `${titlePrefix} - ${titleSuffix}`
       });
-      this.generateFromTopTracks();
-    } else if (generatorType === "top-artists") {
-      this.setState({
-        orginalPlaylistName: `Top Artists - ${id}`
-      });
+    }
+
+    if (generatorType === "top-artists") {
       this.generateFromTopArtists();
+    } else if (generatorType === "top-tracks") {
+      this.generateFromTopTracks();
     }
   }
 

@@ -174,3 +174,11 @@ export const parseTrackKey = note => {
 export const formatNumber = num => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
+
+export const humanize = str => {
+  var frags = str.split("_");
+  for (var i = 0; i < frags.length; i++) {
+    frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+  }
+  return frags.join(" ");
+};
