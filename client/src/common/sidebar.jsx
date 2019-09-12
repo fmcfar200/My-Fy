@@ -7,7 +7,7 @@ const Sidebar = () => {
     <div className="sidenav">
       <nav className="navbar p-0 side align-items-start nav-fill justify-content-start h-100 navbar-light">
         <NavLink className="nav-item nav-link logo" to="/profile">
-          <i
+          {/* <i
             className="fa fa-wifi"
             style={{
               fontSize: 50,
@@ -15,7 +15,8 @@ const Sidebar = () => {
               color: "#1db954",
               marginTop: 20
             }}
-          ></i>
+          ></i> */}
+          <img src="android-chrome-192x192.png" alt="" width={75} height={75} />
         </NavLink>
 
         <div className="navbar-nav nav-fill w-100">
