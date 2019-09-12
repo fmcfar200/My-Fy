@@ -1,0 +1,17 @@
+th {
+  color: grey;
+}
+
+td {
+  vertical-align: middle !important;
+  color: white;
+  max-lines: 1;
+}
+
+.length {
+  color: grey;
+}
+
+.th-select {
+  transform: translate(10%);
+}
