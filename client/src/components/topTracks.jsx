@@ -3,6 +3,8 @@ import * as Sentry from "@sentry/browser";
 import { Link } from "react-router-dom";
 import Spotify from "spotify-web-api-js";
 import TrackList from "./trackList";
+import TrackListLarge from "./trackListLarge";
+import ReactResizeDetector from "react-resize-detector";
 import { token } from "../utils";
 import ActivityIndicator from "../common/activityIndicator";
 import "../styles/topTracks.css";
@@ -52,6 +54,26 @@ class TopTracks extends Component {
     }
 
     e.currentTarget.className += " active";
+  }
+
+  renderTrackList(screenWidth, tracks) {
+    if (screenWidth >= 768) {
+      return (
+        <TrackListLarge
+          style={{ padding: "100px 80px" }}
+          data={tracks}
+          history={this.props.history}
+        />
+      );
+    } else {
+      return (
+        <TrackList
+          style={{ padding: "100px 80px" }}
+          data={tracks}
+          history={this.props.history}
+        />
+      );
+    }
   }
 
   render() {
@@ -107,11 +129,11 @@ class TopTracks extends Component {
           {loading ? (
             <ActivityIndicator />
           ) : (
-            <TrackList
-              style={{ padding: "100px 80px" }}
-              data={this.state.currentList}
-              history={this.props.history}
-            />
+            <ReactResizeDetector handleWidth>
+              {({ width }) =>
+                this.renderTrackList(width, this.state.currentList)
+              }
+            </ReactResizeDetector>
           )}
         </div>
       </React.Fragment>

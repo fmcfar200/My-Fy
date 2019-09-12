@@ -32,10 +32,12 @@ const TrackListLarge = props => {
         <td>{getArtistString(item.artists)}</td>
         <td>{item.album.name}</td>
         <td className="length">{msToRuntime(item.duration_ms)}</td>
-        <td>
-          {" "}
-          <input type="checkbox" onClick={() => handleCheck(item)} />
-        </td>
+        {toggle && (
+          <td>
+            {" "}
+            <input type="checkbox" onClick={() => handleCheck(item)} />
+          </td>
+        )}
       </tr>
     );
   });
@@ -49,9 +51,11 @@ const TrackListLarge = props => {
           <th scope="col">Artist</th>
           <th scope="col">Album</th>
           <th scope="col">Length</th>
-          <th className="th-select" scope="col">
-            Select
-          </th>
+          {toggle && (
+            <th className="th-select" scope="col">
+              Select
+            </th>
+          )}
         </tr>
       </thead>
       <tbody>{theTrackList}</tbody>
