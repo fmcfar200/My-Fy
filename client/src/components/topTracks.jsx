@@ -1,12 +1,10 @@
 import React, { Component } from "react";
+import Spotify from "spotify-web-api-js";
+import { token } from "../utils";
 import * as Sentry from "@sentry/browser";
 import { Link } from "react-router-dom";
-import Spotify from "spotify-web-api-js";
-import TrackList from "./trackList";
-import TrackListLarge from "./trackListLarge";
-import ReactResizeDetector from "react-resize-detector";
-import { token } from "../utils";
 import ActivityIndicator from "../common/activityIndicator";
+import TrackListProvider from "./trackListProvider";
 import "../styles/topTracks.css";
 
 const TIME_RANGE_SHORT = "short_term";
@@ -56,28 +54,8 @@ class TopTracks extends Component {
     e.currentTarget.className += " active";
   }
 
-  renderTrackList(screenWidth, tracks) {
-    if (screenWidth >= 768) {
-      return (
-        <TrackListLarge
-          style={{ padding: "100px 80px" }}
-          data={tracks}
-          history={this.props.history}
-        />
-      );
-    } else {
-      return (
-        <TrackList
-          style={{ padding: "100px 80px" }}
-          data={tracks}
-          history={this.props.history}
-        />
-      );
-    }
-  }
-
   render() {
-    const { loading, range } = this.state;
+    const { loading, range, currentList } = this.state;
     return (
       <React.Fragment>
         <div>
@@ -129,11 +107,7 @@ class TopTracks extends Component {
           {loading ? (
             <ActivityIndicator />
           ) : (
-            <ReactResizeDetector handleWidth>
-              {({ width }) =>
-                this.renderTrackList(width, this.state.currentList)
-              }
-            </ReactResizeDetector>
+            <TrackListProvider data={currentList}></TrackListProvider>
           )}
         </div>
       </React.Fragment>

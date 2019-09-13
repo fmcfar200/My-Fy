@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
 import { token, humanize } from "../utils";
-import ReactResizeDetector from "react-resize-detector";
+import * as Sentry from "@sentry/browser";
 import Spotify from "spotify-web-api-js";
-import TrackList from "./trackList";
+import TrackListProvider from "./trackListProvider";
 import DropdownButton from "../common/dropdownButton";
 import ActivityIndicator from "../common/activityIndicator";
 import ModalAlertDialog from "../common/modalAlertDialog";
-import * as Sentry from "@sentry/browser";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
-import TrackListLarge from "./trackListLarge";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -311,29 +309,7 @@ class Generator extends Component {
   //handler for confirm button in modal menu
   handleConfirmClick() {
     this.clearSelection();
-    this.generateFromPlaylist(this.state.id);
-  }
-
-  renderTrackList(screenWidth, tracks) {
-    if (screenWidth >= 768) {
-      return (
-        <TrackListLarge
-          data={tracks}
-          toggle={true}
-          checkTrack={this.checkTrack}
-          history={this.props.history}
-        />
-      );
-    } else {
-      return (
-        <TrackList
-          data={tracks}
-          toggle={true}
-          checkTrack={this.checkTrack}
-          history={this.props.history}
-        />
-      );
-    }
+    this.refreshTracks();
   }
 
   //RENDER
@@ -406,9 +382,12 @@ class Generator extends Component {
             {loading ? (
               <ActivityIndicator />
             ) : (
-              <ReactResizeDetector handleWidth>
-                {({ width }) => this.renderTrackList(width, generatedTracks)}
-              </ReactResizeDetector>
+              <TrackListProvider
+                data={generatedTracks}
+                toggle={true}
+                history={this.props.history}
+                checkTrack={this.checkTrack}
+              ></TrackListProvider>
             )}
           </div>
         </div>
