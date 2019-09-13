@@ -10,6 +10,10 @@ const TrackListLarge = props => {
     checkTrack(item);
   }
 
+  function openItem(item) {
+    history.push(`/tracks/${item.id}`);
+  }
+
   const theTrackList = data.map(item => {
     var imageUrl = "";
     if (item.album.images[2] !== undefined) {
@@ -28,9 +32,11 @@ const TrackListLarge = props => {
             </div>
           </Link>
         </td>
-        <td>{item.name}</td>
-        <td>{getArtistString(item.artists)}</td>
-        <td>{item.album.name}</td>
+        <td className="title" onClick={() => openItem(item)}>
+          {item.name}
+        </td>
+        <td onClick={() => openItem(item)}>{getArtistString(item.artists)}</td>
+        <td onClick={() => openItem(item)}>{item.album.name}</td>
         <td className="length">{msToRuntime(item.duration_ms)}</td>
         {toggle && (
           <td>

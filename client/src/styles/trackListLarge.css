@@ -8,6 +8,10 @@ td {
   color: white;
   text-align: start;
   max-lines: 1;
+  cursor: pointer;
+}
+.title:hover {
+  text-decoration: underline;
 }
 
 .length {
