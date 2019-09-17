@@ -21,3 +21,7 @@ td {
 .th-select {
   transform: translate(10%);
 }
+
+tr:hover {
+  background-color: var(--nav-color);
+}
