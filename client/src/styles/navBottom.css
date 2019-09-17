@@ -1,7 +1,7 @@
 .phantom {
   display: block;
   padding: 10px;
-  height: 40px;
+  height: var(--bottomNav-height) !important;
   width: 100%;
 }
 
@@ -9,13 +9,13 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  height: 40px;
+  height: var(--bottomNav-height) !important;
   width: 100%;
-  background-color: black;
+  background-color: var(--nav-color);
 }
 
 nav.bottom {
-  background-color: black !important;
+  background-color: var(--nav-color) !important;
   align-content: center !important;
   justify-content: space-evenly !important;
   font-size: 12px;
@@ -25,7 +25,7 @@ nav.bottom {
 
 nav.bottom a.nav-item.nav-link {
   border-top: 2.5px solid transparent;
-  color: grey;
+  color: var(--icon-color);
 }
 
 nav.bottom a.nav-item.nav-link.active.active {

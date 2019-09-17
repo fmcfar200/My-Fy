@@ -1,19 +1,19 @@
 .sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 140px; /* Set the width of the sidebar */
+  width: var(--sidebar-width); /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
   left: 0;
-  background-color: #111; /* Black */
+  background-color: var(--nav-color); /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
 }
 
 /* The navigation menu links */
 .sidenav a {
   text-decoration: none;
-  font-size: px;
-  color: #818181;
+  font-size: 16px;
+  color: var(--icon-color);
   display: block;
 }
 
@@ -22,11 +22,12 @@
 }
 
 .sidenav nav {
-  background-color: black;
+  background-color: var(--nav-color);
 }
 
 .sidenav a.nav-item.nav-link {
-  color: grey !important;
+  color: var(--icon-color) !important;
+  border-right: 5px solid var(--nav-color);
 }
 
 .sidenav a.nav-item.nav-link:hover {
@@ -46,7 +47,7 @@
 .sidenav a.nav-item.nav-link.logo.active {
   border: none;
   color: white !important;
-  background: black !important;
+  background: var(--nav-color) !important;
 }
 @media only screen and (max-width: 768px) {
   .sidenav {

@@ -27,6 +27,11 @@
 :root {
   --main-color: #181818;
   --secondary-color: #1db954;
+  --nav-color: #282828;
+  --icon-color: #737373;
+
+  --sidebar-width: 120px;
+  --bottomNav-height: 44px;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 375px) {
@@ -37,7 +42,7 @@
 
 @media only screen and (min-width: 768px) {
   .App {
-    margin-left: 140px;
+    margin-left: var(--sidebar-width);
   }
 }
 

@@ -92,16 +92,11 @@ class TopArtists extends Component {
                 4 Weeks
               </button>
             </div>
-            {!loading && (
-              <Link to={`/generator/${"top-artists"}/${range}`}>
-                <button
-                  className="Spotify-Button Spotify-Button-Play"
-                  style={{}}
-                >
-                  More
-                </button>
-              </Link>
-            )}
+            <Link to={`/generator/${"top-artists"}/${range}`}>
+              <button className="Spotify-Button Spotify-Button-Play" style={{}}>
+                More
+              </button>
+            </Link>
           </div>
           {loading ? (
             <ActivityIndicator />

@@ -92,22 +92,21 @@ class TopTracks extends Component {
                 4 Weeks
               </button>
             </div>
-            {!loading && (
-              <Link to={`/generator/${"top-tracks"}/${range}`}>
-                <button
-                  className="Spotify-Button Spotify-Button-Play"
-                  style={{}}
-                >
-                  More
-                </button>
-              </Link>
-            )}
+            <Link to={`/generator/${"top-tracks"}/${range}`}>
+              <button className="Spotify-Button Spotify-Button-Play" style={{}}>
+                More
+              </button>
+            </Link>
           </div>
 
           {loading ? (
             <ActivityIndicator />
           ) : (
-            <TrackListProvider data={currentList}></TrackListProvider>
+            <React.Fragment>
+              <div className="tracklist">
+                <TrackListProvider data={currentList}></TrackListProvider>
+              </div>
+            </React.Fragment>
           )}
         </div>
       </React.Fragment>

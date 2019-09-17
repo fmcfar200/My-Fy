@@ -8,6 +8,7 @@ import { getAverageAudioFeatures } from "../utils/index";
 import { token } from "../utils";
 import "../styles/playlist.css";
 import "../styles/topTracks.css";
+import TrackListProvider from "./trackListProvider";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -143,7 +144,10 @@ class Playlist extends Component {
           </div>
           <div className="Body-Content">
             {showTracks ? (
-              <TrackList data={playlistTracks} history={this.props.history} />
+              <TrackListProvider
+                data={playlistTracks}
+                history={this.props.history}
+              />
             ) : (
               <React.Fragment>
                 <BarGraph

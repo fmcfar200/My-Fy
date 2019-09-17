@@ -21,6 +21,7 @@ h2 {
 
 .Header-Button-Container {
   display: flex;
+  flex-direction: row-reverse;
   margin-top: 24px;
   margin-bottom: 24px;
 }
@@ -38,14 +39,15 @@ h2 {
   padding: 2px 20px;
   background: transparent;
   border: 2px solid grey;
-  margin-left: 16px;
+  margin-right: 16px;
 }
+
 .Refresh {
   background-color: transparent;
   border-radius: 50%;
   outline: none;
   border-color: grey;
-  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .fa-sync {
