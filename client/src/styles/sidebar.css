@@ -45,9 +45,15 @@
 }
 
 .sidenav a.nav-item.nav-link.logo.active {
-  border: none;
+  border-right: 5px solid transparent;
   color: white !important;
   background: var(--nav-color) !important;
+}
+
+.brand-title {
+  font-family: "Squada One", cursive;
+  color: var(--secondary-color);
+  font-size: 24px;
 }
 @media only screen and (max-width: 768px) {
   .sidenav {

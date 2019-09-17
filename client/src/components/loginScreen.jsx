@@ -29,7 +29,7 @@ class LoginScreen extends Component {
           <div style={{ textAlign: "center" }}>
             {/* https://my-fyauth.herokuapp.com/ -production
               http://localhost:8888 - development */}
-            <h1>My-Fy</h1>
+            <h1 className="login-title">My-Fy</h1>
             <a href={this.state.authServerURL}>
               <button className="Spotify-Button Spotify-Button-Trans">
                 Login To Spotify

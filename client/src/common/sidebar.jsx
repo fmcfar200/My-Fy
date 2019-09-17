@@ -16,6 +16,9 @@ const Sidebar = () => {
               marginTop: 20
             }}
           ></i>
+          <div>
+            <span className="brand-title">My-Fy</span>
+          </div>
         </NavLink>
 
         <div className="navbar-nav nav-fill w-100">

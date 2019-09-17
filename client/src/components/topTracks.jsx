@@ -104,7 +104,10 @@ class TopTracks extends Component {
           ) : (
             <React.Fragment>
               <div className="tracklist">
-                <TrackListProvider data={currentList}></TrackListProvider>
+                <TrackListProvider
+                  data={currentList}
+                  history={this.props.history}
+                ></TrackListProvider>
               </div>
             </React.Fragment>
           )}
