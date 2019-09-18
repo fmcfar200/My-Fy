@@ -18,6 +18,10 @@
   margin-top: 0px;
 }
 
+.track-list li:hover {
+  background-color: var(--nav-color);
+}
+
 .Image-Container {
   position: relative;
   width: 100%;

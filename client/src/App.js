@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { token } from "./utils";
+import ScrollUpButton from "react-scroll-up-button";
 import LoginScreen from "./components/loginScreen";
 import Profile from "./components/profile";
 import NotFound from "./components/notFound";
@@ -54,6 +55,7 @@ class App extends Component {
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />
               </Switch>
+              <ScrollUpButton style={{ bottom: "65px" }} />
             </main>
             <NavBottom></NavBottom>
           </React.Fragment>

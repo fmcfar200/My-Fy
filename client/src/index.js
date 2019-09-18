@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactGA from "react-ga";
+import createHistory from "history/createBrowserHistory";
 import { Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import * as Sentry from "@sentry/browser";
-import ReactGA from "react-ga";
-import createHistory from "history/createBrowserHistory";
 import App from "./App";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
