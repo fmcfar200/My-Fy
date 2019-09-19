@@ -31,8 +31,9 @@ class LoginScreen extends Component {
               http://localhost:8888 - development */}
             <h1 className="login-title">My-Fy</h1>
             <a href={this.state.authServerURL}>
-              <button className="Spotify-Button Spotify-Button-Trans">
-                Login To Spotify
+              <button className="Spotify-Button Spotify-Button-Play login-button">
+                <i className="fab fa-spotify icon" aria-hidden="true"></i>
+                Connect With Spotify
               </button>
             </a>
           </div>
