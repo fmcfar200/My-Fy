@@ -58,7 +58,7 @@ class App extends Component {
             </main>
             <ScrollUpButton
               style={{
-                bottom: "65px"
+                bottom: "95px"
               }}
             />
             <NavBottom></NavBottom>

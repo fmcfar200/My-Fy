@@ -30,7 +30,7 @@ const PlaylistHeader = props => {
           <a href={spotifyUrl} target="_blank" rel="noopener noreferrer">
             <button
               className="Spotify-Button Spotify-Button-Play"
-              style={{ marginTop: "16px" }}
+              style={{ marginTop: "8px" }}
             >
               Play
             </button>
@@ -38,7 +38,11 @@ const PlaylistHeader = props => {
           <Link to={`/generator/${generatorType}/${id}`}>
             <button
               className="Spotify-Button Spotify-Button-Play"
-              style={{ marginTop: "16px" }}
+              style={{
+                marginTop: "16px",
+                marginLeft: "16px",
+                backgroundColor: "transparent"
+              }}
             >
               More
             </button>
