@@ -46,7 +46,7 @@ class Playlist extends Component {
         }
 
         this.setState({
-          playlist: response,
+          playlist: thePlaylist,
           playlistTracks: thePlaylistTracks
         });
 
@@ -144,10 +144,15 @@ class Playlist extends Component {
           </div>
           <div className="Body-Content">
             {showTracks ? (
-              <TrackListProvider
-                data={playlistTracks}
-                history={this.props.history}
-              />
+              <div>
+                <TrackListProvider
+                  data={playlistTracks}
+                  history={this.props.history}
+                />
+                {playlist.tracks.total > playlistTracks.length && (
+                  <button>Show More</button>
+                )}
+              </div>
             ) : (
               <React.Fragment>
                 <BarGraph
