@@ -55,8 +55,12 @@ class App extends Component {
                 <Redirect from="/" exact to="/profile" />
                 <Redirect to="/not-found" />
               </Switch>
-              <ScrollUpButton style={{ bottom: "65px" }} />
             </main>
+            <ScrollUpButton
+              style={{
+                bottom: "65px"
+              }}
+            />
             <NavBottom></NavBottom>
           </React.Fragment>
         )}
