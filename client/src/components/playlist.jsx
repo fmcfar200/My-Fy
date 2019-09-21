@@ -8,6 +8,7 @@ import { getAverageAudioFeatures } from "../utils/index";
 import { token } from "../utils";
 import "../styles/playlist.css";
 import "../styles/topTracks.css";
+import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -20,7 +21,9 @@ class Playlist extends Component {
     playlist: null,
     playlistTracks: [],
     showTracks: true,
-    trackIds: ""
+    trackIds: "",
+    fetchOffset: 0,
+    loadingMore: false
   };
 
   getSongIds(tracks) {
@@ -32,57 +35,70 @@ class Playlist extends Component {
     return ids.join(",").toString();
   }
 
+  getMore() {
+    this.setState({
+      loadingMore: true
+    });
+
+    var theOffset = this.state.fetchOffset + 100;
+    spotifyApi
+      .getPlaylistTracks(this.state.playlistId, {
+        offset: theOffset
+      })
+      .then(response => {
+        var thePlaylistTracks = this.state.playlistTracks;
+        response.items.forEach(item => {
+          thePlaylistTracks.push(item.track);
+        });
+        return thePlaylistTracks;
+      })
+      .then(thePlaylistTracks => {
+        this.setState({
+          playlistTracks: thePlaylistTracks,
+          fetchOffset: theOffset,
+          loadingMore: false
+        });
+      });
+  }
+
   async componentDidMount() {
     const { playlistId } = this.state;
 
-    //WORKING CODE FOR GRABBING ALL TRACKS
-    // spotifyApi
-    //   .getPlaylist(playlistId)
-    //   .then(response => {
-    //     this.setState({
-    //       playlist: response
-    //     });
-    //     var totalTracks = response.tracks.total;
-    //     return totalTracks;
-    //   })
-    //   .then(totalTracks => {
-    //     if (totalTracks > 100) {
-    //       var thePlaylistTracks = [];
-    //       var fetches = (Math.ceil(totalTracks / 100) * 100) / 100;
-    //       for (var i = 0; i < fetches; i++) {
-    //         spotifyApi
-    //           .getPlaylistTracks(playlistId, { offset: i * 100 })
-    //           .then(response => {
-    //             thePlaylistTracks = [...thePlaylistTracks, response.items];
-    //           })
-    //           .then(() => {
-    //             console.log(thePlaylistTracks);
-    //           });
-    //       }
-    //     }
-    //   });
-
+    //get tracks for track list
     spotifyApi
       .getPlaylist(playlistId)
       .then(response => {
-        const thePlaylist = response;
-        var thePlaylistTracks = [];
-        for (var i = 0; i < thePlaylist.tracks.items.length; i++) {
-          thePlaylistTracks.push(thePlaylist.tracks.items[i].track);
-        }
-
         this.setState({
-          playlist: thePlaylist,
-          playlistTracks: thePlaylistTracks
+          playlist: response
         });
-
-        let trackIdString = this.getSongIds(thePlaylistTracks);
-        return trackIdString;
       })
-      .then(function(trackIds) {
-        spotifyApi.getAudioFeaturesForTracks(trackIds).then(response => {
-          audioFeatureData = getAverageAudioFeatures(response.audio_features);
-        });
+      .then(() => {
+        spotifyApi
+          .getPlaylistTracks(playlistId, { offset: this.state.fetchOffset })
+          .then(response => {
+            var thePlaylistTracks = [];
+            response.items.forEach(item => {
+              thePlaylistTracks.push(item.track);
+            });
+            return thePlaylistTracks;
+          })
+          .then(thePlaylistTracks => {
+            //set the playlist tracks
+            this.setState({
+              playlistTracks: thePlaylistTracks
+            });
+
+            //now gets the audio features - gets a string of the song ids to send to spotify
+            let trackIdString = this.getSongIds(thePlaylistTracks);
+            return trackIdString;
+          })
+          .then(trackIds => {
+            spotifyApi.getAudioFeaturesForTracks(trackIds).then(response => {
+              audioFeatureData = getAverageAudioFeatures(
+                response.audio_features
+              );
+            });
+          });
       })
       .catch(err => {
         Sentry.captureException(err);
@@ -101,7 +117,13 @@ class Playlist extends Component {
   }
 
   render() {
-    const { playlist, playlistTracks, showTracks, playlistId } = this.state;
+    const {
+      playlist,
+      playlistTracks,
+      showTracks,
+      playlistId,
+      loadingMore
+    } = this.state;
 
     const chartData = {
       labels: [
@@ -176,7 +198,13 @@ class Playlist extends Component {
                   history={this.props.history}
                 />
                 {playlist.tracks.total > playlistTracks.length && (
-                  <button>Show More</button>
+                  <button
+                    className="Spotify-Button Spotify-Button-Play"
+                    style={{ backgroundColor: "grey", borderColor: "grey" }}
+                    onClick={() => this.getMore()}
+                  >
+                    Show More
+                  </button>
                 )}
               </div>
             ) : (
