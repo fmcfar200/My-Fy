@@ -226,7 +226,8 @@ class Playlist extends Component {
                           className="Spotify-Button Spotify-Button-Play"
                           style={{
                             backgroundColor: "grey",
-                            borderColor: "grey"
+                            borderColor: "grey",
+                            marginBottom: "8px"
                           }}
                           onClick={() => this.getMore()}
                         >

@@ -1,7 +1,7 @@
 import React from "react";
 import { Digital } from "react-activity";
-import "../styles/activityIndicator.css";
 import "react-activity/dist/react-activity.css";
+import "../styles/activityIndicator.css";
 
 const ActivityIndicator = () => {
   return (

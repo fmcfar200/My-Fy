@@ -31,6 +31,13 @@
   filter: brightness(50%);
 }
 
+.Top-Artists-Grid .Name-Label {
+  color: white;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
 @media only screen and (min-width: 320px) and (max-width: 375px) {
   .Top-Artists-Grid img {
     width: 100px;
