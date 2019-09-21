@@ -9,6 +9,7 @@ import ActivityIndicator from "../common/activityIndicator";
 import ModalAlertDialog from "../common/modalAlertDialog";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
+import FilterTabs from "./filterTabs";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -27,7 +28,8 @@ class Generator extends Component {
     id: this.props.match.params.id,
     generatedTracks: [],
     accessiblePlaylists: [],
-    checkedTracks: []
+    checkedTracks: [],
+    filterOpen: false
   };
 
   componentDidMount() {
@@ -319,7 +321,8 @@ class Generator extends Component {
       generatedTracks,
       orginalPlaylistName,
       accessiblePlaylists,
-      checkedTracks
+      checkedTracks,
+      filterOpen
     } = this.state;
 
     //mapping accessible playlists into list items
@@ -363,7 +366,7 @@ class Generator extends Component {
               )}
 
               <button
-                className="Refresh"
+                className="Icon-Button"
                 data-toggle={checkedTracks.length > 0 ? "modal" : ""}
                 data-target={checkedTracks.length > 0 ? "#exampleModal" : ""}
                 onClick={() => {
@@ -374,7 +377,20 @@ class Generator extends Component {
               >
                 <i className="fas fa-sync" />
               </button>
+
+              <button
+                className="Icon-Button"
+                onClick={() => {
+                  this.setState({
+                    filterOpen: !this.state.filterOpen
+                  });
+                }}
+              >
+                <i className="fas fa-filter" />
+              </button>
             </div>
+
+            {filterOpen && <FilterTabs />}
           </div>
 
           {/* Track list container */}

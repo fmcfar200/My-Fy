@@ -42,7 +42,7 @@ h2 {
   margin-right: 16px;
 }
 
-.Refresh {
+.Icon-Button {
   background-color: transparent;
   border-radius: 50%;
   outline: none;
@@ -51,6 +51,11 @@ h2 {
 }
 
 .fa-sync {
+  color: white;
+  padding: 10px 5px;
+}
+
+.fa-filter {
   color: white;
   padding: 10px 5px;
 }
