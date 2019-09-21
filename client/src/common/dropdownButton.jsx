@@ -36,7 +36,7 @@ class DropdownButton extends Component {
 
   render() {
     const { menuOpen } = this.state;
-    const { buttonClass, buttonLabel, listItems } = this.props;
+    const { buttonClass, buttonLabel, bodyContent } = this.props;
 
     return (
       <div className="Dropdown-Container" ref={this.conatinerRef}>
@@ -48,11 +48,7 @@ class DropdownButton extends Component {
         >
           {buttonLabel}
         </button>
-        {menuOpen && (
-          <div className="Dropdown">
-            <ul>{listItems}</ul>
-          </div>
-        )}
+        {menuOpen && <div className="Dropdown">{bodyContent}</div>}
       </div>
     );
   }

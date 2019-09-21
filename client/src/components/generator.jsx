@@ -336,6 +336,7 @@ class Generator extends Component {
         {item.name}
       </li>
     ));
+    const dropdownBody = <ul>{dropdownListItems}</ul>;
 
     return (
       <React.Fragment>
@@ -351,7 +352,7 @@ class Generator extends Component {
                     ? "Add all to playlist"
                     : "Add to playlist"
                 }
-                listItems={dropdownListItems}
+                bodyContent={dropdownBody}
               />
 
               {checkedTracks.length > 0 && (
