@@ -6,9 +6,10 @@ import BarGraph from "../common/barGraph";
 import TrackListProvider from "./trackListProvider";
 import { getAverageAudioFeatures } from "../utils/index";
 import { token } from "../utils";
+import { Digital } from "react-activity";
+import "react-activity/dist/react-activity.css";
 import "../styles/playlist.css";
 import "../styles/topTracks.css";
-import ActivityIndicator from "../common/activityIndicator";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -23,6 +24,7 @@ class Playlist extends Component {
     showTracks: true,
     trackIds: "",
     fetchOffset: 0,
+    loading: true,
     loadingMore: false
   };
 
@@ -98,6 +100,11 @@ class Playlist extends Component {
                 response.audio_features
               );
             });
+          })
+          .then(() => {
+            this.setState({
+              loading: false
+            });
           });
       })
       .catch(err => {
@@ -116,12 +123,25 @@ class Playlist extends Component {
     e.currentTarget.className += " active";
   }
 
+  renderActivityIndicator() {
+    return (
+      <div>
+        <Digital
+          style={{ position: "relative" }}
+          color="var(--secondary-color)"
+          size={30}
+        />
+      </div>
+    );
+  }
+
   render() {
     const {
       playlist,
       playlistTracks,
       showTracks,
       playlistId,
+      loading,
       loadingMore
     } = this.state;
 
@@ -191,54 +211,67 @@ class Playlist extends Component {
             </button>
           </div>
           <div className="Body-Content">
-            {showTracks ? (
-              <div>
-                <TrackListProvider
-                  data={playlistTracks}
-                  history={this.props.history}
-                />
-                {playlist.tracks.total > playlistTracks.length && (
-                  <button
-                    className="Spotify-Button Spotify-Button-Play"
-                    style={{ backgroundColor: "grey", borderColor: "grey" }}
-                    onClick={() => this.getMore()}
-                  >
-                    Show More
-                  </button>
-                )}
-              </div>
-            ) : (
-              <React.Fragment>
-                <BarGraph
-                  chartData={chartData}
-                  width={700}
-                  height={500}
-                  options={{
-                    maintainAspectRatio: false,
-                    scales: {
-                      xAxes: [
-                        {
-                          gridLines: {
-                            color: "##1db954"
+            {loading && this.renderActivityIndicator()}
+            <div>
+              {showTracks ? (
+                <div>
+                  <TrackListProvider
+                    data={playlistTracks}
+                    history={this.props.history}
+                  />
+                  {playlist.tracks.total > playlistTracks.length && !loading && (
+                    <div>
+                      {!loadingMore ? (
+                        <button
+                          className="Spotify-Button Spotify-Button-Play"
+                          style={{
+                            backgroundColor: "grey",
+                            borderColor: "grey"
+                          }}
+                          onClick={() => this.getMore()}
+                        >
+                          Show More
+                        </button>
+                      ) : (
+                        this.renderActivityIndicator()
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <React.Fragment>
+                  <BarGraph
+                    chartData={chartData}
+                    width={700}
+                    height={500}
+                    options={{
+                      maintainAspectRatio: false,
+                      scales: {
+                        xAxes: [
+                          {
+                            gridLines: {
+                              color: "##1db954"
+                            }
                           }
-                        }
-                      ],
+                        ],
 
-                      yAxes: [
-                        {
-                          gridLines: {
-                            color: "##1db954"
+                        yAxes: [
+                          {
+                            gridLines: {
+                              color: "##1db954"
+                            }
                           }
-                        }
-                      ]
-                    }
-                  }}
-                />
-                <p>
-                  *Audio Features are based on first 100 tracks of the playlist
-                </p>
-              </React.Fragment>
-            )}
+                        ]
+                      }
+                    }}
+                  />
+                  <p>
+                    *Audio Features are based on first 100 tracks of the
+                    playlist
+                  </p>
+                </React.Fragment>
+              )}
+            </div>
           </div>
         </div>
       </React.Fragment>
