@@ -41,11 +41,23 @@ class TopArtists extends Component {
     this.setState({
       loading: true
     });
+    var theTopArtists = [];
     spotifyApi
       .getMyTopArtists({ limit: 100, time_range: range })
       .then(response => {
+        //catches artists without images and removes
+        theTopArtists = response.items;
+        theTopArtists.forEach(artist => {
+          if (artist.images.length === 0) {
+            var index = theTopArtists.indexOf(artist);
+            theTopArtists.splice(index, 1);
+            Sentry.captureMessage("Caught Unknown Artist : " + artist.name);
+          }
+        });
+      })
+      .then(() => {
         this.setState({
-          topArtists: response.items,
+          topArtists: theTopArtists,
           loading: false,
           range: range
         });

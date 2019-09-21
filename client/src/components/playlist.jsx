@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import * as Sentry from "@sentry/browser";
 import PlaylistHeader from "./playlistHeader";
 import Spotify from "spotify-web-api-js";
-import TrackList from "./trackList";
 import BarGraph from "../common/barGraph";
+import TrackListProvider from "./trackListProvider";
 import { getAverageAudioFeatures } from "../utils/index";
 import { token } from "../utils";
 import "../styles/playlist.css";
 import "../styles/topTracks.css";
-import TrackListProvider from "./trackListProvider";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -35,6 +34,33 @@ class Playlist extends Component {
 
   async componentDidMount() {
     const { playlistId } = this.state;
+
+    //WORKING CODE FOR GRABBING ALL TRACKS
+    // spotifyApi
+    //   .getPlaylist(playlistId)
+    //   .then(response => {
+    //     this.setState({
+    //       playlist: response
+    //     });
+    //     var totalTracks = response.tracks.total;
+    //     return totalTracks;
+    //   })
+    //   .then(totalTracks => {
+    //     if (totalTracks > 100) {
+    //       var thePlaylistTracks = [];
+    //       var fetches = (Math.ceil(totalTracks / 100) * 100) / 100;
+    //       for (var i = 0; i < fetches; i++) {
+    //         spotifyApi
+    //           .getPlaylistTracks(playlistId, { offset: i * 100 })
+    //           .then(response => {
+    //             thePlaylistTracks = [...thePlaylistTracks, response.items];
+    //           })
+    //           .then(() => {
+    //             console.log(thePlaylistTracks);
+    //           });
+    //       }
+    //     }
+    //   });
 
     spotifyApi
       .getPlaylist(playlistId)
