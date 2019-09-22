@@ -29,7 +29,19 @@ class Generator extends Component {
     generatedTracks: [],
     accessiblePlaylists: [],
     checkedTracks: [],
-    filterOpen: false
+    filterOpen: false,
+    //Filter States
+    bpmValue: { min: null, max: null }
+  };
+
+  handleBPMChange = bpmValue => {
+    this.setState({ bpmValue: bpmValue });
+    console.log(this.state.bpmValue);
+  };
+
+  handleApplyFilter = () => {
+    var filter = true;
+    this.refreshTracks(filter);
   };
 
   componentDidMount() {
@@ -157,7 +169,7 @@ class Generator extends Component {
   }
 
   //GENERATE TRACKS BASED ON A PLAYLIST
-  generateFromPlaylist(itemId) {
+  generateFromPlaylist(itemId, filter) {
     var tracks = [];
 
     //generates seeds and new tracks
@@ -169,17 +181,36 @@ class Generator extends Component {
         return this.createSeedTracks(tracks);
       })
       .then(seedTracks => {
-        spotifyApi
-          .getRecommendations({
-            seed_tracks: seedTracks,
-            limit: 100
-          })
-          .then(response => {
-            this.setState({
-              generatedTracks: response.tracks,
-              loading: false
+        if (filter) {
+          console.log(filter);
+          spotifyApi
+            .getRecommendations({
+              seed_tracks: seedTracks,
+              limit: 100,
+
+              max_tempo: this.state.bpmValue.max,
+              min_tempo: this.state.bpmValue.min
+            })
+            .then(response => {
+              console.log(response);
+              this.setState({
+                generatedTracks: response.tracks,
+                loading: false
+              });
             });
-          });
+        } else {
+          spotifyApi
+            .getRecommendations({
+              seed_tracks: seedTracks,
+              limit: 100
+            })
+            .then(response => {
+              this.setState({
+                generatedTracks: response.tracks,
+                loading: false
+              });
+            });
+        }
       })
       .catch(err => {
         Sentry.captureException(err);
@@ -291,11 +322,11 @@ class Generator extends Component {
   }
 
   //refresh tracks
-  refreshTracks() {
+  refreshTracks(filter) {
     const { generatorType, id } = this.state;
 
     if (generatorType === "playlist") {
-      this.generateFromPlaylist(id);
+      this.generateFromPlaylist(id, filter);
     } else if (generatorType === "top-tracks") {
       this.generateFromTopTracks();
     } else if (generatorType === "top-artists") {
@@ -391,7 +422,12 @@ class Generator extends Component {
               </button>
             </div>
 
-            {filterOpen && <FilterTabs />}
+            {filterOpen && (
+              <FilterTabs
+                handleApplyFilter={this.handleApplyFilter}
+                handleBPMChange={this.handleBPMChange}
+              />
+            )}
           </div>
 
           {/* Track list container */}
