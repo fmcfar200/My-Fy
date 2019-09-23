@@ -5,29 +5,40 @@ import "react-input-range/lib/css/index.css";
 
 class FilterTabs extends Component {
   state = {
-    bpmValue: { min: 60, max: 145 }
+    tempo: { min: 60, max: 145 },
+    popularity: { min: 0, max: 100 },
+    acousticness: { min: 0.0, max: 1.0 }
   };
 
-  render() {
+  renderMinMaxBox(
+    heading,
+    minValue,
+    maxValue,
+    filterNameString,
+    step,
+    formatLabel
+  ) {
     const { handleApplyFilterMinMax } = this.props;
-    var bpmContent = (
+    return (
       <div style={{ padding: "40px" }}>
-        <label style={{ marginBottom: "16px" }}>BPM Range</label>
+        <label style={{ marginBottom: "16px" }}>{heading}</label>
         <InputRange
-          minValue={60}
-          maxValue={145}
-          value={this.state.bpmValue}
-          onChange={bpmValue => {
-            this.setState({ bpmValue });
+          minValue={minValue}
+          maxValue={maxValue}
+          value={this.state[filterNameString]}
+          onChange={theValue => {
+            this.setState({ [filterNameString]: theValue });
           }}
+          step={step}
+          formatLabel={value => `${value}${formatLabel}`}
         />
         <div style={{ display: "flex", marginTop: "40px" }}>
           <button
             onClick={() =>
               handleApplyFilterMinMax(
-                "tempo",
-                this.state.bpmValue.min,
-                this.state.bpmValue.max
+                filterNameString,
+                this.state[filterNameString].min,
+                this.state[filterNameString].max
               )
             }
           >
@@ -36,7 +47,9 @@ class FilterTabs extends Component {
         </div>
       </div>
     );
+  }
 
+  render() {
     return (
       <div
         style={{
@@ -50,12 +63,26 @@ class FilterTabs extends Component {
         <DropdownButton
           buttonClass="btn btn-1"
           buttonLabel="Audio Features"
-          bodyContent="This is the dropdown body"
+          bodyContent={this.renderMinMaxBox(
+            "Acousticness",
+            0.0,
+            1.0,
+            "acousticness",
+            0.05,
+            ""
+          )}
         />
         <DropdownButton
           buttonClass="btn"
-          buttonLabel="BPM"
-          bodyContent={bpmContent}
+          buttonLabel="Tempo"
+          bodyContent={this.renderMinMaxBox(
+            "Tempo (BPM)",
+            60,
+            140,
+            "tempo",
+            1,
+            "bpm"
+          )}
         />
         <DropdownButton
           buttonClass="btn"
@@ -81,7 +108,14 @@ class FilterTabs extends Component {
         <DropdownButton
           buttonClass="btn"
           buttonLabel="Popularity"
-          bodyContent="This is the dropdown body"
+          bodyContent={this.renderMinMaxBox(
+            "Popularity",
+            0,
+            100,
+            "popularity",
+            1,
+            "%"
+          )}
         />
       </div>
     );

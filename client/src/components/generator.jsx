@@ -37,6 +37,7 @@ class Generator extends Component {
   handleApplyFilterMinMax = (name, minValue, maxValue) => {
     this.setState({
       filterOptions: {
+        ...this.state.filterOptions,
         [`min_${name}`]: minValue,
         [`max_${name}`]: maxValue
       }
