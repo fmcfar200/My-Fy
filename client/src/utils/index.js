@@ -108,6 +108,45 @@ export const parseTrackModality = modeInt => {
   return mode;
 };
 
+export const createSeedTracks = (tracks, generatorType) => {
+  let randomIndexArr = [
+    Math.floor(Math.random() * tracks.length),
+    Math.floor(Math.random() * tracks.length),
+    Math.floor(Math.random() * tracks.length),
+    Math.floor(Math.random() * tracks.length),
+    Math.floor(Math.random() * tracks.length)
+  ];
+
+  let seedTracksArray = [];
+  for (var i = 0; i < randomIndexArr.length; i++) {
+    if (generatorType === "playlist") {
+      seedTracksArray.push(tracks[randomIndexArr[i]].track.id);
+    } else {
+      seedTracksArray.push(tracks[randomIndexArr[i]].id);
+    }
+  }
+
+  return seedTracksArray.join(",").toString();
+};
+
+//generates atrists seeds
+export const createSeedArtists = artists => {
+  let randomIndexArr = [
+    Math.floor(Math.random() * artists.length),
+    Math.floor(Math.random() * artists.length),
+    Math.floor(Math.random() * artists.length),
+    Math.floor(Math.random() * artists.length),
+    Math.floor(Math.random() * artists.length)
+  ];
+
+  let seedArtistsArray = [];
+  for (var i = 0; i < randomIndexArr.length; i++) {
+    seedArtistsArray.push(artists[randomIndexArr[i]].id);
+  }
+
+  return seedArtistsArray.join(",").toString();
+};
+
 //Pitch class to tonal counterpart
 // see - https://en.wikipedia.org/wiki/Pitch_class
 export const parseTrackKey = note => {

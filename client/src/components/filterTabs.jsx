@@ -9,7 +9,7 @@ class FilterTabs extends Component {
   };
 
   render() {
-    const { handleBPMChange, handleApplyFilter } = this.props;
+    const { handleApplyFilterMinMax } = this.props;
     var bpmContent = (
       <div style={{ padding: "40px" }}>
         <label style={{ marginBottom: "16px" }}>BPM Range</label>
@@ -18,12 +18,21 @@ class FilterTabs extends Component {
           maxValue={145}
           value={this.state.bpmValue}
           onChange={bpmValue => {
-            handleBPMChange(bpmValue);
             this.setState({ bpmValue });
           }}
         />
         <div style={{ display: "flex", marginTop: "40px" }}>
-          <button onClick={() => handleApplyFilter()}>Apply</button>
+          <button
+            onClick={() =>
+              handleApplyFilterMinMax(
+                "tempo",
+                this.state.bpmValue.min,
+                this.state.bpmValue.max
+              )
+            }
+          >
+            Apply
+          </button>
         </div>
       </div>
     );

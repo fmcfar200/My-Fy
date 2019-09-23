@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
-import { token, humanize } from "../utils";
+import { token, humanize, createSeedTracks, createSeedArtists } from "../utils";
 import * as Sentry from "@sentry/browser";
 import Spotify from "spotify-web-api-js";
 import TrackListProvider from "./trackListProvider";
@@ -31,15 +31,16 @@ class Generator extends Component {
     checkedTracks: [],
     filterOpen: false,
     //Filter States
-    bpmValue: { min: null, max: null }
+    filterOptions: {}
   };
 
-  handleBPMChange = bpmValue => {
-    this.setState({ bpmValue: bpmValue });
-    console.log(this.state.bpmValue);
-  };
-
-  handleApplyFilter = () => {
+  handleApplyFilterMinMax = (name, minValue, maxValue) => {
+    this.setState({
+      filterOptions: {
+        [`min_${name}`]: minValue,
+        [`max_${name}`]: maxValue
+      }
+    });
     var filter = true;
     this.refreshTracks(filter);
   };
@@ -89,7 +90,6 @@ class Generator extends Component {
           orginalPlaylistName: response.name
         });
       });
-
       this.generateFromPlaylist(id); // generate tracks form playlist id
     } else {
       //set title based on options
@@ -117,10 +117,11 @@ class Generator extends Component {
         return response.items;
       })
       .then(tracks => {
-        return this.createSeedTracks(tracks);
+        return createSeedTracks(tracks, this.state.generatorType);
       })
       .then(seedTracks => {
         const seed_tracks = seedTracks;
+
         spotifyApi
           .getRecommendations({
             seed_tracks: seed_tracks,
@@ -147,7 +148,7 @@ class Generator extends Component {
         return response.items;
       })
       .then(artists => {
-        return this.createSeedArtists(artists);
+        return createSeedArtists(artists);
       })
       .then(seedArtists => {
         const seed_artists = seedArtists;
@@ -178,26 +179,22 @@ class Generator extends Component {
       .then(response => {
         tracks = response.items;
 
-        return this.createSeedTracks(tracks);
+        return createSeedTracks(tracks, this.state.generatorType);
       })
       .then(seedTracks => {
         if (filter) {
-          console.log(filter);
-          spotifyApi
-            .getRecommendations({
-              seed_tracks: seedTracks,
-              limit: 100,
+          var options = this.state.filterOptions;
+          options["seed_tracks"] = seedTracks;
+          options["limit"] = 100;
 
-              max_tempo: this.state.bpmValue.max,
-              min_tempo: this.state.bpmValue.min
-            })
-            .then(response => {
-              console.log(response);
-              this.setState({
-                generatedTracks: response.tracks,
-                loading: false
-              });
+          console.log(options);
+          spotifyApi.getRecommendations(options).then(response => {
+            console.log(response);
+            this.setState({
+              generatedTracks: response.tracks,
+              loading: false
             });
+          });
         } else {
           spotifyApi
             .getRecommendations({
@@ -215,46 +212,6 @@ class Generator extends Component {
       .catch(err => {
         Sentry.captureException(err);
       });
-  }
-
-  //generates track seeds
-  createSeedTracks(tracks) {
-    let randomIndexArr = [
-      Math.floor(Math.random() * tracks.length),
-      Math.floor(Math.random() * tracks.length),
-      Math.floor(Math.random() * tracks.length),
-      Math.floor(Math.random() * tracks.length),
-      Math.floor(Math.random() * tracks.length)
-    ];
-
-    let seedTracksArray = [];
-    for (var i = 0; i < randomIndexArr.length; i++) {
-      if (this.state.generatorType === "playlist") {
-        seedTracksArray.push(tracks[randomIndexArr[i]].track.id);
-      } else {
-        seedTracksArray.push(tracks[randomIndexArr[i]].id);
-      }
-    }
-
-    return seedTracksArray.join(",").toString();
-  }
-
-  //generates atrists seeds
-  createSeedArtists(artists) {
-    let randomIndexArr = [
-      Math.floor(Math.random() * artists.length),
-      Math.floor(Math.random() * artists.length),
-      Math.floor(Math.random() * artists.length),
-      Math.floor(Math.random() * artists.length),
-      Math.floor(Math.random() * artists.length)
-    ];
-
-    let seedArtistsArray = [];
-    for (var i = 0; i < randomIndexArr.length; i++) {
-      seedArtistsArray.push(artists[randomIndexArr[i]].id);
-    }
-
-    return seedArtistsArray.join(",").toString();
   }
 
   //SAVE TRACKS TO PLAYLIST
@@ -424,7 +381,7 @@ class Generator extends Component {
 
             {filterOpen && (
               <FilterTabs
-                handleApplyFilter={this.handleApplyFilter}
+                handleApplyFilterMinMax={this.handleApplyFilterMinMax}
                 handleBPMChange={this.handleBPMChange}
               />
             )}
