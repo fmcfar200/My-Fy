@@ -7,8 +7,17 @@ class FilterTabs extends Component {
   state = {
     tempo: { min: 60, max: 145 },
     popularity: { min: 0, max: 100 },
-    acousticness: { min: 0.0, max: 1.0 }
+    acousticness: { min: 0, max: 1 }
   };
+
+  renderSelectBox(heading) {
+    return (
+      <div style={{ padding: "40px" }}>
+        <label style={{ marginBottom: "16px" }}>{heading}</label>
+        <input type="checkbox" />
+      </div>
+    );
+  }
 
   renderMinMaxBox(
     heading,
@@ -68,7 +77,7 @@ class FilterTabs extends Component {
             0.0,
             1.0,
             "acousticness",
-            0.05,
+            0.01,
             ""
           )}
         />
@@ -87,7 +96,7 @@ class FilterTabs extends Component {
         <DropdownButton
           buttonClass="btn"
           buttonLabel="Key"
-          bodyContent="This is the dropdown body"
+          bodyContent={this.renderSelectBox("Key")}
         />
         <DropdownButton
           buttonClass="btn"
