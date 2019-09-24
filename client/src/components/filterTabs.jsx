@@ -7,9 +7,18 @@ import "../styles/filterTabs.css";
 
 class FilterTabs extends Component {
   state = {
+    //audio features
+    acousticness: { min: 0, max: 1 },
+    danceability: { min: 0, max: 1 },
+    energy: { min: 0, max: 1 },
+    instrumentalness: { min: 0, max: 1 },
+    liveness: { min: 0, max: 1 },
+    speechiness: { min: 0, max: 1 },
+    valence: { min: 0, max: 1 },
+
+    //other
     tempo: { min: 60, max: 140 },
-    popularity: { min: 0, max: 100 },
-    acousticness: { min: 0, max: 1 }
+    popularity: { min: 0, max: 100 }
   };
 
   renderSelectBox(heading) {
@@ -64,12 +73,10 @@ class FilterTabs extends Component {
   }
 
   render() {
-    return (
-      <div className="tab-container">
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Audio Features"
-          bodyContent={this.renderMinMaxBox(
+    const audioFeatureContent = (
+      <div className="tab-dropdown-audioFeatures">
+        <div>
+          {this.renderMinMaxBox(
             "Acousticness",
             0.0,
             1.0,
@@ -77,6 +84,56 @@ class FilterTabs extends Component {
             0.01,
             ""
           )}
+        </div>
+        <div>
+          {this.renderMinMaxBox(
+            "Danceability",
+            0.0,
+            1.0,
+            "danceability",
+            0.01,
+            ""
+          )}
+        </div>
+        <div>
+          {this.renderMinMaxBox("Energy", 0.0, 1.0, "energy", 0.01, "")}
+        </div>
+        <div>
+          {this.renderMinMaxBox(
+            "Instrumentalness",
+            0.0,
+            1.0,
+            "instrumentalness",
+            0.01,
+            ""
+          )}
+        </div>
+        <div>
+          {this.renderMinMaxBox("Liveness", 0.0, 1.0, "liveness", 0.01, "")}
+        </div>
+        <div>
+          {this.renderMinMaxBox(
+            "Speechiness",
+            0.0,
+            1.0,
+            "speechiness",
+            0.01,
+            ""
+          )}
+        </div>
+        <div>
+          {this.renderMinMaxBox("Valence", 0.0, 1.0, "valence", 0.01, "")}
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="tab-container">
+        <DropdownButton
+          buttonClass="btn tab-button"
+          buttonLabel="Audio Features"
+          bodyContent={audioFeatureContent}
+          dropdownClass="large"
         />
         <DropdownButton
           buttonClass="btn tab-button"

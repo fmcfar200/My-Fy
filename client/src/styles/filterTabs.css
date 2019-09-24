@@ -7,11 +7,16 @@
 }
 
 .tab-button {
-  color: white !important;
+  color: gray !important;
   height: 100% !important;
   background: transparent;
   border: none;
   outline: none !important;
+}
+
+.tab-button:focus {
+  color: white !important;
+  font-weight: bold;
 }
 
 .tab-dropdown-container {
@@ -58,4 +63,10 @@
   padding-bottom: 2.5px;
 
   cursor: pointer;
+}
+
+.tab-dropdown-audioFeatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 25px;
 }
