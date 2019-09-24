@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../styles/dropdownButton.css";
+import "../styles/filterTabs.css";
 
 class DropdownButton extends Component {
   conatinerRef = React.createRef();

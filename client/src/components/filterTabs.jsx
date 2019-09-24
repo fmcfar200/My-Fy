@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import InputRange from "react-input-range";
 import DropdownButton from "../common/dropdownButton";
+import "../styles/spotifyButton.css";
 import "react-input-range/lib/css/index.css";
+import "../styles/filterTabs.css";
 
 class FilterTabs extends Component {
   state = {
-    tempo: { min: 60, max: 145 },
+    tempo: { min: 60, max: 140 },
     popularity: { min: 0, max: 100 },
     acousticness: { min: 0, max: 1 }
   };
@@ -29,20 +31,23 @@ class FilterTabs extends Component {
   ) {
     const { handleApplyFilterMinMax } = this.props;
     return (
-      <div style={{ padding: "40px" }}>
-        <label style={{ marginBottom: "16px" }}>{heading}</label>
-        <InputRange
-          minValue={minValue}
-          maxValue={maxValue}
-          value={this.state[filterNameString]}
-          onChange={theValue => {
-            this.setState({ [filterNameString]: theValue });
-          }}
-          step={step}
-          formatLabel={value => `${value}${formatLabel}`}
-        />
-        <div style={{ display: "flex", marginTop: "40px" }}>
+      <div className="tab-dropdown-container">
+        <label className="tab-dropdown-heading">{heading}</label>
+        <div className="tab-input-container">
+          <InputRange
+            minValue={minValue}
+            maxValue={maxValue}
+            value={this.state[filterNameString]}
+            onChange={theValue => {
+              this.setState({ [filterNameString]: theValue });
+            }}
+            step={step}
+            formatLabel={value => `${value}${formatLabel}`}
+          />
+        </div>
+        <div className="tab-dropdown-button-container">
           <button
+            className="button-add"
             onClick={() =>
               handleApplyFilterMinMax(
                 filterNameString,
@@ -51,7 +56,7 @@ class FilterTabs extends Component {
               )
             }
           >
-            Apply
+            Add
           </button>
         </div>
       </div>
@@ -60,17 +65,9 @@ class FilterTabs extends Component {
 
   render() {
     return (
-      <div
-        style={{
-          width: "100%",
-          height: "auto",
-          backgroundColor: "grey",
-          justifyContent: "space-evenly",
-          marginBottom: 8
-        }}
-      >
+      <div className="tab-container">
         <DropdownButton
-          buttonClass="btn btn-1"
+          buttonClass="btn tab-button"
           buttonLabel="Audio Features"
           bodyContent={this.renderMinMaxBox(
             "Acousticness",
@@ -82,7 +79,7 @@ class FilterTabs extends Component {
           )}
         />
         <DropdownButton
-          buttonClass="btn"
+          buttonClass="btn tab-button"
           buttonLabel="Tempo"
           bodyContent={this.renderMinMaxBox(
             "Tempo (BPM)",
@@ -94,28 +91,28 @@ class FilterTabs extends Component {
           )}
         />
         <DropdownButton
-          buttonClass="btn"
+          buttonClass="btn tab-button"
           buttonLabel="Key"
           bodyContent={this.renderSelectBox("Key")}
         />
         <DropdownButton
-          buttonClass="btn"
+          buttonClass="btn tab-button"
           buttonLabel="Modality"
           bodyContent="This is the dropdown body"
         />
 
         <DropdownButton
-          buttonClass="btn"
+          buttonClass="btn tab-button"
           buttonLabel="Length"
           bodyContent="This is the dropdown body"
         />
         <DropdownButton
-          buttonClass="btn"
+          buttonClass="btn tab-button"
           buttonLabel="Release Date"
           bodyContent="This is the dropdown body"
         />
         <DropdownButton
-          buttonClass="btn"
+          buttonClass="btn tab-button"
           buttonLabel="Popularity"
           bodyContent={this.renderMinMaxBox(
             "Popularity",
