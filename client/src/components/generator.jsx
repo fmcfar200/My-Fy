@@ -183,32 +183,18 @@ class Generator extends Component {
         return createSeedTracks(tracks, this.state.generatorType);
       })
       .then(seedTracks => {
-        if (filter) {
-          var options = this.state.filterOptions;
-          options["seed_tracks"] = seedTracks;
-          options["limit"] = 100;
+        var options = this.state.filterOptions;
+        options["seed_tracks"] = seedTracks;
+        options["limit"] = 100;
 
-          console.log(options);
-          spotifyApi.getRecommendations(options).then(response => {
-            console.log(response);
-            this.setState({
-              generatedTracks: response.tracks,
-              loading: false
-            });
+        console.log(options);
+        spotifyApi.getRecommendations(options).then(response => {
+          console.log(response);
+          this.setState({
+            generatedTracks: response.tracks,
+            loading: false
           });
-        } else {
-          spotifyApi
-            .getRecommendations({
-              seed_tracks: seedTracks,
-              limit: 100
-            })
-            .then(response => {
-              this.setState({
-                generatedTracks: response.tracks,
-                loading: false
-              });
-            });
-        }
+        });
       })
       .catch(err => {
         Sentry.captureException(err);
@@ -281,6 +267,7 @@ class Generator extends Component {
 
   //refresh tracks
   refreshTracks(filter) {
+    this.setState({ loading: true });
     const { generatorType, id } = this.state;
 
     if (generatorType === "playlist") {

@@ -40,6 +40,7 @@
 
 .tab-dropdown-button-container {
   display: flex;
+  flex-direction: row-reverse;
   margin-top: 32px;
 }
 
@@ -69,4 +70,5 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 25px;
+  column-gap: 25px;
 }

@@ -41,7 +41,6 @@ class DropdownButton extends Component {
     var theDropdownClass = "Dropdown";
     if (dropdownClass !== undefined) {
       theDropdownClass = theDropdownClass + " " + dropdownClass;
-      console.log(theDropdownClass);
     }
     return (
       <div className="Dropdown-Container" ref={this.conatinerRef}>
