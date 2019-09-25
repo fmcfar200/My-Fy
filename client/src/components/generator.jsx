@@ -10,6 +10,8 @@ import ModalAlertDialog from "../common/modalAlertDialog";
 import "../styles/generator.css";
 import "../styles/spotifyButton.css";
 import FilterTabs from "./filterTabs";
+import FilterMobile from "./filterMobile";
+import ReactResizeDetector from "react-resize-detector";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -356,6 +358,8 @@ class Generator extends Component {
               </button>
 
               <button
+                data-toggle="modal"
+                data-target="#filterModal"
                 className="Icon-Button"
                 onClick={() => {
                   this.setState({
@@ -370,7 +374,6 @@ class Generator extends Component {
             {filterOpen && (
               <FilterTabs
                 handleApplyFilterMinMax={this.handleApplyFilterMinMax}
-                handleBPMChange={this.handleBPMChange}
               />
             )}
           </div>
@@ -389,6 +392,19 @@ class Generator extends Component {
             )}
           </div>
         </div>
+
+        <ReactResizeDetector
+          handleWidth
+          render={({ width }) => (
+            <div>
+              {width < 768 && (
+                <FilterMobile
+                  handleApplyFilterMinMax={this.handleApplyFilterMinMax}
+                />
+              )}
+            </div>
+          )}
+        ></ReactResizeDetector>
 
         {/* Modal Menu */}
         <ModalAlertDialog

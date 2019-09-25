@@ -21,7 +21,7 @@ const TrackListLarge = props => {
     }
 
     return (
-      <tr>
+      <tr key={item.id}>
         <td>
           <Link to={`/tracks/${item.id}`}>
             <div className="Image-Container">
