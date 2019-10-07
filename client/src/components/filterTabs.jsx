@@ -18,7 +18,8 @@ class FilterTabs extends Component {
 
     //other
     tempo: { min: 60, max: 140 },
-    popularity: { min: 0, max: 100 }
+    popularity: { min: 0, max: 100 },
+    mode: null
   };
 
   renderSelectBox(heading) {
@@ -26,6 +27,40 @@ class FilterTabs extends Component {
       <div style={{ padding: "40px" }}>
         <label style={{ marginBottom: "16px" }}>{heading}</label>
         <input type="checkbox" />
+      </div>
+    );
+  }
+
+  renderModeBox() {
+    const { handleModalityRadioChange } = this.props;
+
+    return (
+      <div>
+        <label className="tab-dropdown-heading">Modality</label>
+        <form className="radio">
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="1"
+                checked={this.state.mode === 1}
+                onChange={handleModalityRadioChange}
+              />
+              Major
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="0"
+                checked={this.state.mode === 0}
+                onChange={handleModalityRadioChange}
+              />
+              Minor
+            </label>
+          </div>
+        </form>
       </div>
     );
   }
@@ -155,7 +190,7 @@ class FilterTabs extends Component {
         <DropdownButton
           buttonClass="btn tab-button"
           buttonLabel="Modality"
-          bodyContent="This is the dropdown body"
+          bodyContent={this.renderModeBox()}
         />
 
         <DropdownButton
@@ -163,11 +198,7 @@ class FilterTabs extends Component {
           buttonLabel="Length"
           bodyContent="This is the dropdown body"
         />
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Release Date"
-          bodyContent="This is the dropdown body"
-        />
+
         <DropdownButton
           buttonClass="btn tab-button"
           buttonLabel="Popularity"

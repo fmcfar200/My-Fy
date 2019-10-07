@@ -48,6 +48,17 @@ class Generator extends Component {
     this.refreshTracks(filter);
   };
 
+  handleModalityRadioChange = event => {
+    this.setState({
+      filterOptions: {
+        ...this.state.filterOptions,
+        target_mode: event.target.value
+      }
+    });
+    var filter = true;
+    this.refreshTracks(filter);
+  };
+
   componentDidMount() {
     const { generatorType, id } = this.state;
 
@@ -379,6 +390,9 @@ class Generator extends Component {
                     {width >= 768 && (
                       <FilterTabs
                         handleApplyFilterMinMax={this.handleApplyFilterMinMax}
+                        handleModalityRadioChange={
+                          this.handleModalityRadioChange
+                        }
                       />
                     )}
                   </div>
