@@ -7,11 +7,11 @@ import TrackListProvider from "./trackListProvider";
 import DropdownButton from "../common/dropdownButton";
 import ActivityIndicator from "../common/activityIndicator";
 import ModalAlertDialog from "../common/modalAlertDialog";
-import "../styles/generator.css";
-import "../styles/spotifyButton.css";
 import FilterTabs from "./filterTabs";
 import FilterMobile from "./filterMobile";
 import ReactResizeDetector from "react-resize-detector";
+import "../styles/generator.css";
+import "../styles/spotifyButton.css";
 
 const spotifyApi = new Spotify();
 spotifyApi.setAccessToken(token);
@@ -372,9 +372,18 @@ class Generator extends Component {
             </div>
 
             {filterOpen && (
-              <FilterTabs
-                handleApplyFilterMinMax={this.handleApplyFilterMinMax}
-              />
+              <ReactResizeDetector
+                handleWidth
+                render={({ width }) => (
+                  <div>
+                    {width >= 768 && (
+                      <FilterTabs
+                        handleApplyFilterMinMax={this.handleApplyFilterMinMax}
+                      />
+                    )}
+                  </div>
+                )}
+              ></ReactResizeDetector>
             )}
           </div>
 
@@ -404,7 +413,9 @@ class Generator extends Component {
               )}
             </div>
           )}
-        ></ReactResizeDetector>
+        >
+          {({ width }) => this.setState({ screenWidth: width })}
+        </ReactResizeDetector>
 
         {/* Modal Menu */}
         <ModalAlertDialog
