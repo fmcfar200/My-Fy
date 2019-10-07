@@ -8,7 +8,7 @@ const Sidebar = () => {
       <nav className="navbar p-0 side align-items-start nav-fill justify-content-start h-100 navbar-light">
         <NavLink className="nav-item nav-link logo" to="/profile">
           <i
-            className="fa fa-wifi"
+            className="fa fa-headphones"
             style={{
               fontSize: 50,
               transform: "rotate(45deg)",
