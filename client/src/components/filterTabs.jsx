@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import InputRange from "react-input-range";
 import DropdownButton from "../common/dropdownButton";
-import "../styles/spotifyButton.css";
+import { parseTrackKey } from "../utils/index";
 import "react-input-range/lib/css/index.css";
+import "../styles/spotifyButton.css";
 import "../styles/filterTabs.css";
 
 class FilterTabs extends Component {
@@ -22,11 +23,31 @@ class FilterTabs extends Component {
     mode: null
   };
 
-  renderSelectBox(heading) {
+  renderKeyBox() {
+    const { handleKeyRadioChange } = this.props;
+    const intKeyRange = Array.from({ length: 12 }, (x, i) => i); // range from 0-11 for keys
+
+    const radioBoxes = intKeyRange.map(key => {
+      return (
+        <div key={key}>
+          <input
+            type="radio"
+            name="key"
+            id={`keyChoice${key}`}
+            value={key}
+            onChange={handleKeyRadioChange}
+          />
+          <label htmlFor="keyChoice1">{parseTrackKey(key)}</label>
+        </div>
+      );
+    });
+
     return (
-      <div style={{ padding: "40px" }}>
-        <label style={{ marginBottom: "16px" }}>{heading}</label>
-        <input type="checkbox" />
+      <div className="tab-dropdown-container">
+        <label className="tab-dropdown-heading">Key</label>
+        <form className="radio">
+          <div className="key-grid">{radioBoxes}</div>
+        </form>
       </div>
     );
   }
@@ -35,30 +56,30 @@ class FilterTabs extends Component {
     const { handleModalityRadioChange } = this.props;
 
     return (
-      <div>
+      <div className="tab-dropdown-container">
         <label className="tab-dropdown-heading">Modality</label>
         <form className="radio">
           <div>
-            <label>
+            <div>
               <input
                 type="radio"
-                value="1"
-                checked={this.state.mode === 1}
-                onChange={handleModalityRadioChange}
-              />
-              Major
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="radio"
+                name="modality"
+                id="modeChoice1"
                 value="0"
-                checked={this.state.mode === 0}
                 onChange={handleModalityRadioChange}
               />
-              Minor
-            </label>
+              <label htmlFor="modeChoice1">Minor</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="modality"
+                id="modeChoice2"
+                value="1"
+                onChange={handleModalityRadioChange}
+              />
+              <label htmlFor="modeChoice2">Major</label>
+            </div>
           </div>
         </form>
       </div>
@@ -185,7 +206,7 @@ class FilterTabs extends Component {
         <DropdownButton
           buttonClass="btn tab-button"
           buttonLabel="Key"
-          bodyContent={this.renderSelectBox("Key")}
+          bodyContent={this.renderKeyBox()}
         />
         <DropdownButton
           buttonClass="btn tab-button"
@@ -193,11 +214,11 @@ class FilterTabs extends Component {
           bodyContent={this.renderModeBox()}
         />
 
-        <DropdownButton
+        {/* <DropdownButton
           buttonClass="btn tab-button"
           buttonLabel="Length"
           bodyContent="This is the dropdown body"
-        />
+        /> */}
 
         <DropdownButton
           buttonClass="btn tab-button"

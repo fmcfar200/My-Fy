@@ -59,6 +59,17 @@ class Generator extends Component {
     this.refreshTracks(filter);
   };
 
+  handleKeyRadioChange = event => {
+    this.setState({
+      filterOptions: {
+        ...this.state.filterOptions,
+        target_key: event.target.value
+      }
+    });
+    var filter = true;
+    this.refreshTracks(filter);
+  };
+
   componentDidMount() {
     const { generatorType, id } = this.state;
 
@@ -393,6 +404,7 @@ class Generator extends Component {
                         handleModalityRadioChange={
                           this.handleModalityRadioChange
                         }
+                        handleKeyRadioChange={this.handleKeyRadioChange}
                       />
                     )}
                   </div>
