@@ -435,6 +435,8 @@ class Generator extends Component {
               {width < 768 && (
                 <FilterMobile
                   handleApplyFilterMinMax={this.handleApplyFilterMinMax}
+                  handleKeyRadioChange={this.handleKeyRadioChange}
+                  handleModalityRadioChange={this.handleModalityRadioChange}
                 />
               )}
             </div>

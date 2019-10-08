@@ -1,6 +1,10 @@
 import React, { Component } from "react";
-import InputRange from "react-input-range";
 import Collapsible from "react-collapsible";
+import {
+  renderKeyBox,
+  renderModeBox,
+  renderMinMaxBox
+} from "../utils/filterRenderer";
 import "../styles/filterMobile.css";
 
 class FilterMobile extends Component {
@@ -22,7 +26,7 @@ class FilterMobile extends Component {
     appliedFilters: []
   };
 
-  renderMinMaxBox(
+  renderMinMaxBoxCollapsible(
     heading,
     minValue,
     maxValue,
@@ -30,46 +34,27 @@ class FilterMobile extends Component {
     step,
     formatLabel
   ) {
-    const { handleApplyFilterMinMax } = this.props;
     return (
       <Collapsible trigger={heading}>
-        <div className="tab-dropdown-container">
-          <label className="tab-dropdown-heading">{heading}</label>
-          <div className="tab-input-container">
-            <InputRange
-              minValue={minValue}
-              maxValue={maxValue}
-              value={this.state[filterNameString]}
-              onChange={theValue => {
-                this.setState({ [filterNameString]: theValue });
-              }}
-              step={step}
-              formatLabel={value => `${value}${formatLabel}`}
-            />
-          </div>
-          <div className="tab-dropdown-button-container">
-            <button
-              className="button-add"
-              onClick={() => {
-                handleApplyFilterMinMax(
-                  filterNameString,
-                  this.state[filterNameString].min,
-                  this.state[filterNameString].max
-                );
-                this.setState({
-                  appliedFilters: [
-                    ...this.state.appliedFilters,
-                    filterNameString + ", "
-                  ]
-                });
-              }}
-            >
-              Add
-            </button>
-          </div>
-        </div>
+        {renderMinMaxBox(
+          this,
+          heading,
+          minValue,
+          maxValue,
+          filterNameString,
+          step,
+          formatLabel
+        )}
       </Collapsible>
     );
+  }
+
+  renderKeyBoxCollapsible(props) {
+    return <Collapsible trigger="Key">{renderKeyBox(props)}</Collapsible>;
+  }
+
+  renderModeBoxCollapsible(props) {
+    return <Collapsible trigger="Modality">{renderModeBox(props)}</Collapsible>;
   }
 
   render() {
@@ -78,7 +63,7 @@ class FilterMobile extends Component {
         <Collapsible trigger="Audio Features">
           <div className="modal-body-content">
             <div>
-              {this.renderMinMaxBox(
+              {this.renderMinMaxBoxCollapsible(
                 "Acousticness",
                 0.0,
                 1.0,
@@ -88,7 +73,7 @@ class FilterMobile extends Component {
               )}
             </div>
             <div>
-              {this.renderMinMaxBox(
+              {this.renderMinMaxBoxCollapsible(
                 "Danceability",
                 0.0,
                 1.0,
@@ -98,10 +83,17 @@ class FilterMobile extends Component {
               )}
             </div>
             <div>
-              {this.renderMinMaxBox("Energy", 0.0, 1.0, "energy", 0.01, "")}
+              {this.renderMinMaxBoxCollapsible(
+                "Energy",
+                0.0,
+                1.0,
+                "energy",
+                0.01,
+                ""
+              )}
             </div>
             <div>
-              {this.renderMinMaxBox(
+              {this.renderMinMaxBoxCollapsible(
                 "Instrumentalness",
                 0.0,
                 1.0,
@@ -111,10 +103,17 @@ class FilterMobile extends Component {
               )}
             </div>
             <div>
-              {this.renderMinMaxBox("Liveness", 0.0, 1.0, "liveness", 0.01, "")}
+              {this.renderMinMaxBoxCollapsible(
+                "Liveness",
+                0.0,
+                1.0,
+                "liveness",
+                0.01,
+                ""
+              )}
             </div>
             <div>
-              {this.renderMinMaxBox(
+              {this.renderMinMaxBoxCollapsible(
                 "Speechiness",
                 0.0,
                 1.0,
@@ -124,7 +123,14 @@ class FilterMobile extends Component {
               )}
             </div>
             <div>
-              {this.renderMinMaxBox("Valence", 0.0, 1.0, "valence", 0.01, "")}
+              {this.renderMinMaxBoxCollapsible(
+                "Valence",
+                0.0,
+                1.0,
+                "valence",
+                0.01,
+                ""
+              )}
             </div>
           </div>
         </Collapsible>
@@ -158,8 +164,17 @@ class FilterMobile extends Component {
             <div className="modal-body">
               <div className="modal-body-content">
                 {audioFeatureContent}
-                {this.renderMinMaxBox("Tempo", 60, 140, "tempo", 1, "")}
-                {this.renderMinMaxBox(
+                {this.renderMinMaxBoxCollapsible(
+                  "Tempo",
+                  60,
+                  140,
+                  "tempo",
+                  1,
+                  ""
+                )}
+                {this.renderKeyBoxCollapsible(this.props)}
+                {this.renderModeBoxCollapsible(this.props)}
+                {this.renderMinMaxBoxCollapsible(
                   "Popularity",
                   0,
                   100,
@@ -176,10 +191,7 @@ class FilterMobile extends Component {
                 className="btn btn-secondary"
                 data-dismiss="modal"
               >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
+                Done
               </button>
             </div>
           </div>
