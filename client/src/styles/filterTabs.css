@@ -1,3 +1,17 @@
+.applied-filters-container {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.applied-filters-container label {
+  color: white;
+  font-size: 24px;
+}
+
 .tab-container {
   width: 100%;
   height: auto;

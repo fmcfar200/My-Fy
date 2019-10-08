@@ -93,13 +93,19 @@ export const renderMinMaxBox = (
       <div className="tab-dropdown-button-container">
         <button
           className="button-add"
-          onClick={() =>
+          onClick={() => {
             handleApplyFilterMinMax(
               filterNameString,
               ref.state[filterNameString].min,
               ref.state[filterNameString].max
-            )
-          }
+            );
+            ref.setState({
+              appliedFilters: [
+                ...ref.state.appliedFilters,
+                filterNameString + ", "
+              ]
+            });
+          }}
         >
           Add
         </button>

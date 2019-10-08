@@ -23,7 +23,10 @@ class FilterTabs extends Component {
     //other
     tempo: { min: 60, max: 140 },
     popularity: { min: 0, max: 100 },
-    mode: null
+    mode: null,
+
+    //applied filter
+    appliedFilters: []
   };
 
   render() {
@@ -86,57 +89,63 @@ class FilterTabs extends Component {
     );
 
     return (
-      <div className="tab-container">
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Audio Features"
-          bodyContent={audioFeatureContent}
-          dropdownClass="large"
-        />
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Tempo"
-          bodyContent={renderMinMaxBox(
-            this,
-            "Tempo (BPM)",
-            60,
-            140,
-            "tempo",
-            1,
-            "bpm"
-          )}
-        />
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Key"
-          bodyContent={renderKeyBox(this.props)}
-        />
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Modality"
-          bodyContent={renderModeBox(this.props)}
-        />
+      <React.Fragment>
+        {/* <div className="applied-filters-container">
+          <label>Filter By: </label>
+          <label> {this.state.appliedFilters}</label>
+        </div> */}
+        <div className="tab-container">
+          <DropdownButton
+            buttonClass="btn tab-button"
+            buttonLabel="Audio Features"
+            bodyContent={audioFeatureContent}
+            dropdownClass="large"
+          />
+          <DropdownButton
+            buttonClass="btn tab-button"
+            buttonLabel="Tempo"
+            bodyContent={renderMinMaxBox(
+              this,
+              "Tempo (BPM)",
+              60,
+              140,
+              "tempo",
+              1,
+              "bpm"
+            )}
+          />
+          <DropdownButton
+            buttonClass="btn tab-button"
+            buttonLabel="Key"
+            bodyContent={renderKeyBox(this.props)}
+          />
+          <DropdownButton
+            buttonClass="btn tab-button"
+            buttonLabel="Modality"
+            bodyContent={renderModeBox(this.props)}
+          />
 
-        {/* <DropdownButton
+          {/* <DropdownButton
           buttonClass="btn tab-button"
           buttonLabel="Length"
           bodyContent="This is the dropdown body"
         /> */}
 
-        <DropdownButton
-          buttonClass="btn tab-button"
-          buttonLabel="Popularity"
-          bodyContent={renderMinMaxBox(
-            this,
-            "Popularity",
-            0,
-            100,
-            "popularity",
-            1,
-            "%"
-          )}
-        />
-      </div>
+          <DropdownButton
+            buttonClass="btn tab-button"
+            buttonLabel="Popularity"
+            bodyContent={renderMinMaxBox(
+              this,
+              "Popularity",
+              0,
+              100,
+              "popularity",
+              1,
+              "%"
+            )}
+          />
+        </div>
+      </React.Fragment>
     );
   }
 }
