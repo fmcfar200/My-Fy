@@ -24,10 +24,6 @@ const NavBottom = () => {
             <i className="fa fa-list" aria-hidden="true"></i> <br></br>
             Playlists
           </NavLink>
-          <NavLink className="nav-item nav-link" to="/recently-played">
-            <i className="fa fa-repeat" aria-hidden="true"></i> <br></br>
-            Recent
-          </NavLink>
         </div>
       </nav>
     </React.Fragment>

@@ -41,9 +41,6 @@ const NavBar = () => {
           <NavLink className="nav-item nav-link" to="/playlists">
             Playlists
           </NavLink>
-          <NavLink className="nav-item nav-link" to="/recently-played">
-            Recent
-          </NavLink>
         </div>
       </div>
     </nav>
