@@ -13,7 +13,7 @@ const Sidebar = () => {
               fontSize: 50,
               transform: "rotate(45deg)",
               color: "#1db954",
-              marginTop: 20
+              marginTop: 20,
             }}
           ></i>
           <div>
@@ -41,11 +41,6 @@ const Sidebar = () => {
             <i className="fa fa-list" aria-hidden="true"></i>
             <br></br>
             Playlists
-          </NavLink>
-          <NavLink className="nav-item nav-link mb-3" to="/recently-played">
-            <i className="fa fa-repeat" aria-hidden="true"></i>
-            <br></br>
-            Recent
           </NavLink>
         </div>
       </nav>
