@@ -10,13 +10,13 @@ const axios = require('axios')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
-const client_id = process.env.CLIENT_ID
-const client_secret = process.env.CLIENT_SECRET
 const env = process.env.NODE_ENV
-const devCallbackUrl = 'http://localhost:8888/callback' // development
-const prodCallbackUrl = 'https://my-fyauth.herokuapp.com/callback' // production
-const redirect_uri = env === 'production' ? prodCallbackUrl : devCallbackUrl
+const client_id = process.env.SPOTIFY_API_CLIENT_ID
+const client_secret = process.env.SPOTIFY_API_CLIENT_SECRET
+const redirect_uri = process.env.AUTH_CALLBACK_URL
 const stateKey = 'spotify_auth_state'
+
+// const prodCallbackUrl = 'https://my-fyauth.herokuapp.com/callback' // production
 
 /**
  * TODO - What on earth is this about ??
